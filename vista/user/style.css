@@ -1,0 +1,690 @@
+
+/*profile*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+.body-profile{
+    background: rgb(244, 244, 244);
+}
+
+.body-profile .header{
+    border-bottom: 1px solid var(--borde-hover-claro);
+}
+
+.body-profile .nav_logo,.nav_items .nav_link{
+    color: black;
+}
+
+.nav_items .nav_link:hover{
+    color: #888;
+}
+
+.body-profile .perfil-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    padding: 60px 50px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 50px auto 130px;
+    gap: 20px;
+    font-family: 'Open Sans', sans-serif;
+    border: 1px solid var(--borde-hover-claro);
+}
+
+input[type="text"], textarea {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.body-profile .modal-confirmation {
+  display: none; 
+  position: fixed;
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3); 
+}
+
+.perfil-container p,.modal-content p, .column li{
+    font-size: 14px;
+}
+
+svg{
+    vertical-align: -3px;
+}
+.perfil-container svg {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.experiencia h3 i{
+    margin-right: 10px;
+}
+
+.encabezado-perfil {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 110px;
+    max-width: 900px;
+    color: #333; /* Color para texto legible en light mode */
+    padding: 20px;
+    background-color: #fff; /* Fondo blanco para light mode */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Suave sombra */
+    border: 1px solid var(--borde-hover-claro);
+}
+
+.blob {
+    top: 6%;
+    right: 8%;
+    position: absolute;
+    width: 100%;
+    max-width: 190px;
+    pointer-events: none;
+}
+
+.blob-configuration {
+    top: 6%;
+    right: 8%;
+    position: absolute;
+    width: 100%;
+    max-width: 190px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.body-profile .encabezado-perfil svg {
+    margin-right: 5px;
+}
+
+.encabezado-perfil h1 {
+    color: var(--azul);
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.encabezado p {
+    color: #555;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.azul {
+    color: var(--azul);
+    font-weight: bold;
+}
+
+.controles {
+    margin-left: 20px;
+}
+
+.controles button {
+    padding: 8px 12px;
+    background: linear-gradient(90deg, #393df79a, rgb(18, 63, 250), rgb(20, 20, 169));
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.controles button:hover {
+    background-color: var(--azul-hover); /* Cambia a un tono más oscuro al pasar el cursor */
+}
+
+.column {
+    flex: 1;
+    min-width: 280px;
+}
+
+.perfil-pagina {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.perfil-pagina h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.perfil-pagina h2 {
+    font-size: 25px;
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+
+.foto-perfil {
+    width: 100%;
+    max-width: 125px;
+    height: 100%;
+    height: 125px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info-adicional .icon p{
+    margin-bottom: 10px;
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-adicional .icon a{
+    color: black;
+}
+.info-adicional .icon a i{
+    margin-right: 10px;
+}
+#portafolio i{
+  margin-right: 4px;
+}
+
+.info-adicional .perfil p ,.info-adicional .experiencia p, .educacion p, .proyectos li, .skills li{
+    margin-bottom: 10px;
+}
+
+.info-adicional .perfil ,.info-adicional .experiencia{
+    margin-top: 30px;
+
+}
+.perfil-container h3 {
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.info-adicional,
+.skills,
+.proyectos,
+.educacion {
+    margin-bottom: 30px;
+}
+
+.skills ul,
+.proyectos ul {
+    list-style: none;
+    padding: 0;
+    font-size: 15px;
+
+}
+
+.skills ul li {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+.proyectos a {
+    font-style: italic;
+    color: var(--bordes);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 13px;
+}
+
+.proyectos a:hover {
+    color: #005bb5;
+}
+
+/* Estilos básicos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow-y: auto;
+    margin-top: 40px;
+    font-family: 'Open Sans', sans-serif;
+}
+.modal-content h2 img{
+    width: 24px;
+    margin-right: 5px;
+}
+
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #0b0217;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.1s ease;
+}
+
+.close:hover {
+    padding: 0 7px;
+    background-color: #adadad9f;
+    border-radius: 50%;
+    color: black;
+}
+
+/*editar foto*/
+.image-edit-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-icon-edit {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+    position: relative;
+}
+
+.svg-overlay {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.1); /* Color semitransparente para el fondo */
+    backdrop-filter: blur(1px); /* Efecto de desenfoque */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Estilo para el SVG */
+.svg-overlay svg {
+    color: white;
+    width: 30px;
+    height: 30px;
+}
+
+.profile-image:hover .svg-overlay {
+    opacity: 1;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border-radius: 50%;
+    padding: 8px 10px;
+    cursor: pointer;
+    display: block;
+}
+
+.tooltip-edit {
+    visibility: hidden;
+    width: 100px;
+    background-color: #3c4043c7;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 3px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: -125%; 
+    left: 50%;
+    margin-left: -50px; 
+    opacity: 0;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    font: 11px 'Open Sans', sans-serif;
+}
+
+.edit-icon:hover .tooltip-edit {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0.8s; 
+}
+
+.edit-icon svg {
+    color: white;
+    width: 18px;
+    height: 18px;
+}
+
+.profile-image .edit-icon:hover {
+    background-color: var(--bordes);
+}
+
+.image-edit-container .name-ft {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.profile-image {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+/*editar foto*/
+
+h2 {
+    color: #333;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Formulario en dos columnas */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.form-column {
+    flex: 0 0 48%; /* Cada columna ocupa el 48% del ancho */
+}
+
+.form-row.full-width {
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-row label,.form-row .form-column label {
+    font-weight: bold;
+    color: #555;
+}
+
+input{
+    margin-top: 3px;
+}
+
+input[type="text"], textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, textarea:focus {
+    border-color: #007bff; /* Color de borde en focus */
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    margin-top: 3px;
+}
+input:hover,textarea:hover{
+    background-color: var(--hover-claro);
+    transition: background-color 0.2s ease;
+}
+
+.modal-content button {
+    padding: 10px 15px;
+    background: linear-gradient(90deg, #393df79a, rgb(18, 63, 250), rgb(20, 20, 169));
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3; /* Cambia el color al pasar el mouse */
+}
+/*modal*/
+
+/*profile*/
+.title-configuration {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 110px;
+    max-width: 900px;
+    color: #333; /* Color para texto legible en light mode */
+    padding: 20px;
+    background-color: #fff; /* Fondo blanco para light mode */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Suave sombra */
+    border: 1px solid var(--borde-hover-claro);
+    margin-bottom: 50px;
+}
+
+.title-configuration h1 {
+    color: var(--azul);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.title-configuration p{
+    color: #555;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+/* Estilos para la estructura de las tabs */
+.tabs-menu {
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.tab-link {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.tab-link:hover {
+    background-color: #ddd;
+}
+
+.tab-link.active {
+    background-color: #000000;
+    color: white;
+    border-radius: 8px;
+}
+
+/* Estilos para el contenido de las tabs */
+.tabs-content {
+    max-width: 900px;
+    margin: 20px auto 130px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.seguridad{
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
+    gap: 20px; /* Espacio entre las columnas */
+    align-items: start; /* Alinear los elementos al inicio */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Apilar el label encima del input */
+}
+
+.seguridad label{
+    font-size: 16px;
+   display: block; 
+}
+
+#notifications label{
+    font-size: 14px;
+   display: block; 
+}
+
+.seguridad input[type="email"],
+.seguridad  input[type="password"] {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    vertical-align: 10px;
+}
+
+/* Cambios de color en focus */
+.seguridad input[type="email"]:focus,
+.seguridad input[type="password"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Estilos para el botón de guardar */
+.save-button {
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #393df79a, rgb(18, 63, 250), rgb(20, 20, 169));
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover en el botón */
+.save-button:hover {
+    background-color: rgb(27, 69, 249);
+}
+
+/* Estilo de botón al hacer click */
+.save-button:active {
+    background-color: #4c00ff;
+}
+
+/* Estilos adicionales */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #007BFF;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.social-button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.facebook {
+    background-color: #3b5998;
+}
+
+.twitter {
+    background-color: #1da1f2;
+}
+
+.google {
+    background-color: #db4437;
+}
+
+.delete-button {
+    background-color: #ff4b5c;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.delete-button:hover {
+    background-color: #f51a25;
+}
+
+
