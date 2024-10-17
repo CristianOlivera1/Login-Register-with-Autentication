@@ -103,6 +103,11 @@ svg{
     font-size: 28px;
     font-weight: 700;
 }
+.encabezado-perfil h1 img{
+    margin-right: 5px;
+    width: 100%;
+    max-width: 28px;
+}
 
 .encabezado {
     display: flex;
@@ -405,6 +410,26 @@ h2 {
     flex: 0 0 48%; /* Cada columna ocupa el 48% del ancho */
 }
 
+.form-column .button-mas {
+    padding: 2px 4px;
+    background: linear-gradient(90deg, #28a745, #04ff3b);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    margin-left: 10px;
+   vertical-align: 3px;
+    color: white;
+}
+
+.form-column .button-mas:hover {
+    background-color: #1e612e;
+    transform: scale(1.05);
+}
+
 .form-row.full-width {
     flex-direction: column;
     margin-bottom: 20px;
@@ -446,7 +471,7 @@ input:hover,textarea:hover{
     transition: background-color 0.2s ease;
 }
 
-.modal-content button {
+.modal-content .button-save-edit {
     padding: 10px 15px;
     background: linear-gradient(90deg, #393df79a, rgb(18, 63, 250), rgb(20, 20, 169));
     color: white;
@@ -459,7 +484,7 @@ input:hover,textarea:hover{
     margin-top: 10px;
 }
 
-.modal-content button:hover {
+.modal-content .button-save-edit:hover {
     background-color: #0056b3; /* Cambia el color al pasar el mouse */
 }
 /*modal*/
@@ -484,6 +509,12 @@ input:hover,textarea:hover{
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 10px;
+}
+
+.title-configuration h1 img {
+    margin-right: 5px;
+    width: 100%;
+    max-width: 28px;
 }
 
 .title-configuration p{
@@ -516,7 +547,8 @@ input:hover,textarea:hover{
 .tab-link.active {
     background-color: #000000;
     color: white;
-    border-radius: 8px;
+    border-radius: 4px;
+    border-top: 2px solid rgb(7, 128, 254);
 }
 
 /* Estilos para el contenido de las tabs */

@@ -85,6 +85,9 @@ if (isset($response['access_token'])) {
         $_SESSION['proyectos'] = $detalles['proyectos']; 
         $_SESSION['educacion'] = $detalles['educacion']; 
         $_SESSION['foto_perfil'] = $detalles['foto_perfil']; 
+        $_SESSION['perfil_desc2'] = $detalles['perfil_desc2']; 
+        $_SESSION['experiencia2'] = $detalles['experiencia2']; 
+        $_SESSION['experiencia3'] = $detalles['experiencia3']; 
 
         header('Location: ../../index.php');
     } else {
@@ -102,7 +105,13 @@ if (isset($response['access_token'])) {
             $portafolio = "https://usuario-portafolio.com";
             $linkedin = "https://www.linkedin.com/in/usuario";
             $github = "https://github.com/usuario";
-            $insert_details_query = "INSERT INTO usuario_detalles (user_id, nombre, foto_perfil, ubicacion, portafolio, linkedin, github) VALUES ('$userId', '$name', '$profileImageUrl', '$ubicacion', '$portafolio', '$linkedin', '$github')";
+            $perfil_desc="Aquí puedes agregar una breve descripción o resumen sobre ti, tus intereses, y cualquier otra información relevante que quieras compartir.";
+            $experiencia="Ingresa la Información relevante sobre la empresa laborada. 
+                    - Tecnologías: Ingresa las tecnologías que utilizadas. 
+                    - Responsabilidades: Describe tu rol que tuviste en la empresa. 
+                    - Logros: Menciona los diferentes logros que ayudaron a la empresa y/o logros que influyeron en ti mismo.";
+
+            $insert_details_query = "INSERT INTO usuario_detalles (user_id, nombre, foto_perfil, ubicacion, portafolio, linkedin, github,perfil_desc,experiencia) VALUES ('$userId', '$name', '$profileImageUrl', '$ubicacion', '$portafolio', '$linkedin', '$github',' $perfil_desc','$experiencia')";
             
             if ($mysqli->query($insert_details_query) === TRUE) {
                 $_SESSION['nombre'] = $name; 
@@ -111,6 +120,8 @@ if (isset($response['access_token'])) {
                 $_SESSION['portafolio'] = $portafolio; 
                 $_SESSION['linkedin'] = $linkedin; 
                 $_SESSION['github'] = $github; 
+                $_SESSION['perfil_desc'] = $perfil_desc; 
+                $_SESSION['experiencia'] = $experiencia; 
             } else {
                 echo "Error al insertar los detalles del usuario: " . $mysqli->error;
             }

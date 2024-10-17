@@ -80,7 +80,7 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Usuario no encontrado
     <!-- Sección de configuration -->
     <img class="blob-configuration" src="../../resources/img/blob-configuration.svg" alt="adorno">
     <div class="title-configuration">
-        <h1>Configuración</h1>
+        <h1> <img src="../../resources/icons/settings.png" alt=""> Configuración</h1>
         <p>Bienvenido, <span class="azul"><?php echo htmlspecialchars($nombre); ?></span>. Esta es la sección de tu configuracion.</p>
     </div>
 

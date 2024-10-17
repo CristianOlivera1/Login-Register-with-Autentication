@@ -8,6 +8,40 @@ document.addEventListener("click", (event) => {
     }
 });
 }
+ 
+/*mostrar y ocultar los elementos escondidos en el modal*/
+const agregarDescBtn = document.getElementById('agregar-desc');
+const desc2 = document.getElementById('perfil-desc-input2');
+
+if (agregarDescBtn && desc2) {
+    agregarDescBtn.addEventListener('click', function() {
+        if (desc2.style.display === 'none') {
+            desc2.style.display = 'block'; // Mostrar el campo
+            agregarDescBtn.disabled = true; 
+            agregarDescBtn.style.background = '#d3d3d3'; // Cambiar el color de fondo a un color apagado
+            agregarDescBtn.style.color = '#808080'; // Cambiar el color del texto a un color apagado
+        }
+    });
+}
+
+const agregarExpBtn = document.getElementById('agregar-exp');
+const exp2 = document.getElementById('experiencia-input2');
+const exp3 = document.getElementById('experiencia-input3');
+
+if (agregarExpBtn && exp2 && exp3) {
+    agregarExpBtn.addEventListener('click', function() {
+        if (exp2.style.display === 'none' || exp2.style.display === '') {
+            exp2.style.display = 'block'; // Mostrar el campo
+        } else if (exp3.style.display === 'none' || exp3.style.display === '') {
+            exp3.style.display = 'block'; // Mostrar el campo
+            agregarExpBtn.disabled = true; 
+            agregarExpBtn.style.background = '#d3d3d3'; // Cambiar el color de fondo a un color apagado
+            agregarExpBtn.style.color = '#808080'; // Cambiar el color del texto a un color apagado
+        }
+    });
+}
+
+/*mostrar y ocultar los elementos escondidos en el modal*/
 
 // Abrir el modal y cargar los datos actuales
 function abrirModal() {
@@ -28,28 +62,53 @@ function abrirModal() {
     document.getElementById('github-input').value = githubElement ? githubElement.getAttribute('href') : '';
 
     document.getElementById('perfil-desc-input').value = document.getElementById('perfil-desc').innerText;
-    document.getElementById('experiencia-input').value = document.getElementById('experiencia').innerText;
+    document.getElementById('experiencia-input').value = document.getElementById('experiencia').innerText; 
     document.getElementById('habilidades-input').value = document.getElementById('habilidades').innerText;
     document.getElementById('proyectos-input').value = document.getElementById('proyectos').innerText;
     document.getElementById('educacion-input').value = document.getElementById('educacion').innerText;
+    
+    const perfilDesc2 = document.getElementById('perfil-desc2');
+    if (perfilDesc2 && perfilDesc2.innerText.trim() !== '') {
+        document.getElementById('perfil-desc-input2').value = perfilDesc2.innerText;
+        desc2.style.display = 'block'; // Mostrar el imput de la segunda descripcion siesque tiene texto
+        agregarDescBtn.disabled = true; 
+        agregarDescBtn.style.background = '#d3d3d3'; // Cambiar el color de fondo a un color apagado
+        agregarDescBtn.style.color = '#808080'; // Cambiar el color del texto a un color apagado
+    }else{
+        desc2.style.display = 'none';
+        agregarDescBtn.disabled = false;  
+        agregarDescBtn.style.background = ''; // Restaurar el color de fondo original
+        agregarDescBtn.style.color = ''; // Restaurar el color del texto original
+    }
+
+    const expe2 = document.getElementById('experiencia2');
+    const expe3 = document.getElementById('experiencia3');
+    if (expe2 && expe2.innerText.trim() !== '') {
+        document.getElementById('experiencia-input2').value = expe2.innerText;
+        exp2.style.display = 'block'; // Mostrar el input de la segunda experiencia si es que tiene texto
+    } else {
+        exp2.style.display = 'none';
+    }
+    if (expe3 && expe3.innerText.trim() !== '') {
+        document.getElementById('experiencia-input3').value = expe3.innerText;
+        exp3.style.display = 'block'; // Mostrar el input de la tercera experiencia si es que tiene texto
+        agregarExpBtn.disabled = true; 
+        agregarExpBtn.style.background = '#d3d3d3'; // Cambiar el color de fondo a un color apagado
+        agregarExpBtn.style.color = '#808080'; // Cambiar el color del texto a un color apagado
+    } else {
+        exp3.style.display = 'none';
+        agregarExpBtn.disabled = false;  
+        agregarExpBtn.style.background = ''; // Restaurar el color de fondo original
+        agregarExpBtn.style.color = ''; // Restaurar el color del texto original
+    }
+
 }
 
 // Cerrar el modal
 function cerrarModal() {
     document.getElementById('modal-editar').style.display = 'none';
 }
-// Evento para mostrar la vista previa de la imagen seleccionada del modal
-document.getElementById('profileImage').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            // Cambiar la vista previa en el modal
-            document.getElementById('profile-icon-edit').src = e.target.result;
-        }
-        reader.readAsDataURL(file);
-    }
-});
+
 // Evento para mostrar la vista previa de la imagen seleccionada del modal
 const profileImageInput = document.getElementById('profileImage');
 if (profileImageInput) {
@@ -66,8 +125,7 @@ if (profileImageInput) {
     });
 }
 
-
-// Guardar los cambios realizados
+// Guardar los cambios realizados y mostrarlos en la vista previa
 function guardarCambios() {
     // Obtener los nuevos valores
     let nuevoNombre = document.getElementById('nombre').value;
@@ -81,6 +139,10 @@ function guardarCambios() {
     let nuevasHabilidades = document.getElementById('habilidades-input').value;
     let nuevosProyectos = document.getElementById('proyectos-input').value;
     let nuevaEducacion = document.getElementById('educacion-input').value;
+    let nuevaDescripcion2 = document.getElementById('perfil-desc-input2').value;
+    let nuevaExperiencia2 = document.getElementById('experiencia-input2').value;
+    let nuevaExperiencia3 = document.getElementById('experiencia-input3').value;
+
 
     // Obtener la imagen de perfil seleccionada
     let nuevaFotoPerfil = document.getElementById('profileImage').files[0];
@@ -98,6 +160,10 @@ function guardarCambios() {
     formData.append('habilidades', nuevasHabilidades);
     formData.append('proyectos', nuevosProyectos); 
     formData.append('educacion', nuevaEducacion);
+    formData.append('perfil_desc2', nuevaDescripcion2);
+    formData.append('experiencia2', nuevaExperiencia2);
+    formData.append('experiencia3', nuevaExperiencia3);
+
 
     // Si hay una nueva imagen de perfil, adjuntarla
     if (nuevaFotoPerfil) {
@@ -179,7 +245,31 @@ function guardarCambios() {
                }
                
             document.getElementById('perfil-desc').innerText = nuevaDescripcion;
+
+            let perfilDesc2 = document.getElementById('perfil-desc2');
+            if (perfilDesc2) {
+                perfilDesc2.innerText = nuevaDescripcion2;
+                perfilDesc2.style.display = nuevaDescripcion2 ? 'block' : 'none';
+                // Forzar el redibujado del elemento para asegurar que se actualice
+                perfilDesc2.style.visibility = 'hidden';
+                perfilDesc2.offsetHeight; // Forzar un reflow
+                perfilDesc2.style.visibility = 'visible';
+            }
+
             document.getElementById('experiencia').innerText = nuevaExperiencia;
+
+                let experiencia2 = document.getElementById('experiencia2');
+                if (experiencia2) {
+                    experiencia2.innerText = nuevaExperiencia2;
+                    experiencia2.style.display = nuevaExperiencia2 ? 'block' : 'none';
+                }
+
+                let experiencia3 = document.getElementById('experiencia3');
+                if (experiencia3) {
+                    experiencia3.innerText = nuevaExperiencia3;
+                    experiencia3.style.display = nuevaExperiencia3 ? 'block' : 'none';
+                }
+
             document.getElementById('habilidades').innerText = nuevasHabilidades;
             document.getElementById('proyectos').innerText = nuevosProyectos;
             document.getElementById('educacion').innerText = nuevaEducacion;

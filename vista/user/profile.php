@@ -81,7 +81,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
     <!-- Sección de perfil -->
     <img class="blob" src="../../resources/img/blob-profile.svg" alt="adorno">
     <div class="encabezado-perfil">
-         <h1>Mi perfil</h1>
+         <h1><img src="../../resources/icons/user.png" alt="icono-profile"> Mi perfil</h1>
         <div class="encabezado">
             <p>¡Hola, <span class="azul"><?php echo htmlspecialchars($nombre); ?>!</span>, ¡Bienvenido a tu perfil! Aquí puedes ver toda la información sobre ti.</p>
             <div class="controles">
@@ -140,33 +140,42 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                     </p>
                 <?php endif; ?>
             </div>
+
             <div class="perfil">
                 <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" fill-rule="evenodd" d="M4 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm10 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1m0 3a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1m0 3a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1m-8-5a3 3 0 1 1 6 0a3 3 0 0 1-6 0m1.942 4a3 3 0 0 0-2.847 2.051l-.044.133l-.004.012c-.042.126-.055.167-.042.195c.006.013.02.023.038.039c.032.025.08.064.146.155A1 1 0 0 0 6 17h6a1 1 0 0 0 .811-.415a.7.7 0 0 1 .146-.155c.019-.016.031-.026.038-.04c.014-.027 0-.068-.042-.194l-.004-.012l-.044-.133A3 3 0 0 0 10.059 14z" clip-rule="evenodd"/></svg>Perfil</h3>
-                <p id="perfil-desc">
-                    <?php echo isset($_SESSION['perfil_desc']) ? $_SESSION['perfil_desc'] : 'Aquí puedes agregar una breve descripción o resumen sobre ti, tus intereses, y cualquier otra información relevante que quieras compartir.'; ?>
-                </p>
+
+                <?php if (!empty($_SESSION['perfil_desc'])): ?>
+                    <p id="perfil-desc">
+                        <?php echo $_SESSION['perfil_desc']; ?>
+                    </p>
+                <?php endif; ?>
+
+                <?php if (!empty($_SESSION['perfil_desc2'])): ?>
+                    <p id="perfil-desc2">
+                        <?php echo $_SESSION['perfil_desc2']; ?>
+                    </p>
+                <?php endif; ?>
             </div>
             <div class="experiencia">
                 <h3><i class="fas fa-briefcase"></i>Experiencia</h3>
 
+                <?php if (!empty($_SESSION['experiencia'])): ?>
                 <p id="experiencia">
-                    <?php echo isset($_SESSION['experiencia']) ? $_SESSION['experiencia'] : 'Ingresa la Información relevante sobre la empresa laborada. 
-                    - Tecnologías: Ingresa las tecnologías que utilizadas. 
-                    - Responsabilidades: Describe tu rol que tuviste en la empresa. 
-                    - Logros: Menciona los diferentes logros que ayudaron a la empresa y/o logros que influyeron en ti mismo.'; ?>
+                    <?php echo $_SESSION['experiencia'];?>
                 </p>
-                <p id="experiencia2">
-                    <?php echo isset($_SESSION['experiencia_2']) ? $_SESSION['experiencia_2'] :'Ingresa la Información relevante sobre la empresa laborada. 
-                    - Tecnologías: Ingresa las tecnologías que utilizadas. 
-                    - Responsabilidades: Describe tu rol que tuviste en la empresa. 
-                    - Logros: Menciona los diferentes logros que ayudaron a la empresa y/o logros que influyeron en ti mismo.'; ?>
+                <?php endif; ?>
+
+                <?php if (!empty($_SESSION['experiencia2'])): ?>
+                <p id="experiencia2"> 
+                    <?php echo $_SESSION['experiencia2'];?>
                 </p>
+                <?php endif; ?>
+
+                <?php if (!empty($_SESSION['experiencia3'])): ?>
                 <p id="experiencia3">
-                    <?php echo isset($_SESSION['experiencia_3']) ? $_SESSION['experiencia_3'] : 'Ingresa la Información relevante sobre la empresa laborada. 
-                    - Tecnologías: Ingresa las tecnologías que utilizadas. 
-                    - Responsabilidades: Describe tu rol que tuviste en la empresa. 
-                    - Logros: Menciona los diferentes logros que ayudaron a la empresa y/o logros que influyeron en ti mismo.'; ?>
+                    <?php echo $_SESSION['experiencia3'];?>
                 </p>
+                <?php endif; ?>
 
             </div>
         </div>
@@ -224,7 +233,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                     <div class="image-edit-container">
                         <div class="profile-image">
                         <label class="name-ft">Foto de perfil:</label>
-                            <!-- Imagen de perfil con ícono de lápiz -->
+                            <!-- Imagen de perfil con ícono de lápiz --> 
                             <img src="<?php echo isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : '../../resources/icons/user-defecto.png'; ?>" 
                                 alt="Foto de Perfil" class="profile-icon-edit" id="profile-icon-edit">
                                 <div class="svg-overlay">
@@ -258,11 +267,20 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                     <input type="text" id="github-input" name="github" placeholder="Ej. github.com/usuario" spellcheck="false">
                 </div>
                 <div class="form-column">
-                    <label for="perfil-desc-input">Descripción del Perfil:</label>
-                    <textarea id="perfil-desc-input" name="perfil-desc" placeholder="Breve descripción sobre ti" spellcheck="false"></textarea>
+                    <label for="perfil-desc-input">Descripción del Perfil:
+                        <button class="button-mas" id="agregar-desc" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
+                        </button>
+                    </label>
+                    <textarea id="perfil-desc-input" name="perfil_desc" placeholder="Breve descripción sobre ti"></textarea>
+                    <textarea id="perfil-desc-input2" name="perfil_desc2" placeholder="Descripción adicional" style="display:none;"></textarea>
 
-                    <label for="experiencia-input">Experiencia:</label>
+                    <label for="experiencia-input">Experiencia:
+                        <button class="button-mas" id="agregar-exp" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
+                        </button>
+                    </label>
                     <textarea id="experiencia-input" name="experiencia" placeholder="Resumen de tu experiencia laboral" spellcheck="false"></textarea>
+                    <textarea id="experiencia-input2" name="experiencia2" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+                    <textarea id="experiencia-input3" name="experiencia3" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
 
                     <label for="habilidades-input">Habilidades:</label>
                     <input type="text" id="habilidades-input" name="habilidades" placeholder="Ej. HTML, CSS, JS">
@@ -277,7 +295,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                 <input type="text" id="educacion-input" name="educacion" placeholder="Ej. Licenciatura en Computación" spellcheck="false">
             </div>
 
-            <button type="button" onclick="guardarCambios()">Guardar Cambios</button>
+            <button class="button-save-edit" type="button" onclick="guardarCambios()">Guardar Cambios</button>
         </form>
     </div>
 </div>

@@ -36,6 +36,10 @@ if ($data) {
     $habilidades = $mysqli->real_escape_string($data['habilidades']);
     $proyectos = $mysqli->real_escape_string($data['proyectos']);
     $educacion = $mysqli->real_escape_string($data['educacion']);
+    $perfil_desc2 = $mysqli->real_escape_string($data['perfil_desc2']);
+    $experiencia2 = $mysqli->real_escape_string($data['experiencia2']);
+    $experiencia3 = $mysqli->real_escape_string($data['experiencia3']);
+
     
     // Comprobar si el usuario ya tiene un registro
     $checkQuery = "SELECT user_id FROM usuario_detalles WHERE user_id = '$userId'";
@@ -54,7 +58,10 @@ if ($data) {
                         experiencia = '$experiencia',
                         habilidades = '$habilidades',
                         proyectos = '$proyectos',
-                        educacion = '$educacion'
+                        educacion = '$educacion',
+                        perfil_desc2 = '$perfil_desc2',
+                        experiencia2 = '$experiencia2',
+                        experiencia3 = '$experiencia3'
                     WHERE user_id = '$userId'";
                     
         if ($mysqli->query($sqlUpdate) === TRUE) {
@@ -70,6 +77,9 @@ if ($data) {
             $_SESSION['habilidades'] = $habilidades;
             $_SESSION['proyectos'] = $proyectos;
             $_SESSION['educacion'] = $educacion;
+            $_SESSION['perfil_desc2'] = $perfil_desc2;
+            $_SESSION['experiencia2'] = $experiencia2;
+            $_SESSION['experiencia3'] = $experiencia3;
     
             $response = ['success' => true, 'message' => 'Datos actualizados exitosamente'];
             
