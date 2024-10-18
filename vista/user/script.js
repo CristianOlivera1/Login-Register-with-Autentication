@@ -4,7 +4,7 @@ const formOpenBtn = document.querySelector("#editar-perfil");
 if(formOpenBtn){
 document.addEventListener("click", (event) => {
     if (!formContainer.contains(event.target) && !formOpenBtn.contains(event.target)) {
-        cerrarModal(); // Cerrar el modal
+        cerrarModal(); 
     }
 });
 }
@@ -16,10 +16,10 @@ const desc2 = document.getElementById('perfil-desc-input2');
 if (agregarDescBtn && desc2) {
     agregarDescBtn.addEventListener('click', function() {
         if (desc2.style.display === 'none') {
-            desc2.style.display = 'block'; // Mostrar el campo
+            desc2.style.display = 'block'; 
             agregarDescBtn.disabled = true; 
-            agregarDescBtn.style.background = '#d3d3d3'; // Cambiar el color de fondo a un color apagado
-            agregarDescBtn.style.color = '#808080'; // Cambiar el color del texto a un color apagado
+            agregarDescBtn.style.background = '#d3d3d3'; 
+            agregarDescBtn.style.color = '#808080'; 
         }
     });
 }
@@ -31,12 +31,12 @@ const exp3 = document.getElementById('experiencia-input3');
 if (agregarExpBtn && exp2 && exp3) {
     agregarExpBtn.addEventListener('click', function() {
         if (exp2.style.display === 'none' || exp2.style.display === '') {
-            exp2.style.display = 'block'; // Mostrar el campo
+            exp2.style.display = 'block'; 
         } else if (exp3.style.display === 'none' || exp3.style.display === '') {
-            exp3.style.display = 'block'; // Mostrar el campo
+            exp3.style.display = 'block'; 
             agregarExpBtn.disabled = true; 
-            agregarExpBtn.style.background = '#d3d3d3'; // Cambiar el color de fondo a un color apagado
-            agregarExpBtn.style.color = '#808080'; // Cambiar el color del texto a un color apagado
+            agregarExpBtn.style.background = '#d3d3d3'; 
+            agregarExpBtn.style.color = '#808080'; 
         }
     });
 }
@@ -70,36 +70,36 @@ function abrirModal() {
     const perfilDesc2 = document.getElementById('perfil-desc2');
     if (perfilDesc2 && perfilDesc2.innerText.trim() !== '') {
         document.getElementById('perfil-desc-input2').value = perfilDesc2.innerText;
-        desc2.style.display = 'block'; // Mostrar el imput de la segunda descripcion siesque tiene texto
+        desc2.style.display = 'block';
         agregarDescBtn.disabled = true; 
-        agregarDescBtn.style.background = '#d3d3d3'; // Cambiar el color de fondo a un color apagado
-        agregarDescBtn.style.color = '#808080'; // Cambiar el color del texto a un color apagado
+        agregarDescBtn.style.background = '#d3d3d3';
+        agregarDescBtn.style.color = '#808080'; 
     }else{
         desc2.style.display = 'none';
         agregarDescBtn.disabled = false;  
-        agregarDescBtn.style.background = ''; // Restaurar el color de fondo original
-        agregarDescBtn.style.color = ''; // Restaurar el color del texto original
+        agregarDescBtn.style.background = ''; 
+        agregarDescBtn.style.color = ''; 
     }
 
     const expe2 = document.getElementById('experiencia2');
     const expe3 = document.getElementById('experiencia3');
     if (expe2 && expe2.innerText.trim() !== '') {
         document.getElementById('experiencia-input2').value = expe2.innerText;
-        exp2.style.display = 'block'; // Mostrar el input de la segunda experiencia si es que tiene texto
+        exp2.style.display = 'block'; 
     } else {
         exp2.style.display = 'none';
     }
     if (expe3 && expe3.innerText.trim() !== '') {
         document.getElementById('experiencia-input3').value = expe3.innerText;
-        exp3.style.display = 'block'; // Mostrar el input de la tercera experiencia si es que tiene texto
+        exp3.style.display = 'block'; 
         agregarExpBtn.disabled = true; 
-        agregarExpBtn.style.background = '#d3d3d3'; // Cambiar el color de fondo a un color apagado
-        agregarExpBtn.style.color = '#808080'; // Cambiar el color del texto a un color apagado
+        agregarExpBtn.style.background = '#d3d3d3';
+        agregarExpBtn.style.color = '#808080'; 
     } else {
         exp3.style.display = 'none';
         agregarExpBtn.disabled = false;  
-        agregarExpBtn.style.background = ''; // Restaurar el color de fondo original
-        agregarExpBtn.style.color = ''; // Restaurar el color del texto original
+        agregarExpBtn.style.background = ''; 
+        agregarExpBtn.style.color = ''; 
     }
 
 }
@@ -117,12 +117,17 @@ if (profileImageInput) {
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                // Cambiar la vista previa en el modal
                 document.getElementById('profile-icon-edit').src = e.target.result;
             }
             reader.readAsDataURL(file);
         }
     });
+}
+
+// Añadir evento click al botón de guardar cambios
+const saveChangesButton = document.getElementById('saveChangesButton');
+if (saveChangesButton) {
+    saveChangesButton.addEventListener('click', guardarCambios);
 }
 
 // Guardar los cambios realizados y mostrarlos en la vista previa
@@ -249,11 +254,7 @@ function guardarCambios() {
             let perfilDesc2 = document.getElementById('perfil-desc2');
             if (perfilDesc2) {
                 perfilDesc2.innerText = nuevaDescripcion2;
-                perfilDesc2.style.display = nuevaDescripcion2 ? 'block' : 'none';
-                // Forzar el redibujado del elemento para asegurar que se actualice
-                perfilDesc2.style.visibility = 'hidden';
-                perfilDesc2.offsetHeight; // Forzar un reflow
-                perfilDesc2.style.visibility = 'visible';
+                perfilDesc2.style.display = nuevaDescripcion2.trim() !== '' ? 'block' : 'none';
             }
 
             document.getElementById('experiencia').innerText = nuevaExperiencia;
@@ -316,3 +317,49 @@ tabLinks.forEach(link => {
     });
 });
 //manejar los tabs(pestañas) de configuracion
+
+const perfilBackgroundEdit = document.querySelector(".perfil-background-edit");
+if (perfilBackgroundEdit) {
+    generateGradient(perfilBackgroundEdit);
+  }
+
+  function generateGradient(element) {
+    let gradient = "", mode = "";
+
+    const blendModes = [
+      "normal",
+      "multiply",
+      "screen",
+      "overlay",
+      "lighten",
+      "hard-light",
+      "soft-light",
+      "hue",
+      "color"
+    ];
+   
+    const notableMinimalistColors = [
+      "#000000",   
+      "#82126c",  
+      "#19ac8a",  
+      "#49b7b4",   
+      "#9100ff",   
+      "#1030e9",   
+      "#0238CE",  
+      "#FF4000"    
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      const deg = Math.floor(Math.random() * 180);
+      const firstColor = notableMinimalistColors[Math.floor(Math.random() * notableMinimalistColors.length)];
+      const lastColor = notableMinimalistColors[Math.floor(Math.random() * notableMinimalistColors.length)];
+      const firstSpread = Math.floor(Math.random() * 40) + 30; // Between 30% to 70%
+      const lastSpread = firstSpread + Math.floor(Math.random() * 20) + 20; // Between firstSpread + 20% to firstSpread + 40%
+
+      mode += `${blendModes[Math.floor(Math.random() * blendModes.length)]},`;
+      gradient += `linear-gradient(${deg}deg, ${firstColor} ${firstSpread}%, ${lastColor} ${lastSpread}%),`;
+    }
+
+    const style = `background-image: ${gradient.slice(0, -1)}; background-blend-mode: ${mode.slice(0, -1)};`;
+    element.setAttribute("style", style);
+  }

@@ -1,5 +1,5 @@
 <?php
-session_start(); // Inicia la sesión para acceder a las variables de sesión
+session_start(); 
 
 // Verifica si el nombre de usuario está disponible
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : "Usuario";

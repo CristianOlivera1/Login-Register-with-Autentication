@@ -176,14 +176,14 @@ transition: 0.7s;
 .modal-confirmation-content {
   position: relative; 
   background-color: #ffffff;
-  margin: 10% auto; /* Centrado verticalmente */
+  margin: 10% auto; 
   padding: 25px;
-  border-radius: 12px; /* Bordes suavemente redondeados */
-  width: 85%; /* Ancho del contenido del modal */
-  max-width: 400px; /* Ancho máximo */
+  border-radius: 12px; 
+  width: 85%; 
+  max-width: 400px; 
   text-align: center;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra suave */
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Bordes sutiles */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); 
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .close-button-logout {
@@ -216,7 +216,7 @@ transition: 0.7s;
 .modal-confirmation-content p {
   font-size: 16px;
   line-height: 1.5;
-  color: #333333; /* Texto oscuro para buena legibilidad */
+  color: #333333; 
   margin-bottom: 40px;
 }
 
@@ -259,7 +259,7 @@ transition: 0.7s;
 
 /* Sutileza al presionar el botón */
 .button-confirm:active, .button-cancel:active {
-  transform: scale(0.98); /* Efecto de compresión */
+  transform: scale(0.98); 
 }
 /*modal cerrar sesion*/
 
@@ -491,12 +491,12 @@ position: relative;
   font-size: 18px;
   font-weight: bold;
   padding: 15px 40px;
-  color: #fff; /* Texto en blanco */
+  color: #fff;
   background: linear-gradient(90deg, #00e1ff, #0099ff);
   border: none;
   border-radius: calc(0.7 * 1rem);
   cursor: pointer;
-  box-shadow: 0px 1px 12px rgba(0, 195, 255, 0.63); /* Sombra suave */
+  box-shadow: 0px 1px 12px rgba(0, 195, 255, 0.63); 
   transition: all 0.3s ease;
   letter-spacing: 1.5px;
   position: relative;
@@ -504,8 +504,8 @@ position: relative;
 }
 
 .button-register:hover {
-  box-shadow: 0px 8px 24px rgba(0, 153, 255, 0.6); /* Mayor sombra al hacer hover */
-  color: #fff; /* Asegura que el texto se mantenga legible */
+  box-shadow: 0px 8px 24px rgba(0, 153, 255, 0.6); 
+  color: #fff;
 }
 
 .home {
@@ -517,7 +517,7 @@ position: relative;
   position: absolute;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.3); /* Efecto de overlay */
+  background-color: rgba(0, 0, 0, 0.3); 
   z-index: 100;
   opacity: 0;
   pointer-events: none;
@@ -531,9 +531,9 @@ position: relative;
 
 .form_container {
   opacity: 0;
-  transform: translateY(-20px); /* Añade una ligera animación */
+  transform: translateY(-20px); 
   transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-  z-index: 101; /* Asegúrate de que el formulario esté sobre el overlay */
+  z-index: 101; 
 }
 
 .home.show .form_container {
@@ -827,8 +827,8 @@ margin-top: 15px;
   padding: 40px 20px 30px 20px;
   border-top: 1px solid #252525;
   width: 100%;
-  position: relative; /* Por defecto, el footer está en el flujo del documento */
-  bottom: 0; /* Opcional: especifica que el footer esté al fondo */
+  position: relative; 
+  bottom: 0; 
 
 }
 

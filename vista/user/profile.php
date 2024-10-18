@@ -231,9 +231,9 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
 
                     <!-- Sección para editar la foto de perfil -->
                     <div class="image-edit-container">
+                    <label class="name-ft">Foto de perfil:</label> 
+                    <div class="perfil-background-edit">
                         <div class="profile-image">
-                        <label class="name-ft">Foto de perfil:</label>
-                            <!-- Imagen de perfil con ícono de lápiz --> 
                             <img src="<?php echo isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : '../../resources/icons/user-defecto.png'; ?>" 
                                 alt="Foto de Perfil" class="profile-icon-edit" id="profile-icon-edit">
                                 <div class="svg-overlay">
@@ -244,15 +244,16 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                                         </g>
                                     </svg>
                                 </div>
-                        
                             <label for="profileImage" class="edit-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>
                                 </svg>
                                 <span class="tooltip-edit">Subir nueva imagen de perfil</span>
                             </label>
                             <input type="file" id="profileImage" name="profileImage" accept="image/*" style="display: none;">
+                            </div>
                         </div>
                     </div>
+
                     <br>
                     <label for="ubicacion-input">Ubicación:</label>
                     <input type="text" id="ubicacion-input" name="ubicacion" placeholder="Ej. https://maps.google.com/?q=Ciudad,País" spellcheck="false">
@@ -268,19 +269,19 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                 </div>
                 <div class="form-column">
                     <label for="perfil-desc-input">Descripción del Perfil:
-                        <button class="button-mas" id="agregar-desc" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
+                        <button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-desc" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
                         </button>
                     </label>
                     <textarea id="perfil-desc-input" name="perfil_desc" placeholder="Breve descripción sobre ti"></textarea>
-                    <textarea id="perfil-desc-input2" name="perfil_desc2" placeholder="Descripción adicional" style="display:none;"></textarea>
+                    <textarea title="Si agregó este parrafo por primera vez, guarde y actualice la página." id="perfil-desc-input2" name="perfil_desc2" placeholder="Descripción adicional" style="display:none;"></textarea>
 
                     <label for="experiencia-input">Experiencia:
-                        <button class="button-mas" id="agregar-exp" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
+                        <button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-exp" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
                         </button>
                     </label>
                     <textarea id="experiencia-input" name="experiencia" placeholder="Resumen de tu experiencia laboral" spellcheck="false"></textarea>
-                    <textarea id="experiencia-input2" name="experiencia2" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
-                    <textarea id="experiencia-input3" name="experiencia3" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+                    <textarea title="Si agregó este parrafo por primera vez, guarde y actualice la página."  id="experiencia-input2" name="experiencia2" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+                    <textarea title="Si agregó este parrafo por primera vez, guarde y actualice la página."  id="experiencia-input3" name="experiencia3" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
 
                     <label for="habilidades-input">Habilidades:</label>
                     <input type="text" id="habilidades-input" name="habilidades" placeholder="Ej. HTML, CSS, JS">
@@ -295,8 +296,8 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                 <input type="text" id="educacion-input" name="educacion" placeholder="Ej. Licenciatura en Computación" spellcheck="false">
             </div>
 
-            <button class="button-save-edit" type="button" onclick="guardarCambios()">Guardar Cambios</button>
-        </form>
+            <button class="button-save-edit" id="saveChangesButton" type="button">Guardar Cambios</button>
+            </form>
     </div>
 </div>
 

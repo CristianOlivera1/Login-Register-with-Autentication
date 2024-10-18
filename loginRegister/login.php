@@ -1,5 +1,5 @@
 <?php
-session_start(); // Inicia sesión
+session_start(); 
 include '../controler/conexion.php';
 
 // Verificar si el formulario fue enviado
@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
-            // Verificar la contraseña
             if (password_verify($password, $user['password'])) {
                 // Inicio de sesión exitoso
                 $_SESSION['user_id'] = $user['id'];
@@ -77,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Aquí se manejará la autenticación con Google, GitHub, Facebook
 if (isset($_SESSION['oauth_user'])) {
     // Obtener el usuario de OAuth
-    $oauth_user = $_SESSION['oauth_user']; // Asegúrate de establecer este valor en tu callback
+    $oauth_user = $_SESSION['oauth_user'];
 
     // Verifica si el usuario ya existe en la base de datos
     $sql = "SELECT * FROM usuarios WHERE email = ?";
@@ -95,7 +94,7 @@ if (isset($_SESSION['oauth_user'])) {
      
     } else {
         // Usuario no encontrado, puedes crear uno nuevo si lo deseas
-        $sql = "INSERT INTO usuarios (email, password) VALUES (?, '')"; // Contraseña vacía o generar una
+        $sql = "INSERT INTO usuarios (email, password) VALUES (?, '')"; 
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param("s", $oauth_user['email']);
         $stmt->execute();

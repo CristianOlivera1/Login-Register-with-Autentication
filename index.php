@@ -3,7 +3,7 @@ session_start();
 $isAuthenticated = isset($_SESSION['user_id']);
 // Capturar el mensaje de error y eliminarlo de la sesión
 $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
-unset($_SESSION['error']); // Limpiar el mensaje de error después de mostrarlo
+unset($_SESSION['error']); 
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : "Usuario";
 $nombre = isset($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Nombre completo aqui'; 
 $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'foto perfil';

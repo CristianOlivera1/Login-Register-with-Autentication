@@ -1,16 +1,16 @@
 <?php 
-session_start(); // Asegúrate de iniciar la sesión
-require_once '../../vendor/autoload.php'; // Asegúrate de que la ruta sea correcta
+session_start(); 
+require_once '../../vendor/autoload.php';
 
 // Cargar las variables de entorno
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); // Ajusta la ruta según sea necesario
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); 
 $dotenv->load();
 
 include '../../controler/conexion.php';
 
 $client_id = $_ENV['GITHUB_CLIENT_ID'];
 $client_secret = $_ENV['GITHUB_CLIENT_SECRET'];
-$redirect_uri = 'http://localhost:3000/loginRegister/callback/github.php'; // La URL a donde el usuario será redirigido después de autenticar
+$redirect_uri = 'http://localhost:3000/loginRegister/callback/github.php'; 
 $code = $_GET['code'];
 
 // Solicitar el token de acceso
@@ -56,10 +56,10 @@ if (isset($response['access_token'])) {
     if ($result->num_rows > 0) {
         // El usuario ya existe, iniciar sesión
         $user = $result->fetch_assoc();
-        $_SESSION['user_id'] = $user['id']; // Usar el ID del usuario
+        $_SESSION['user_id'] = $user['id']; 
 
         // Muestra la imagen de perfil y correo
-        $_SESSION['profile_image'] = $profileImageUrl; // Almacenar la URL de la imagen de perfil en la sesión
+        $_SESSION['profile_image'] = $profileImageUrl;
         $_SESSION['email'] = $email;
         $username = explode('@', $email)[0];
         $_SESSION['username'] = $username; 
@@ -86,7 +86,7 @@ if (isset($response['access_token'])) {
         header('Location: ../../index.php');
     } else {
         // El usuario no existe, registrarlo
-        $name = $mysqli->real_escape_string($user_info['login']); // GitHub usa el nombre de usuario como login
+        $name = $mysqli->real_escape_string($user_info['login']); 
         $insert_query = "INSERT INTO usuarios (email, password) VALUES ('$email', '')";
 
         if ($mysqli->query($insert_query) === TRUE) {
@@ -95,10 +95,10 @@ if (isset($response['access_token'])) {
             $_SESSION['user_id'] = $userId; 
 
             // Insertar detalles en la tabla "usuario_detalles"
-            $ubicacion = "https://www.google.com/maps/place/Abancay,+Apur%C3%ADmac,+Per%C3%BA"; // Puedes ajustar esto
-            $portafolio = "https://usuario-portafolio.com"; // Cambiar a un valor real
-            $linkedin = "https://www.linkedin.com/in/usuario"; // Cambiar a un valor real
-            $github = "https://github.com/usuario"; // Cambiar a un valor real
+            $ubicacion = "https://www.google.com/maps/place/Abancay,+Apur%C3%ADmac,+Per%C3%BA"; 
+            $portafolio = "https://usuario-portafolio.com"; 
+            $linkedin = "https://www.linkedin.com/in/usuario"; 
+            $github = "https://github.com/usuario"; 
             $insert_details_query = "INSERT INTO usuario_detalles (user_id, nombre, foto_perfil, ubicacion, portafolio, linkedin, github) VALUES ('$userId', '$name', '$profileImageUrl', '$ubicacion', '$portafolio', '$linkedin', '$github')";
             
             if ($mysqli->query($insert_details_query) === TRUE) {

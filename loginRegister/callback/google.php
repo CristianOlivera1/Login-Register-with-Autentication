@@ -1,16 +1,16 @@
 <?php 
-session_start(); // Asegúrate de iniciar la sesión
-require_once '../../vendor/autoload.php'; // Asegúrate de que la ruta sea correcta
+session_start(); 
+require_once '../../vendor/autoload.php'; 
 
 // Cargar las variables de entorno
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); // Ajusta la ruta según sea necesario
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); 
 $dotenv->load();
 
 include '../../controler/conexion.php';
 
 $client_id = $_ENV['GOOGLE_CLIENT_ID'];
 $client_secret = $_ENV['GOOGLE_CLIENT_SECRET'];
-$redirect_uri = 'http://localhost:3000/loginRegister/callback/google.php'; // La URL a donde el usuario será redirigido después de autenticar
+$redirect_uri = 'http://localhost:3000/loginRegister/callback/google.php';
 $code = $_GET['code'];
 
 // Solicitar el token de acceso
@@ -59,10 +59,10 @@ if (isset($response['access_token'])) {
     if ($result->num_rows > 0) {
         // El usuario ya existe, iniciar sesión
         $user = $result->fetch_assoc();
-        $_SESSION['user_id'] = $user['id']; // Usar el ID del usuario
+        $_SESSION['user_id'] = $user['id']; 
         
         // Muestra la imagen de perfil y correo
-        $_SESSION['profile_image'] = $profileImageUrl; // Almacenar la URL de la imagen de perfil en la sesión
+        $_SESSION['profile_image'] = $profileImageUrl; 
         $_SESSION['email'] = $email;
         $username = explode('@', $email)[0];
         $_SESSION['username'] = $username; 
@@ -97,7 +97,6 @@ if (isset($response['access_token'])) {
 
         if ($mysqli->query($insert_query) === TRUE) {
             $userId = $mysqli->insert_id; // Este es el ID del usuario recién creado
-            // Almacenar el ID del usuario en la sesión
             $_SESSION['user_id'] = $userId; 
 
             // Insertar detalles en la tabla "usuario_detalles"

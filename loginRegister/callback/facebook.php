@@ -1,16 +1,16 @@
 <?php
 session_start();
-require_once '../../vendor/autoload.php'; // Asegúrate de que la ruta sea correcta
+require_once '../../vendor/autoload.php'; 
 
 // Cargar las variables de entorno
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); // Ajusta la ruta según sea necesario
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); 
 $dotenv->load();
 
 include '../../controler/conexion.php';
 
-$client_id = $_ENV['FACEBOOK_CLIENT_ID']; // ID de la aplicación de Facebook
-$client_secret = $_ENV['FACEBOOK_CLIENT_SECRET']; // Secreto de la aplicación
-$code = $_GET['code']; // Código de autorización recibido
+$client_id = $_ENV['FACEBOOK_CLIENT_ID']; 
+$client_secret = $_ENV['FACEBOOK_CLIENT_SECRET']; 
+$code = $_GET['code'];
 $redirect_uri = 'http://localhost:3000/loginRegister/callback/facebook.php'; // URL de redirección
 
 // Intercambiar el código de autorización por un token de acceso

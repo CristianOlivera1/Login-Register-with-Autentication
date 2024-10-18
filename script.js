@@ -4,25 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const formContainer = document.querySelector(".form_container");
   const formCloseBtn = document.querySelector(".form_close");
   const formOpenBtn = document.querySelector("#form-open");
-  const home = document.querySelector(".home"); // Asegúrate de que este elemento exista
+  const home = document.querySelector(".home");
   const signupBtn = document.querySelector("#signup");
   const btnRegister = document.querySelector("#button-register");
   const loginBtn = document.querySelector("#login");
   const pwShowHide = document.querySelectorAll(".pw_hide");
 
-  if (formOpenBtn) { // Verifica si formOpenBtn no es null
+  if (formOpenBtn) {
     formOpenBtn.addEventListener("click", () => {
           home.classList.add("show");
       });
   }
-  if (btnRegister) { // Verifica si formOpenBtn no es null
+  if (btnRegister) { 
     btnRegister.addEventListener("click", () => {
           home.classList.add("show");
           formContainer.classList.add("active");
       });
   }
     // Manejar el cierre del formulario
-    if (formCloseBtn) { // Verifica si formCloseBtn no es null
+    if (formCloseBtn) {
       formCloseBtn.addEventListener("click", () => {
         home.classList.remove("show");
       });
@@ -51,14 +51,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   
    // Manejar el registro y el inicio de sesión
-   if (signupBtn) { // Verifica si signupBtn no es null
+   if (signupBtn) { 
     signupBtn.addEventListener("click", (e) => {
       e.preventDefault();
       formContainer.classList.add("active");
     });
   }
 
-  if (loginBtn) { // Verifica si loginBtn no es null
+  if (loginBtn) { 
     loginBtn.addEventListener("click", (e) => {
       e.preventDefault();
       formContainer.classList.remove("active");
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
     loginForm.addEventListener("submit", function(event) {
-      event.preventDefault(); // Evita el envío del formulario y la recarga de la página.
+      event.preventDefault(); 
 
       const formData = new FormData(this);
 
@@ -80,13 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         if (data.success) {
           // Redirigir al index si la autenticación es exitosa
-          window.location.href = "index.php"; // Cambia a la URL que deseas redirigir
+          window.location.href = "index.php"; 
         } else {
           // Mostrar el mensaje de error en el formulario
           const errorMessage = document.getElementById("error-message");
           const errorText = document.getElementById("error-text");
-          errorText.textContent = data.message; // Mostrar el mensaje de error
-          errorMessage.style.display = "block"; // Hacer visible el mensaje
+          errorText.textContent = data.message;
+          errorMessage.style.display = "block"; 
         }
       })
       .catch(error => {
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const perfilDropdown = document.querySelector(".perfil-dropdown");
     
       // Verifica si el usuario está autenticado antes de añadir los eventos
-      if (profileIcon && dropdownMenu) { // Solo si ambos elementos existen
+      if (profileIcon && dropdownMenu) { 
         profileIcon.addEventListener('click', function () {
             dropdownMenu.classList.toggle('open');
         });
@@ -185,8 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const deg = Math.floor(Math.random() * 180);
       const firstColor = notableMinimalistColors[Math.floor(Math.random() * notableMinimalistColors.length)];
       const lastColor = notableMinimalistColors[Math.floor(Math.random() * notableMinimalistColors.length)];
-      const firstSpread = Math.floor(Math.random() * 40) + 30; // Between 30% to 70%
-      const lastSpread = firstSpread + Math.floor(Math.random() * 20) + 20; // Between firstSpread + 20% to firstSpread + 40%
+      const firstSpread = Math.floor(Math.random() * 40) + 30; 
+      const lastSpread = firstSpread + Math.floor(Math.random() * 20) + 20;
 
       mode += `${blendModes[Math.floor(Math.random() * blendModes.length)]},`;
       gradient += `linear-gradient(${deg}deg, ${firstColor} ${firstSpread}%, ${lastColor} ${lastSpread}%),`;
@@ -215,12 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Confirmar el cierre de sesión cuando se hace clic en "Sí"
       confirmLogoutButton.addEventListener('click', function() {
         // Obtener la ruta actual
-        const currentPath = window.location.pathname; // Ejemplo: /vista/user/profile.php
+        const currentPath = window.location.pathname; 
         let logoutPath;
 
         // Verifica la ruta actual y ajusta la redirección
         if (currentPath.includes('/vista/user/')) {
-          logoutPath = '../../loginRegister/logout.php'; // Si estás en /vista/user/
+          logoutPath = '../../loginRegister/logout.php'; 
         } else {
           logoutPath = 'loginRegister/logout.php'; // Por defecto
         }
