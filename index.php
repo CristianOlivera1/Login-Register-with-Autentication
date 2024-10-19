@@ -24,6 +24,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
    <div class="port">
     <img class="portada" src="resources/img/Animated Shape.svg" alt="portada">
     <img class="circle-lines" src="resources/img/circle-lines.svg" alt="pattern-lines">
+    <img class="line-gradient" src="resources/img/line-gradient-top.svg" alt="linea-gradiente">
    </div>
        <!-- Header -->
     <header class="header">
@@ -67,6 +68,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                         <ul>
                             <li><a href="vista/user/profile.php"><img src="resources/icons/user.png" alt="icono-user-dropdown">Mi Perfil</a></li>
                             <li><a href="vista/user/configuration.php"><img src="resources/icons/settings.png" alt="icono-settings-dropdown">Configuración</a></li>
+                            <li class="separator"><hr class="dropdown-separator"></li>
                             <li>
                                 <button id="logoutButton" class="logout-button">
                                     <img src="resources/icons/logout.png" alt="icono-salir-dropdown">Cerrar sesión

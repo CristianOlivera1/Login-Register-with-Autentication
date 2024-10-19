@@ -39,14 +39,27 @@ if ($data) {
     $perfil_desc2 = $mysqli->real_escape_string($data['perfil_desc2']);
     $experiencia2 = $mysqli->real_escape_string($data['experiencia2']);
     $experiencia3 = $mysqli->real_escape_string($data['experiencia3']);
+    $habilidades2 = $mysqli->real_escape_string($data['habilidades2']);
+    $habilidades3 = $mysqli->real_escape_string($data['habilidades3']);
+    $educacion2 = $mysqli->real_escape_string($data['educacion2']);
+    $educacion3 = $mysqli->real_escape_string($data['educacion3']);
 
-    
     // Comprobar si el usuario ya tiene un registro
     $checkQuery = "SELECT user_id FROM usuario_detalles WHERE user_id = '$userId'";
     $checkResult = $mysqli->query($checkQuery);
 
     if ($checkResult->num_rows > 0) {
         // Si el registro ya existe, actualizar
+        // Asignar un espacio en blanco si están vacíos (!importante para componentes ocultos)
+        $perfil_desc2 = !empty($perfil_desc2) ? $perfil_desc2 : " ";
+        $experiencia2 = !empty($experiencia2) ? $experiencia2 : " ";
+        $experiencia3 = !empty($experiencia3) ? $experiencia3 : " ";
+        $habilidades2 = !empty($habilidades2) ? $habilidades2 : " ";
+        $habilidades3 = !empty($habilidades3) ? $habilidades3 : " ";
+        $educacion2 = !empty($educacion2) ? $educacion2 : " ";
+        $educacion3 = !empty($educacion3) ? $educacion3 : " ";
+
+
         $sqlUpdate = "UPDATE usuario_detalles SET 
                         nombre = '$nombre', 
                         profesion = '$profesion',
@@ -61,7 +74,11 @@ if ($data) {
                         educacion = '$educacion',
                         perfil_desc2 = '$perfil_desc2',
                         experiencia2 = '$experiencia2',
-                        experiencia3 = '$experiencia3'
+                        experiencia3 = '$experiencia3',
+                        habilidades2 = '$habilidades2',
+                        habilidades3 = '$habilidades3',
+                        educacion2 = '$educacion2',
+                        educacion3 = '$educacion3'
                     WHERE user_id = '$userId'";
                     
         if ($mysqli->query($sqlUpdate) === TRUE) {
@@ -80,7 +97,11 @@ if ($data) {
             $_SESSION['perfil_desc2'] = $perfil_desc2;
             $_SESSION['experiencia2'] = $experiencia2;
             $_SESSION['experiencia3'] = $experiencia3;
-    
+            $_SESSION['habilidades2'] = $habilidades2;
+            $_SESSION['habilidades3'] = $habilidades3;
+            $_SESSION['educacion2'] = $educacion2;
+            $_SESSION['educacion3'] = $educacion3;
+
             $response = ['success' => true, 'message' => 'Datos actualizados exitosamente'];
             
             if (isset($fotoPerfilActualizada) && $fotoPerfilActualizada) {

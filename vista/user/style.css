@@ -198,18 +198,24 @@ svg{
 .info-adicional .icon a i{
     margin-right: 10px;
 }
-#portafolio i{
-  margin-right: 4px;
+#portafolio i {
+    margin-right: 4px;
 }
 
-.info-adicional .perfil p ,.info-adicional .experiencia p, .educacion p, .proyectos li, .skills li{
+.info-adicional .perfil p,
+.info-adicional .experiencia p,
+.educacion p,
+.proyectos li,
+.skills li {
     margin-bottom: 10px;
+    word-wrap: break-word;
 }
 
 .info-adicional .perfil ,.info-adicional .experiencia{
     margin-top: 30px;
 
 }
+
 .perfil-container h3 {
     font-weight: 800;
     margin-bottom: 10px;
@@ -222,8 +228,7 @@ svg{
     margin-bottom: 30px;
 }
 
-.skills ul,
-.proyectos ul {
+.skills ul {
     list-style: none;
     padding: 0;
     font-size: 15px;
@@ -268,19 +273,19 @@ svg{
     padding: 30px;
     border-radius: 10px;
     width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
+    max-width: 820px;
+    max-height: 97vh;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow-y: auto;
-    margin-top: 40px;
+    margin-top: 10px;
     font-family: 'Open Sans', sans-serif;
 }
+
 .modal-content h2 img{
     width: 24px;
     margin-right: 5px;
 }
-
 
 .close {
     position: absolute;
@@ -294,10 +299,10 @@ svg{
 }
 
 .close:hover {
-    padding: 0 7px;
+    padding: 0 8px;
     background-color: #adadad9f;
     border-radius: 50%;
-    color: black;
+    color: black;   
 }
 
 /*editar foto*/
@@ -398,6 +403,18 @@ svg{
     display: inline-block;
     margin: 10px 12px 5px 12px;
 }
+
+.circulo-claro{
+    position: absolute;
+    z-index: -1;
+    width: 200px;
+    height: 160px;
+    top: -35px;
+    left: -10px;
+    pointer-events: none;
+
+}
+
 /*editar foto*/
 
 h2 {
@@ -438,11 +455,6 @@ h2 {
     transform: scale(1.05);
 }
 
-.form-row.full-width {
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
 .form-row label,.form-row .form-column label {
     font-weight: bold;
     color: #555;
@@ -471,7 +483,7 @@ input[type="text"]:focus, textarea:focus {
 
 textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 80px;
     margin-top: 3px;
 }
 input:hover,textarea:hover{
@@ -494,6 +506,43 @@ input:hover,textarea:hover{
 
 .modal-content .button-save-edit:hover {
     background-color: #0056b3; 
+}
+
+.form__div {
+    position: relative;
+    height: 52px;
+    margin-bottom: 1.5rem;
+}
+
+.form__label {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    padding: 0 0.25rem;
+    background-color: #fff;
+    color: rgb(85, 85, 85);
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+/* Mueve el label hacia arriba cuando el input tiene focus */
+.form__input:focus + .form__label,
+.form__input:not(:placeholder-shown) + .form__label {
+    top: -0.5rem;
+    left: 0.8rem;
+    color: rgb(85, 85, 85);
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 10;
+}
+
+/* Para navegadores que no soportan :placeholder-shown */
+.form__input:not([value=""]) + .form__label {
+    top: -0.5rem;
+    left: 0.8rem;
+    z-index: 10;
+    font-size: 14px;
+    font-weight: 600;
 }
 /*modal*/
 
@@ -572,6 +621,11 @@ input:hover,textarea:hover{
 .tab-content {
     display: none;
 }
+
+.tab-content a svg{
+    margin-right: 10px;
+}
+
 
 .tab-content.active {
     display: block;
@@ -701,15 +755,32 @@ input:checked + .slider:before {
 }
 
 .facebook {
-    background-color: #3b5998;
+    background-color: rgb(24, 119, 242);
+    transition: background-color 0.3s ease;
 }
 
-.twitter {
-    background-color: #1da1f2;
+.facebook:hover {
+    background-color: rgb(21, 101, 206);
+}
+
+.github {
+    background-color: rgb(13, 17, 23);
+    transition: background-color 0.3s ease;
+}
+
+.github:hover {
+    background-color: rgb(43, 45, 48);
 }
 
 .google {
-    background-color: #db4437;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid var(--bordes);
+    transition: background-color 0.3s ease;
+}
+
+.google:hover {
+    background-color: var(--hover-claro);
 }
 
 .delete-button {

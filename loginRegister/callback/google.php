@@ -88,6 +88,8 @@ if (isset($response['access_token'])) {
         $_SESSION['perfil_desc2'] = $detalles['perfil_desc2']; 
         $_SESSION['experiencia2'] = $detalles['experiencia2']; 
         $_SESSION['experiencia3'] = $detalles['experiencia3']; 
+        $_SESSION['habilidades2'] = $detalles['habilidades2']; 
+        $_SESSION['habilidades3'] = $detalles['habilidades3']; 
 
         header('Location: ../../index.php');
     } else {
@@ -105,12 +107,21 @@ if (isset($response['access_token'])) {
             $linkedin = "https://www.linkedin.com/in/usuario";
             $github = "https://github.com/usuario";
             $perfil_desc="Aquí puedes agregar una breve descripción o resumen sobre ti, tus intereses, y cualquier otra información relevante que quieras compartir.";
+            $perfil_desc2 = " ";
             $experiencia="Ingresa la Información relevante sobre la empresa laborada. 
                     - Tecnologías: Ingresa las tecnologías que utilizadas. 
                     - Responsabilidades: Describe tu rol que tuviste en la empresa. 
                     - Logros: Menciona los diferentes logros que ayudaron a la empresa y/o logros que influyeron en ti mismo.";
+            $experiencia2 = " ";
+            $experiencia3 = " ";
+            $habilidades="JavaScript, HTML, CSS, TypeScript, React";
+            $habilidades2 = " ";
+            $habilidades3 = " ";
+            $educacion="Título del grado, especialización - Nombre de la universidad (año de graduación)";
+            $educacion2 = " ";
+            $educacion3 = " ";
 
-            $insert_details_query = "INSERT INTO usuario_detalles (user_id, nombre, foto_perfil, ubicacion, portafolio, linkedin, github,perfil_desc,experiencia) VALUES ('$userId', '$name', '$profileImageUrl', '$ubicacion', '$portafolio', '$linkedin', '$github',' $perfil_desc','$experiencia')";
+            $insert_details_query = "INSERT INTO usuario_detalles (user_id, nombre, foto_perfil, ubicacion, portafolio, linkedin, github,perfil_desc,experiencia,perfil_desc2,experiencia2,experiencia3,habilidades,habilidades2,habilidades3,educacion,educacion2,educacion3) VALUES ('$userId', '$name', '$profileImageUrl', '$ubicacion', '$portafolio', '$linkedin', '$github','$perfil_desc','$experiencia','$perfil_desc2','$experiencia2','$experiencia3','$habilidades','$habilidades2','$habilidades3','$educacion','$educacion2','$educacion3')";
             
             if ($mysqli->query($insert_details_query) === TRUE) {
                 $_SESSION['nombre'] = $name; 
@@ -121,6 +132,16 @@ if (isset($response['access_token'])) {
                 $_SESSION['github'] = $github; 
                 $_SESSION['perfil_desc'] = $perfil_desc; 
                 $_SESSION['experiencia'] = $experiencia; 
+                $_SESSION['perfil_desc2'] = $perfil_desc2; 
+                $_SESSION['experiencia2'] = $experiencia2; 
+                $_SESSION['experiencia3'] = $experiencia3; 
+                $_SESSION['habilidades'] = $habilidades; 
+                $_SESSION['habilidades2'] = $habilidades2; 
+                $_SESSION['habilidades3'] = $habilidades3; 
+                $_SESSION['educacion'] = $educacion; 
+                $_SESSION['educacion2'] = $educacion2; 
+                $_SESSION['educacion3'] = $educacion3; 
+                
             } else {
                 echo "Error al insertar los detalles del usuario: " . $mysqli->error;
             }

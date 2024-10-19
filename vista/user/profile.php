@@ -54,6 +54,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                         <ul>
                             <li><a href="profile.php"><img src="../../resources/icons/user.png" alt="icono-user-dropdown">Mi Perfil</a></li>
                             <li><a href="configuration.php"><img src="../../resources/icons/settings.png" alt="icono-settings-dropdown">Configuración</a></li>
+                            <li class="separator"><hr class="dropdown-separator"></li>
                             <li>
                                 <button id="logoutButton" class="logout-button">
                                     <img src="../../resources/icons/logout.png" alt="icono-salir-dropdown">Cerrar sesión
@@ -184,32 +185,60 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
     <div class="column">
         <div class="skills">
             <h3><svg xmlns="http://www.w3.org/2000/svg" width="22px" viewBox="0 0 24 24"><path fill="black" d="m19 1l-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4L6.5 9.5L1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg>Habilidades</h3>
-            <ul id="habilidades">
-            <li><?php echo isset($_SESSION['habilidades']) ? $_SESSION['habilidades'] : 'HTML, CSS, JavaScript'; ?></li>
-                <!-- Puedes repetir para los otros ítems de habilidades -->
+            <ul class="habilidades">
+                <?php if (!empty($_SESSION['habilidades'])): ?> 
+                <li id="habilidades">
+                    <?php echo $_SESSION['habilidades'];?>
+                </li>
+                <?php endif; ?>
+
+                <?php if (!empty($_SESSION['habilidades2'])): ?> 
+                <li id="habilidades2"> 
+                    <?php echo $_SESSION['habilidades2'];?>
+                </li>
+                <?php endif; ?>
+
+                <?php if (!empty($_SESSION['habilidades3'])): ?> 
+                <li id="habilidades3"> 
+                    <?php echo $_SESSION['habilidades3'];?>
+                </li>
+                <?php endif; ?>
             </ul>
         </div>
 
         <div class="proyectos">
             <h3><svg xmlns="http://www.w3.org/2000/svg" width="22px" viewBox="0 0 24 24"><path fill="black" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h6l2 2h8q.825 0 1.413.588T22 8H4v10l2.4-8h17.1l-2.575 8.575q-.2.65-.737 1.038T19 20z"/></svg>Proyectos</h3>
            
-            <p id="proyectos"><?php echo isset($_SESSION['proyectos']) ? $_SESSION['proyectos'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>'; ?></p>
-            <p id="proyectos2"><?php echo isset($_SESSION['proyecto_2']) ? $_SESSION['proyecto_2'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>'; ?></p>
-            <p id="proyectos3"><?php echo isset($_SESSION['proyecto_3']) ? $_SESSION['proyecto_3'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>'; ?></p>
+            <p id="proyectos"><?php echo isset($_SESSION['proyectos']) ? $_SESSION['proyectos'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>';?></p>
+
+            <p id="proyectos2"><?php echo isset($_SESSION['proyecto_2']) ? $_SESSION['proyecto_2'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>';?></p>
+
+            <p id="proyectos3"><?php echo isset($_SESSION['proyecto_3']) ? $_SESSION['proyecto_3'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>';?></p>
 
         </div>
 
         <div class="educacion">
             <h3><svg xmlns="http://www.w3.org/2000/svg" width="22px" viewBox="0 0 20 20"><path fill="black" d="M3.33 8L10 12l10-6l-10-6L0 6h10v2zM0 8v8l2-2.22V9.2zm10 12l-5-3l-2-1.2v-6l7 4.2l7-4.2v6z"/></svg>Educación</h3>
+
+            <?php if (!empty($_SESSION['educacion'])): ?>
             <p id="educacion">
-            <?php echo isset($_SESSION['educacion']) ? $_SESSION['educacion'] : 'Título del grado, especialización - Nombre de la universidad (año de graduación)'; ?>
+                <?php echo $_SESSION['educacion'];?>
             </p>
-            <p id="educacion">
-            <?php echo isset($_SESSION['educacion_2']) ? $_SESSION['educacion_2'] : 'Título del grado, especialización - Nombre de la universidad (año de graduación)'; ?>
+            <?php endif; ?>
+
+            <?php if (!empty($_SESSION['educacion2'])): ?>
+            <p id="educacion2"> 
+                <?php echo $_SESSION['educacion2'];?>
             </p>
-            <p id="educacion">
-            <?php echo isset($_SESSION['educacion_3']) ? $_SESSION['educacion_3'] : 'Título del grado, especialización - Nombre de la universidad (año de graduación)'; ?>
+            <?php endif; ?>
+
+            <?php if (!empty($_SESSION['educacion3'])): ?>
+            <p id="educacion3">
+                <?php echo $_SESSION['educacion3'];?>
             </p>
+            <?php endif; ?>
+
+            
 
         </div>
     </div>
@@ -234,6 +263,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                     <label class="name-ft">Foto de perfil:</label> 
                     <div class="perfil-background-edit">
                         <div class="profile-image">
+                            <img class="circulo-claro" src="../../resources/img/circle-clar.svg" alt="circulo claro">
                             <img src="<?php echo isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : '../../resources/icons/user-defecto.png'; ?>" 
                                 alt="Foto de Perfil" class="profile-icon-edit" id="profile-icon-edit">
                                 <div class="svg-overlay">
@@ -255,45 +285,68 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                     </div>
 
                     <br>
-                    <label for="ubicacion-input">Ubicación:</label>
-                    <input type="text" id="ubicacion-input" name="ubicacion" placeholder="Ej. https://maps.google.com/?q=Ciudad,País" spellcheck="false">
+                    <div class="form__div">
+                    <input type="text" class="form__input" id="ubicacion-input" name="ubicacion" placeholder=" " spellcheck="false">
+                    <label for="ubicacion-input" class="form__label">Ubicación</label>
+                    </div>
 
-                    <label for="portafolio-input">Portafolio:</label>
-                    <input type="text" id="portafolio-input" name="portafolio" placeholder="Ej. www.miportafolio.com" spellcheck="false">
+                    <div class="form__div">
+                        <input type="text" class="form__input" id="portafolio-input" name="portafolio" placeholder=" " spellcheck="false">
+                        <label for="portafolio-input" class="form__label">Portafolio</label>
+                    </div>
 
-                    <label for="linkedin-input">LinkedIn:</label>
-                    <input type="text" id="linkedin-input" name="linkedin" placeholder="Ej. linkedin.com/in/usuario" spellcheck="false">
+                    <div class="form__div">
+                        <input type="text" class="form__input" id="linkedin-input" name="linkedin" placeholder=" " spellcheck="false">
+                        <label for="linkedin-input" class="form__label">LinkedIn</label>
+                    </div>
 
-                    <label for="github-input">GitHub:</label>
-                    <input type="text" id="github-input" name="github" placeholder="Ej. github.com/usuario" spellcheck="false">
-                </div>
-                <div class="form-column">
+                    <div class="form__div">
+                        <input type="text" class="form__input" id="github-input" name="github" placeholder=" " spellcheck="false">
+                        <label for="github-input" class="form__label">GitHub</label>
+                    </div>
+
                     <label for="perfil-desc-input">Descripción del Perfil:
                         <button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-desc" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
                         </button>
                     </label>
-                    <textarea id="perfil-desc-input" name="perfil_desc" placeholder="Breve descripción sobre ti"></textarea>
-                    <textarea title="Si agregó este parrafo por primera vez, guarde y actualice la página." id="perfil-desc-input2" name="perfil_desc2" placeholder="Descripción adicional" style="display:none;"></textarea>
-
+                    <textarea id="perfil-desc-input" name="perfil_desc" placeholder="Breve descripción sobre ti" spellcheck="false"></textarea>
+                    <textarea  id="perfil-desc-input2" name="perfil_desc2" placeholder="Descripción adicional" style="display:none;" spellcheck="false"></textarea>
+                    
+                </div>
+                <div class="form-column">            
                     <label for="experiencia-input">Experiencia:
                         <button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-exp" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
                         </button>
                     </label>
                     <textarea id="experiencia-input" name="experiencia" placeholder="Resumen de tu experiencia laboral" spellcheck="false"></textarea>
-                    <textarea title="Si agregó este parrafo por primera vez, guarde y actualice la página."  id="experiencia-input2" name="experiencia2" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
-                    <textarea title="Si agregó este parrafo por primera vez, guarde y actualice la página."  id="experiencia-input3" name="experiencia3" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+                    <textarea id="experiencia-input2" name="experiencia2" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+                    <textarea id="experiencia-input3" name="experiencia3" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
 
-                    <label for="habilidades-input">Habilidades:</label>
+                    <label for="habilidades-input">Habilidades:
+                        <button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-habil" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
+                        </button>
+                    </label>
                     <input type="text" id="habilidades-input" name="habilidades" placeholder="Ej. HTML, CSS, JS">
+                    <input type="text" id="habilidades-input2" name="habilidades" placeholder="Ej. PHP, Java, C#" style="display: none;">
+                    <input type="text" id="habilidades-input3" name="habilidades" placeholder="Ej. Figma, Canva, GitHub" style="display: none;">
 
-                    <label for="proyectos-input">Proyectos:</label>
+                    <label for="proyectos-input">Proyectos:<button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-proyecto" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
+                        </button></label>
                     <textarea type="text" id="proyectos-input" name="proyectos" placeholder="Ej. Proyecto 1, Proyecto 2" spellcheck="false"></textarea>
-                </div>
-            </div>
 
-            <div class="form-row full-width">
-                <label for="educacion-input">Educación:</label>
-                <input type="text" id="educacion-input" name="educacion" placeholder="Ej. Licenciatura en Computación" spellcheck="false">
+                    <textarea id="proyectos-input2" name="proyectos2" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+
+                    <textarea id="proyectos-input3" name="proyectos3" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+
+                    <label for="educacion-input">Educación: <button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-educacion" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
+                    </button></label>
+
+                     <input type="text" id="educacion-input" name="educacion" placeholder="Ej. Licenciatura en Computación" spellcheck="false">
+
+                     <input type="text" id="educacion-input2" name="educacion" placeholder="Ej. PHP, Java, C#" style="display: none;">
+
+                     <input type="text" id="educacion-input3" name="educacion" placeholder="Ej. PHP, Java, C#" style="display: none;">
+                </div>
             </div>
 
             <button class="button-save-edit" id="saveChangesButton" type="button">Guardar Cambios</button>

@@ -41,6 +41,41 @@ if (agregarExpBtn && exp2 && exp3) {
     });
 }
 
+const agregarHabildBtn = document.getElementById('agregar-habil');
+const habilid2 = document.getElementById('habilidades-input2');
+const habilid3 = document.getElementById('habilidades-input3');
+
+if (agregarHabildBtn && habilid2 && habilid3) {
+    agregarHabildBtn.addEventListener('click', function() {
+        if (habilid2.style.display === 'none' || habilid2.style.display === '') {
+            habilid2.style.display = 'block'; 
+        } else if (habilid3.style.display === 'none' || habilid3.style.display === '') {
+            habilid3.style.display = 'block'; 
+            agregarHabildBtn.disabled = true; 
+            agregarHabildBtn.style.background = '#d3d3d3'; 
+            agregarHabildBtn.style.color = '#808080'; 
+        }
+    });
+}
+
+const agregarEduBtn = document.getElementById('agregar-educacion');
+const edu2 = document.getElementById('educacion-input2');
+const edu3 = document.getElementById('educacion-input3');
+
+if (agregarEduBtn && edu2 && edu3) {
+    agregarEduBtn.addEventListener('click', function() {
+        if (edu2.style.display === 'none' || edu2.style.display === '') {
+            edu2.style.display = 'block'; 
+        } else if (edu3.style.display === 'none' || edu3.style.display === '') {
+            edu3.style.display = 'block'; 
+            agregarEduBtn.disabled = true; 
+            agregarEduBtn.style.background = '#d3d3d3'; 
+            agregarEduBtn.style.color = '#808080'; 
+        }
+    });
+}
+
+
 /*mostrar y ocultar los elementos escondidos en el modal*/
 
 // Abrir el modal y cargar los datos actuales
@@ -61,12 +96,20 @@ function abrirModal() {
     const githubElement = document.getElementById('github');
     document.getElementById('github-input').value = githubElement ? githubElement.getAttribute('href') : '';
 
-    document.getElementById('perfil-desc-input').value = document.getElementById('perfil-desc').innerText;
-    document.getElementById('experiencia-input').value = document.getElementById('experiencia').innerText; 
-    document.getElementById('habilidades-input').value = document.getElementById('habilidades').innerText;
-    document.getElementById('proyectos-input').value = document.getElementById('proyectos').innerText;
-    document.getElementById('educacion-input').value = document.getElementById('educacion').innerText;
+    const perfilDescElement = document.getElementById('perfil-desc');
+    document.getElementById('perfil-desc-input').value = perfilDescElement ? perfilDescElement.innerText : '';
     
+    const experienciaElement = document.getElementById('experiencia');
+    document.getElementById('experiencia-input').value = experienciaElement ? experienciaElement.innerText : '';
+
+    const habilidadesElement = document.getElementById('habilidades');
+    document.getElementById('habilidades-input').value = habilidadesElement ? habilidadesElement.innerText : '';
+    
+    document.getElementById('proyectos-input').value = document.getElementById('proyectos').innerText;
+    
+    const educacionElement = document.getElementById('educacion');
+    document.getElementById('educacion-input').value = educacionElement ? educacionElement.innerText : '';
+        
     const perfilDesc2 = document.getElementById('perfil-desc2');
     if (perfilDesc2 && perfilDesc2.innerText.trim() !== '') {
         document.getElementById('perfil-desc-input2').value = perfilDesc2.innerText;
@@ -102,6 +145,48 @@ function abrirModal() {
         agregarExpBtn.style.color = ''; 
     }
 
+    const habilvp2 = document.getElementById('habilidades2');
+    const habilvp3 = document.getElementById('habilidades3');
+    if (habilvp2 && habilvp2.innerText.trim() !== '') {
+        document.getElementById('habilidades-input2').value = habilvp2.innerText;
+        habilid2.style.display = 'block'; 
+    } else {
+        habilid2.style.display = 'none';
+    }
+    if (habilvp3 && habilvp3.innerText.trim() !== '') {
+        document.getElementById('habilidades-input3').value = habilvp3.innerText; // vp--> vista previa
+        habilid3.style.display = 'block'; 
+        agregarHabildBtn.disabled = true; 
+        agregarHabildBtn.style.background = '#d3d3d3';
+        agregarHabildBtn.style.color = '#808080'; 
+    } else {
+        habilid3.style.display = 'none';
+        agregarHabildBtn.disabled = false;  
+        agregarHabildBtn.style.background = ''; 
+        agregarHabildBtn.style.color = ''; 
+    }
+
+    const eduvp2 = document.getElementById('educacion2');
+    const eduvp3 = document.getElementById('educacion3');
+    if (eduvp2 && eduvp2.innerText.trim() !== '') {
+        document.getElementById('educacion-input2').value = eduvp2.innerText;
+        edu2.style.display = 'block'; 
+    } else {
+        edu2.style.display = 'none';
+    }
+    if (eduvp3 && eduvp3.innerText.trim() !== '') {
+        document.getElementById('educacion-input3').value = eduvp3.innerText;
+        edu3.style.display = 'block'; 
+        agregarEduBtn.disabled = true; 
+        agregarEduBtn.style.background = '#d3d3d3';
+        agregarEduBtn.style.color = '#808080'; 
+    } else {
+        edu3.style.display = 'none';
+        agregarEduBtn.disabled = false;  
+        agregarEduBtn.style.background = ''; 
+        agregarEduBtn.style.color = ''; 
+    }
+
 }
 
 // Cerrar el modal
@@ -122,6 +207,33 @@ if (profileImageInput) {
             reader.readAsDataURL(file);
         }
     });
+}
+
+// Obtiene los elementos por ID
+let habilidades = document.getElementById('habilidades');
+let habilidades2 = document.getElementById('habilidades2');
+let habilidades3 = document.getElementById('habilidades3');
+
+// Función para mostrar u ocultar las habilidades según su contenido
+function checkAndDisplayHabilidad(element, text) {
+    if (text.trim() !== '') { // Si el texto no está vacío ni contiene solo espacios
+        element.style.display = 'list-item'; // Mostrar la viñeta
+    } else {
+        element.style.display = 'none'; // Ocultar la viñeta si está vacío o con solo espacios
+    }
+}
+
+// Verificar y ajustar la visualización para cada habilidad
+if (habilidades) {
+    checkAndDisplayHabilidad(habilidades, habilidades.innerText);
+}
+
+if (habilidades2) {
+    checkAndDisplayHabilidad(habilidades2, habilidades2.innerText);
+}
+
+if (habilidades3) {
+    checkAndDisplayHabilidad(habilidades3, habilidades3.innerText);
 }
 
 // Añadir evento click al botón de guardar cambios
@@ -147,7 +259,10 @@ function guardarCambios() {
     let nuevaDescripcion2 = document.getElementById('perfil-desc-input2').value;
     let nuevaExperiencia2 = document.getElementById('experiencia-input2').value;
     let nuevaExperiencia3 = document.getElementById('experiencia-input3').value;
-
+    let nuevasHabilidades2 = document.getElementById('habilidades-input2').value;
+    let nuevasHabilidades3 = document.getElementById('habilidades-input3').value;
+    let nuevaEducacion2 = document.getElementById('educacion-input2').value;
+    let nuevaEducacion3 = document.getElementById('educacion-input3').value;
 
     // Obtener la imagen de perfil seleccionada
     let nuevaFotoPerfil = document.getElementById('profileImage').files[0];
@@ -168,7 +283,10 @@ function guardarCambios() {
     formData.append('perfil_desc2', nuevaDescripcion2);
     formData.append('experiencia2', nuevaExperiencia2);
     formData.append('experiencia3', nuevaExperiencia3);
-
+    formData.append('habilidades2', nuevasHabilidades2);
+    formData.append('habilidades3', nuevasHabilidades3);
+    formData.append('educacion2', nuevaEducacion2);
+    formData.append('educacion3', nuevaEducacion3);
 
     // Si hay una nueva imagen de perfil, adjuntarla
     if (nuevaFotoPerfil) {
@@ -249,7 +367,11 @@ function guardarCambios() {
                    githubElement.parentElement.remove();
                }
                
-            document.getElementById('perfil-desc').innerText = nuevaDescripcion;
+            let perfilDesc = document.getElementById('perfil-desc');
+            if (perfilDesc) {
+                perfilDesc.innerText = nuevaDescripcion;
+                perfilDesc.style.display = nuevaDescripcion.trim() !== '' ? 'block' : 'none';
+            }
 
             let perfilDesc2 = document.getElementById('perfil-desc2');
             if (perfilDesc2) {
@@ -257,7 +379,11 @@ function guardarCambios() {
                 perfilDesc2.style.display = nuevaDescripcion2.trim() !== '' ? 'block' : 'none';
             }
 
-            document.getElementById('experiencia').innerText = nuevaExperiencia;
+            let experiencia = document.getElementById('experiencia');
+            if (experiencia) {
+                experiencia.innerText = nuevaExperiencia;
+                experiencia.style.display = nuevaExperiencia ? 'block' : 'none';
+            }
 
                 let experiencia2 = document.getElementById('experiencia2');
                 if (experiencia2) {
@@ -271,9 +397,47 @@ function guardarCambios() {
                     experiencia3.style.display = nuevaExperiencia3 ? 'block' : 'none';
                 }
 
-            document.getElementById('habilidades').innerText = nuevasHabilidades;
+            let habilidades = document.getElementById('habilidades');
+            if (habilidades) {
+                habilidades.innerText = nuevasHabilidades.trim();
+                habilidades.style.display = nuevasHabilidades.trim() !== "" ? 'list-item' : 'none';
+                habilidades.style.listStyle = nuevasHabilidades.trim() !== "" ? 'disc' : 'none';
+            }
+            
+
+            let habilidades2 = document.getElementById('habilidades2');
+            if (habilidades2) {
+                habilidades2.innerText = nuevasHabilidades2.trim();
+                habilidades2.style.display = nuevasHabilidades2.trim() !== "" ? 'list-item' : 'none';
+                habilidades2.style.listStyle = nuevasHabilidades2.trim() !== "" ? 'disc' : 'none';
+            }
+            
+            let habilidades3 = document.getElementById('habilidades3');
+            if (habilidades3) {
+                habilidades3.innerText = nuevasHabilidades3.trim();
+                habilidades3.style.display = nuevasHabilidades3.trim() !== "" ? 'list-item' : 'none';
+                habilidades3.style.listStyle = nuevasHabilidades3.trim() !== "" ? 'disc' : 'none';
+            }
+
             document.getElementById('proyectos').innerText = nuevosProyectos;
-            document.getElementById('educacion').innerText = nuevaEducacion;
+            
+            let educacion = document.getElementById('educacion');
+            if (educacion) {
+                educacion.innerText = nuevaEducacion;
+                educacion.style.display = nuevaEducacion ? 'block' : 'none';
+            }
+
+            let educacion2 = document.getElementById('educacion2');
+            if (educacion2) {
+                educacion2.innerText = nuevaEducacion2;
+                educacion2.style.display = nuevaEducacion2 ? 'block' : 'none';
+            }
+
+            let educacion3 = document.getElementById('educacion3');
+            if (educacion3) {
+                educacion3.innerText = nuevaEducacion3;
+                educacion3.style.display = nuevaEducacion3 ? 'block' : 'none';
+            }
 
             // Actualizar la imagen de perfil en la interfaz
             if (nuevaFotoPerfil) {
