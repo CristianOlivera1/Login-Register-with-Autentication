@@ -23,8 +23,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
 <body>
    <div class="port">
     <img class="portada" src="resources/img/Animated Shape.svg" alt="portada">
-    <img class="circle-lines" src="resources/img/circle-lines.svg" alt="pattern-lines">
-    <img class="line-gradient" src="resources/img/line-gradient-top.svg" alt="linea-gradiente">
+    <img class="line-gradient" src="resources/img/segunda-capa-portada.svg" alt="linea-gradiente">
    </div>
        <!-- Header -->
     <header class="header">
@@ -42,7 +41,10 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
             
             <?php if (!$isAuthenticated): ?>
                 <!-- Mostrar botón de inicio de sesión si no está autenticado -->
-                <button class="button-login" id="form-open">Iniciar sesión</button>
+                 <div class="btn-header">
+                    <button class="button-login" id="form-open">Iniciar sesión</button>
+                    <button class="button-register-header" id="form-register">Registrarse</button>
+                </div>
             <?php else: ?>
                  <!-- Mostrar el perfil si está autenticado -->
                 <div class="profile-container">
@@ -95,8 +97,6 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
 
     <main>
         <section class="hero">
-            <img class="puntos" src="resources/img/circulo-puntos-med.png" alt="circle-lines">
-            <img src="resources/img/Glow-frio.svg" alt="circle-port">
          <?php if (!$isAuthenticated): ?>
             <h2 class="titulo-main">Bienvenido, aquí encontrarás</h2>
             <p>Explora las diferentes opciones de <span class="bold">Inicio de sesión</span> y <span class="bold">Registro de usuario</span>, incluyendo métodos de autenticación tradicionales y modernos.</p>

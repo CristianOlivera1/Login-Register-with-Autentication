@@ -85,24 +85,50 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Usuario no encontrado
         <p>Bienvenido, <span class="azul"><?php echo htmlspecialchars($nombre); ?></span>. Esta es la sección de tu configuracion.</p>
     </div>
 
-        <div class="tabs-menu">
-        <button class="tab-link active" data-tab="profile">Seguridad</button>
-        <button class="tab-link" data-tab="theme">Tema</button>
-        <button class="tab-link" data-tab="notifications">Notificaciones</button>
-        <button class="tab-link" data-tab="social">Redes Sociales</button>
-        <button class="tab-link" data-tab="delete-account">Eliminar Cuenta</button>
-    </div>
+    <div class="tabs-menu">
+    <button class="tab-link active" data-tab="profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="icon">
+            <path d="m11.19 1.36l-7 3.11C3.47 4.79 3 5.51 3 6.3V11c0 5.55 3.84 10.74 9 12c5.16-1.26 9-6.45 9-12V6.3c0-.79-.47-1.51-1.19-1.83l-7-3.11c-.51-.23-1.11-.23-1.62 0M12 11.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11z" class="path"></path>
+        </svg> Seguridad
+    </button>
 
+    <button class="tab-link" data-tab="theme">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="icon">
+            <g fill="none">
+                <path fill="black" d="M2.75 12A9.25 9.25 0 0 0 12 21.25V2.75A9.25 9.25 0 0 0 2.75 12"/>
+                <path stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21.25a9.25 9.25 0 0 0 0-18.5m0 18.5a9.25 9.25 0 0 1 0-18.5m0 18.5V2.75"/>
+            </g>
+        </svg> Tema
+    </button>
+
+    <button class="tab-link" data-tab="notifications">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="icon">
+            <path fill="black" d="M5 9a7 7 0 0 1 14 0v3.764l1.822 3.644A1.1 1.1 0 0 1 19.838 18h-3.964a4.002 4.002 0 0 1-7.748 0H4.162a1.1 1.1 0 0 1-.984-1.592L5 12.764zm5.268 9a2 2 0 0 0 3.464 0zM12 4a5 5 0 0 0-5 5v3.764a2 2 0 0 1-.211.894L5.619 16h12.763l-1.17-2.342a2 2 0 0 1-.212-.894V9a5 5 0 0 0-5-5"/>
+        </svg> Notificaciones
+    </button>
+
+    <button class="tab-link" data-tab="social">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="icon">
+            <path fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5a2 2 0 1 0 4 0a2 2 0 1 0-4 0M3 19a2 2 0 1 0 4 0a2 2 0 1 0-4 0m14 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0m-8-5a3 3 0 1 0 6 0a3 3 0 1 0-6 0m3-7v4m-5.3 6.8l2.8-2m7.8 2l-2.8-2"/>
+        </svg> Redes Sociales
+    </button>
+
+    <button class="tab-link" data-tab="delete-account">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="icon">
+            <path fill="black" d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"/>
+        </svg> Eliminar Cuenta
+        </button>
+    </div>
     <!-- Tabs Content -->
     <div class="tabs-content">
 
         <!-- Seguridad Tab -->
         <div id="profile" class="tab-content active">
-            <h2>Seguridad</h2>
+            <h2>Cambiar contraseña</h2>
             <form action="update_profile.php" method="POST" enctype="multipart/form-data" class="seguridad">
                 <div class="form-group">
                     <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>">
+                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" readonly>
                 </div>
                 
                 <div class="form-group">

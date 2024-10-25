@@ -75,7 +75,26 @@ if (agregarEduBtn && edu2 && edu3) {
     });
 }
 
+const agregarProyectoBtn = document.getElementById('agregar-proyecto');
+const containerProy2 = document.getElementById('container-proyecto2');
+const containerProy3 = document.getElementById('container-proyecto3');
 
+if (agregarProyectoBtn && containerProy2 && containerProy3) {
+    agregarProyectoBtn.addEventListener('click', function() {
+        // Mostrar el segundo contenedor si aún está oculto
+        if (containerProy2.style.display === 'none' || containerProy2.style.display === '') {
+            containerProy2.style.display = 'block'; 
+        }
+        // Mostrar el tercer contenedor si el segundo ya está visible
+        else if (containerProy3.style.display === 'none' || containerProy3.style.display === '') {
+            containerProy3.style.display = 'block'; 
+            // Deshabilitar el botón si ya se han mostrado los tres proyectos
+            agregarProyectoBtn.disabled = true; 
+            agregarProyectoBtn.style.background = '#d3d3d3'; 
+            agregarProyectoBtn.style.color = '#808080'; 
+        }
+    });
+}
 /*mostrar y ocultar los elementos escondidos en el modal*/
 
 // Abrir el modal y cargar los datos actuales
@@ -105,8 +124,13 @@ function abrirModal() {
     const habilidadesElement = document.getElementById('habilidades');
     document.getElementById('habilidades-input').value = habilidadesElement ? habilidadesElement.innerText : '';
     
-    document.getElementById('proyectos-input').value = document.getElementById('proyectos').innerText;
+    const proyectosElement = document.getElementById('proyectos');
+    const proyectosText = proyectosElement ? proyectosElement.childNodes[0].nodeValue.trim() : '';
+    document.getElementById('proyectos-input').value = proyectosText;
     
+    const proyectosElementLink = document.getElementById('proyectos-link');
+    document.getElementById('proyectos-input-link').value = proyectosElementLink ? proyectosElementLink.getAttribute('href') : '';
+
     const educacionElement = document.getElementById('educacion');
     document.getElementById('educacion-input').value = educacionElement ? educacionElement.innerText : '';
         
@@ -187,11 +211,59 @@ function abrirModal() {
         agregarEduBtn.style.color = ''; 
     }
 
+    const proyecto2 = document.getElementById('proyectos2');
+    const proyectoLink2 = document.getElementById('proyectos-link2');
+    const proyecto3 = document.getElementById('proyectos3');
+    const proyectoLink3 = document.getElementById('proyectos-link3');
+
+    if (proyecto2 && proyecto2.childNodes.length > 0 && proyecto2.childNodes[0].nodeValue.trim() !== '') {
+        document.getElementById('proyectos-input2').value = proyecto2.childNodes[0].nodeValue.trim();
+        containerProy2.style.display = 'block';
+    } else {
+        containerProy2.style.display = 'none';
+    }
+    if (proyectoLink2 && proyectoLink2.getAttribute('href').trim() !== '') {
+        document.getElementById('proyectos-input-link2').value = proyectoLink2.getAttribute('href');
+    }
+
+    // Asegurarse de que proyecto3 existe y tiene nodos
+    if (proyecto3 && proyecto3.childNodes.length > 0 && proyecto3.childNodes[0].nodeValue.trim() !== '') {
+        document.getElementById('proyectos-input3').value = proyecto3.childNodes[0].nodeValue.trim();
+        containerProy3.style.display = 'block';
+        agregarProyectoBtn.disabled = true;
+        agregarProyectoBtn.style.background = '#d3d3d3';
+        agregarProyectoBtn.style.color = '#808080';
+    } else {
+        containerProy3.style.display = 'none';
+        agregarProyectoBtn.disabled = false;
+        agregarProyectoBtn.style.background = '';
+        agregarProyectoBtn.style.color = '';
+    }
+
+    if (proyectoLink3 && proyectoLink3.getAttribute('href').trim() !== '') {
+        document.getElementById('proyectos-input-link3').value = proyectoLink3.getAttribute('href');
+    }
+
 }
 
 // Cerrar el modal
 function cerrarModal() {
     document.getElementById('modal-editar').style.display = 'none';
+}
+
+// Cerrar el modal cuando se haga clic en el botón "X" o "Continuar" en el actualizacion exitosa
+const modalUpdateCloseBtn = document.querySelector('.modal-update-close');
+if (modalUpdateCloseBtn) {
+    modalUpdateCloseBtn.addEventListener('click', function() {
+        document.getElementById('updateSuccessModal').style.display = 'none';
+    });
+}
+
+const continueUpdateBtn = document.getElementById('continueUpdateBtn');
+if (continueUpdateBtn) {
+    continueUpdateBtn.addEventListener('click', function() {
+        document.getElementById('updateSuccessModal').style.display = 'none';
+    });
 }
 
 // Evento para mostrar la vista previa de la imagen seleccionada del modal
@@ -216,10 +288,10 @@ let habilidades3 = document.getElementById('habilidades3');
 
 // Función para mostrar u ocultar las habilidades según su contenido
 function checkAndDisplayHabilidad(element, text) {
-    if (text.trim() !== '') { // Si el texto no está vacío ni contiene solo espacios
+    if (text.trim() !== '') {
         element.style.display = 'list-item'; // Mostrar la viñeta
     } else {
-        element.style.display = 'none'; // Ocultar la viñeta si está vacío o con solo espacios
+        element.style.display = 'none';
     }
 }
 
@@ -239,12 +311,23 @@ if (habilidades3) {
 // Añadir evento click al botón de guardar cambios
 const saveChangesButton = document.getElementById('saveChangesButton');
 if (saveChangesButton) {
-    saveChangesButton.addEventListener('click', guardarCambios);
+    saveChangesButton.addEventListener('click', function() {
+        guardarCambios();
+        // Mostrar el modal de éxito
+        const updateSuccessModal = document.getElementById('updateSuccessModal');
+        if (updateSuccessModal) {
+            updateSuccessModal.style.display = 'block';
+            // Cerrar el modal después de 2 segundos
+            setTimeout(() => {
+                updateSuccessModal.style.display = 'none';
+            }, 2000);
+        }
+    });
 }
 
 // Guardar los cambios realizados y mostrarlos en la vista previa
 function guardarCambios() {
-    // Obtener los nuevos valores
+    // Obtener los nuevos valores del modal
     let nuevoNombre = document.getElementById('nombre').value;
     let nuevaProfesion = document.getElementById('profesion-input').value;
     let nuevaUbicacion = document.getElementById('ubicacion-input').value;
@@ -263,6 +346,11 @@ function guardarCambios() {
     let nuevasHabilidades3 = document.getElementById('habilidades-input3').value;
     let nuevaEducacion2 = document.getElementById('educacion-input2').value;
     let nuevaEducacion3 = document.getElementById('educacion-input3').value;
+    let nuevosProyectosLink = document.getElementById('proyectos-input-link').value;
+    let nuevosProyectos2 = document.getElementById('proyectos-input2').value;
+    let nuevosProyectosLink2 = document.getElementById('proyectos-input-link2').value;
+    let nuevosProyectos3 = document.getElementById('proyectos-input3').value;
+    let nuevosProyectosLink3 = document.getElementById('proyectos-input-link3').value;
 
     // Obtener la imagen de perfil seleccionada
     let nuevaFotoPerfil = document.getElementById('profileImage').files[0];
@@ -287,6 +375,12 @@ function guardarCambios() {
     formData.append('habilidades3', nuevasHabilidades3);
     formData.append('educacion2', nuevaEducacion2);
     formData.append('educacion3', nuevaEducacion3);
+    formData.append('proyectos_link', nuevosProyectosLink); 
+    formData.append('proyectos2', nuevosProyectos2); 
+    formData.append('proyectos_link2', nuevosProyectosLink2); 
+    formData.append('proyectos3', nuevosProyectos3); 
+    formData.append('proyectos_link3', nuevosProyectosLink3); 
+
 
     // Si hay una nueva imagen de perfil, adjuntarla
     if (nuevaFotoPerfil) {
@@ -404,7 +498,6 @@ function guardarCambios() {
                 habilidades.style.listStyle = nuevasHabilidades.trim() !== "" ? 'disc' : 'none';
             }
             
-
             let habilidades2 = document.getElementById('habilidades2');
             if (habilidades2) {
                 habilidades2.innerText = nuevasHabilidades2.trim();
@@ -419,8 +512,68 @@ function guardarCambios() {
                 habilidades3.style.listStyle = nuevasHabilidades3.trim() !== "" ? 'disc' : 'none';
             }
 
-            document.getElementById('proyectos').innerText = nuevosProyectos;
+            let proyectos = document.getElementById('proyectos');
+            if (proyectos) {
+                // Mantener los elementos 'a' dentro del componente 'proyectos'
+                const existingLinks = proyectos.querySelectorAll('a');
+                proyectos.innerText = nuevosProyectos;
+                proyectos.style.display = nuevosProyectos ? 'block' : 'none';
+                    // Reinsertar solo los enlaces cuyo 'href' no está vacío o en blanco
+                existingLinks.forEach(link => {
+                    const hrefValue = link.getAttribute('href').trim();
+                    if (hrefValue !== '' && hrefValue !== ' ') {
+                        proyectos.appendChild(link);
+                    }
+                });
+            }
             
+            let proyectosLink = document.getElementById('proyectos-link');
+            if (proyectosLink) {
+                proyectosLink.setAttribute('href', nuevosProyectosLink);
+                proyectosLink.style.display = nuevosProyectosLink ? 'block' : 'none';
+            }
+
+            let proyectos2 = document.getElementById('proyectos2');
+            if (proyectos2) {
+                const existingLinks = proyectos2.querySelectorAll('a');
+                proyectos2.innerText = nuevosProyectos2;
+                proyectos2.style.display = nuevosProyectos2 ? 'block' : 'none';
+               // Reinsertar solo los enlaces cuyo 'href' no está vacío o en blanco
+               existingLinks.forEach(link => {
+                const hrefValue = link.getAttribute('href').trim();
+                if (hrefValue !== '' && hrefValue !== ' ') {
+                    proyectos2.appendChild(link);
+                }
+            });
+            }
+            let proyectosLink2 = document.getElementById('proyectos-link2');
+
+            if (proyectosLink2) {
+                proyectosLink2.setAttribute('href', nuevosProyectosLink2);
+                proyectosLink2.style.display = nuevosProyectosLink2 ? 'block' : 'none';
+            }
+
+            let proyectos3 = document.getElementById('proyectos3');
+            if (proyectos3) {
+                const existingLinks = proyectos3.querySelectorAll('a');
+                proyectos3.innerText = nuevosProyectos3;
+                proyectos3.style.display = nuevosProyectos3 ? 'block' : 'none';
+
+                // Reinsertar solo los enlaces cuyo 'href' no está vacío o en blanco
+                existingLinks.forEach(link => {
+                    const hrefValue = link.getAttribute('href').trim();
+                    if (hrefValue !== '' && hrefValue !== ' ') {
+                        proyectos3.appendChild(link);
+                    }
+                });
+            }
+
+            let proyectosLink3 = document.getElementById('proyectos-link3');
+            if (proyectosLink3) {
+                proyectosLink3.setAttribute('href', nuevosProyectosLink3);
+                proyectosLink3.style.display = nuevosProyectosLink3 ? 'block' : 'none';
+            }
+
             let educacion = document.getElementById('educacion');
             if (educacion) {
                 educacion.innerText = nuevaEducacion;
@@ -447,7 +600,6 @@ function guardarCambios() {
                 }
                 reader.readAsDataURL(nuevaFotoPerfil); 
             }
-
             // Cerrar el modal
             cerrarModal();
         } else {

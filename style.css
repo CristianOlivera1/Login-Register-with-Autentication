@@ -38,40 +38,32 @@ a {
 text-decoration: none;
 }
 
+.port {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .port .portada {
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center center;
+  object-fit: cover; 
   min-height: 100vh;
   pointer-events: none;
+  display: block;
   margin: 0 auto;
-}
-
-.port .circle-lines {
-  position: absolute;
-  top: -30%;
-  left: 0;
-  z-index: 0; 
-  opacity: 7%;
-  width: 100%;
-  height: 100%;
-  max-width: 200vh;
-  height: 110vh;
-  background-size: cover;
-  pointer-events: none;
 }
 
 .port .line-gradient {
   position: absolute;
   top: 0;
-  left: 0; 
+  left: 0;
   width: 100%;
   height: 100%;
-  background-size: contain;
-  background-position: top;
+  object-fit: cover; 
+  min-height: 100vh;
   pointer-events: none;
-  margin: 0 auto;
 }
 
 .header {
@@ -118,6 +110,49 @@ column-gap: 25px;
 .nav_link:hover {
 color: white;
 transition: 0.7s;
+}
+
+.btn-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.button-register-header {
+  font-size: 16px;
+  padding: calc(0.5* 1rem) calc(1* 1rem);
+  color:rgb(243, 243, 243);
+  background: linear-gradient(90deg, #00e1ffec, #0099ff);
+  border-radius: calc(0.7 * 1rem);
+  cursor: pointer;
+  box-shadow: 0px 1px 12px rgba(0, 195, 255, 0.63); 
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  border: none;
+  position: relative;
+  transform: scale(1);
+}
+
+.button-register-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: calc(0.7 * 1rem);
+  transition: all 0.3s ease;
+}
+
+.button-register-header:hover::before {
+  height: 100%;
+}
+
+.button-register-header:hover {
+  box-shadow: 0px 8px 24px rgba(0, 225, 255, 0.781); 
+  color: #fff;
+  transform: scale(1.05);
 }
 
 /* Contenedor del perfil */
@@ -261,14 +296,12 @@ transition: 0.7s;
   background: var(--azul-hover);
 }
 
-/* Hover y enfoque para accesibilidad en los botones */
 .button-confirm:hover, .button-confirm:focus {
   background-color: #c0392b;
   outline: none;
   color: white;
 }
 
-/* Sutileza al presionar el botón */
 .button-confirm:active, .button-cancel:active {
   transform: scale(0.98); 
 }
@@ -467,27 +500,6 @@ position: relative;
   box-sizing: border-box; 
 }
 
-.hero img {
-  position: absolute;
-  bottom: -8%;
-  left: 50%;
-  transform: translate(-50%,50%);
-  z-index: -1;
-  opacity: 70%;
-  pointer-events: none;
-  width: 100%; 
-  max-width: 900px; 
-  box-sizing: border-box; 
-}
-
-.hero .puntos{
-  opacity: 5%;
-  width: 100%; 
-  max-width: 700px; 
-  box-sizing: border-box; 
-
-}
-
 .hero .titulo-main {
   font-size: clamp(2rem, 5vw, 4.5rem);
   font-weight: bold;
@@ -523,11 +535,12 @@ position: relative;
   letter-spacing: 1.5px;
   position: relative;
   overflow: hidden;
+  transform: scale(1);
 }
 
 .button-register:hover {
-  box-shadow: 0px 8px 24px rgba(0, 153, 255, 0.6); 
-  color: #fff;
+  box-shadow: 0px 8px 24px rgba(0, 225, 255, 0.781); 
+  transform: scale(1.03);
 }
 
 .home {
@@ -728,10 +741,11 @@ text-decoration: underline;
 
 
 .login_signup {
-font-size: 13px;
-text-align: center;
-margin-top: 15px;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 15px;
 }
+
 .login_signup a{
   font-style: italic;
   font-weight: bold;

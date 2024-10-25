@@ -90,6 +90,14 @@ if (isset($response['access_token'])) {
         $_SESSION['experiencia3'] = $detalles['experiencia3']; 
         $_SESSION['habilidades2'] = $detalles['habilidades2']; 
         $_SESSION['habilidades3'] = $detalles['habilidades3']; 
+        $_SESSION['proyectos_link'] = $detalles['proyectos_link']; 
+        $_SESSION['proyectos2'] = $detalles['proyectos2']; 
+        $_SESSION['proyectos_link2'] = $detalles['proyectos_link2']; 
+        $_SESSION['proyectos3'] = $detalles['proyectos3']; 
+        $_SESSION['proyectos_link3'] = $detalles['proyectos_link3']; 
+        $_SESSION['educacion2'] = $detalles['educacion2']; 
+        $_SESSION['educacion3'] = $detalles['educacion3']; 
+
 
         header('Location: ../../index.php');
     } else {
@@ -117,11 +125,16 @@ if (isset($response['access_token'])) {
             $habilidades="JavaScript, HTML, CSS, TypeScript, React";
             $habilidades2 = " ";
             $habilidades3 = " ";
+            $proyectos = "Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto).";
+            $proyectos_link = "https://github.com/CristianOlivera1/Login-Register-with-Autentication";
+            $proyectos2 = " ";
+            $proyectos_link2 = " ";
+            $proyectos3 = " ";
+            $proyectos_link3 = " ";
             $educacion="Título del grado, especialización - Nombre de la universidad (año de graduación)";
             $educacion2 = " ";
             $educacion3 = " ";
-
-            $insert_details_query = "INSERT INTO usuario_detalles (user_id, nombre, foto_perfil, ubicacion, portafolio, linkedin, github,perfil_desc,experiencia,perfil_desc2,experiencia2,experiencia3,habilidades,habilidades2,habilidades3,educacion,educacion2,educacion3) VALUES ('$userId', '$name', '$profileImageUrl', '$ubicacion', '$portafolio', '$linkedin', '$github','$perfil_desc','$experiencia','$perfil_desc2','$experiencia2','$experiencia3','$habilidades','$habilidades2','$habilidades3','$educacion','$educacion2','$educacion3')";
+            $insert_details_query = "INSERT INTO usuario_detalles (user_id, nombre, foto_perfil, ubicacion, portafolio, linkedin, github, perfil_desc, experiencia, perfil_desc2, experiencia2, experiencia3, habilidades, habilidades2, habilidades3, proyectos, proyectos_link, proyectos2, proyectos_link2, proyectos3, proyectos_link3, educacion, educacion2, educacion3) VALUES ('$userId', '$name', '$profileImageUrl', '$ubicacion', '$portafolio', '$linkedin', '$github', '$perfil_desc', '$experiencia', '$perfil_desc2', '$experiencia2', '$experiencia3', '$habilidades', '$habilidades2', '$habilidades3', '$proyectos', '$proyectos_link', '$proyectos2', '$proyectos_link2', '$proyectos3', '$proyectos_link3', '$educacion', '$educacion2', '$educacion3')";
             
             if ($mysqli->query($insert_details_query) === TRUE) {
                 $_SESSION['nombre'] = $name; 
@@ -137,7 +150,13 @@ if (isset($response['access_token'])) {
                 $_SESSION['experiencia3'] = $experiencia3; 
                 $_SESSION['habilidades'] = $habilidades; 
                 $_SESSION['habilidades2'] = $habilidades2; 
-                $_SESSION['habilidades3'] = $habilidades3; 
+                $_SESSION['habilidades3'] = $habilidades3;
+                $_SESSION['proyectos'] = $proyectos;
+                $_SESSION['proyectos_link'] = $proyectos_link;
+                $_SESSION['proyectos2'] = $proyectos2;
+                $_SESSION['proyectos_link2'] = $proyectos_link2;
+                $_SESSION['proyectos3'] = $proyectos3;
+                $_SESSION['proyectos_link3'] = $proyectos_link3;
                 $_SESSION['educacion'] = $educacion; 
                 $_SESSION['educacion2'] = $educacion2; 
                 $_SESSION['educacion3'] = $educacion3; 

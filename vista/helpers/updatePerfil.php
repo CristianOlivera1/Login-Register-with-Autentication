@@ -41,6 +41,11 @@ if ($data) {
     $experiencia3 = $mysqli->real_escape_string($data['experiencia3']);
     $habilidades2 = $mysqli->real_escape_string($data['habilidades2']);
     $habilidades3 = $mysqli->real_escape_string($data['habilidades3']);
+    $proyectos_link = $mysqli->real_escape_string($data['proyectos_link']);
+    $proyectos2 = $mysqli->real_escape_string($data['proyectos2']);
+    $proyectos_link2 = $mysqli->real_escape_string($data['proyectos_link2']);
+    $proyectos3 = $mysqli->real_escape_string($data['proyectos3']);
+    $proyectos_link3 = $mysqli->real_escape_string($data['proyectos_link3']);
     $educacion2 = $mysqli->real_escape_string($data['educacion2']);
     $educacion3 = $mysqli->real_escape_string($data['educacion3']);
 
@@ -58,7 +63,10 @@ if ($data) {
         $habilidades3 = !empty($habilidades3) ? $habilidades3 : " ";
         $educacion2 = !empty($educacion2) ? $educacion2 : " ";
         $educacion3 = !empty($educacion3) ? $educacion3 : " ";
-
+        $proyectos2 = !empty($proyectos2) ? $proyectos2 : " ";
+        $proyectos_link2 = !empty($proyectos_link2) ? $proyectos_link2 : " ";
+        $proyectos3 = !empty($proyectos3) ? $proyectos3 : " ";
+        $proyectos_link3 = !empty($proyectos_link3) ? $proyectos_link3 : " ";
 
         $sqlUpdate = "UPDATE usuario_detalles SET 
                         nombre = '$nombre', 
@@ -77,6 +85,11 @@ if ($data) {
                         experiencia3 = '$experiencia3',
                         habilidades2 = '$habilidades2',
                         habilidades3 = '$habilidades3',
+                        proyectos_link = '$proyectos_link',
+                        proyectos2 = '$proyectos2',
+                        proyectos_link2 = '$proyectos_link2',
+                        proyectos3 = '$proyectos3',
+                        proyectos_link3 = '$proyectos_link3',
                         educacion2 = '$educacion2',
                         educacion3 = '$educacion3'
                     WHERE user_id = '$userId'";
@@ -99,6 +112,11 @@ if ($data) {
             $_SESSION['experiencia3'] = $experiencia3;
             $_SESSION['habilidades2'] = $habilidades2;
             $_SESSION['habilidades3'] = $habilidades3;
+            $_SESSION['proyectos_link'] = $proyectos_link;
+            $_SESSION['proyectos2'] = $proyectos2;
+            $_SESSION['proyectos_link2'] = $proyectos_link2;
+            $_SESSION['proyectos3'] = $proyectos3;
+            $_SESSION['proyectos_link3'] = $proyectos_link3;
             $_SESSION['educacion2'] = $educacion2;
             $_SESSION['educacion3'] = $educacion3;
 

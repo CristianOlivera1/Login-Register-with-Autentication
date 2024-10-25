@@ -228,6 +228,11 @@ svg{
     margin-bottom: 30px;
 }
 
+.proyectos p{
+    margin-bottom: 10px;
+}
+
+
 .skills ul {
     list-style: none;
     padding: 0;
@@ -241,11 +246,12 @@ svg{
 }
 
 .proyectos a {
-    font-style: italic;
+    font-weight: bold;
+    font-size: 13px;
     color: var(--bordes);
     text-decoration: none;
     transition: color 0.3s ease;
-    font-size: 13px;
+    font-style: italic;
 }
 
 .proyectos a:hover {
@@ -369,9 +375,9 @@ svg{
     padding: 3px 0;
     position: absolute;
     z-index: 1;
-    bottom: -125%; 
-    left: 50%;
-    margin-left: -50px; 
+    top: 37%;
+    left: 140%; 
+    margin-top: -12px; 
     opacity: 0;
     transition: opacity 0.5s ease, visibility 0.5s ease;
     font: 11px 'Open Sans', sans-serif;
@@ -414,11 +420,9 @@ svg{
     pointer-events: none;
 
 }
-
 /*editar foto*/
 
 h2 {
-    color: #333;
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
@@ -436,8 +440,8 @@ h2 {
 }
 
 .form-column .button-mas {
-    padding: 2px 4px;
-    background: linear-gradient(90deg, #28a745, #04ff3b);
+    padding: 1px 3px;
+    background: linear-gradient(90deg, #28a746d3, #04ff3ada);
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -482,13 +486,41 @@ input[type="text"]:focus, textarea:focus {
 }
 
 textarea {
-    resize: vertical;
     min-height: 80px;
     margin-top: 3px;
+    resize: none;
 }
+
 input:hover,textarea:hover{
     background-color: var(--hover-claro);
     transition: background-color 0.2s ease;
+}
+
+.textarea-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.textarea-container textarea {
+    width: 100%;
+    height: 100px; 
+    box-sizing: border-box;
+    padding-bottom: 30px;
+}
+
+.textarea-container input[type="text"] {
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    width: 100%; 
+    height: 20%;
+    box-sizing: border-box;
+    border: 1px solid var(--borde-hover-claro);
+}
+
+.textarea-container input[type="text"]:focus {
+    border-color: #007bff; 
+    outline: none;
 }
 
 .modal-content .button-save-edit {
@@ -546,7 +578,7 @@ input:hover,textarea:hover{
 }
 /*modal*/
 
-/*profile*/
+/*CONFIGURATION*/
 .title-configuration {
     margin-left: auto;
     margin-right: auto;
@@ -588,6 +620,13 @@ input:hover,textarea:hover{
     margin: 20px auto;
 }
 
+.tabs-menu svg {
+    width: 20px;
+    height: 20px;
+    vertical-align: -2px;
+    margin-right: 5px;
+}
+
 .tab-link {
     background-color: #f1f1f1;
     border: none;
@@ -605,7 +644,20 @@ input:hover,textarea:hover{
     background-color: #000000;
     color: white;
     border-radius: 4px;
-    border-top: 2px solid rgb(7, 128, 254);
+    border-top: 3px solid rgb(0, 123, 255);
+}
+
+.tab-link .icon {
+    fill: black; /* Color por defecto */
+}
+
+.tab-link.active .icon {
+    fill: white; /* Color cuando está activo */
+}
+.tab-link.active svg path {
+    fill: white; /* Cambia el color a lo que desees */
+    stroke: white; /* Cambia el color del borde */
+
 }
 
 /* Estilos para el contenido de las tabs */
@@ -620,12 +672,14 @@ input:hover,textarea:hover{
 
 .tab-content {
     display: none;
+    align-items: start;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .tab-content a svg{
     margin-right: 10px;
 }
-
 
 .tab-content.active {
     display: block;
@@ -634,15 +688,15 @@ input:hover,textarea:hover{
 .seguridad{
     display: grid;
     grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
-    gap: 20px; /* Espacio entre las columnas */
-    align-items: start; /* Alinear los elementos al inicio */
+    gap: 20px;
+    align-items: start; 
     max-width: 800px;
     margin: 0 auto;
 }
 
 .form-group {
     display: flex;
-    flex-direction: column; /* Apilar el label encima del input */
+    flex-direction: column;
 }
 
 .seguridad label{
@@ -651,7 +705,7 @@ input:hover,textarea:hover{
 }
 
 #notifications label{
-    font-size: 14px;
+    font-size: 16px;
    display: block; 
 }
 
@@ -786,16 +840,101 @@ input:checked + .slider:before {
 .delete-button {
     background-color: #ff4b5c;
     color: white;
-    padding: 10px;
+    padding: 10px 20px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
     margin-top: 10px;
+    width: 390px;
+    margin-top: 15px;
 }
 
 .delete-button:hover {
     background-color: #f51a25;
 }
+/*CONFIGURATION*/
 
+/*SuccessfullEdit*/
+.modal-update-success {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000;
+}
+
+.modal-update-success.visible {
+    display: flex; 
+}
+
+.modal-update-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-update-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.modal-update-gif {
+    width: 100px;
+    height: 100px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+.modal-update-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #0b0217;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.1s ease;
+}
+
+.modal-update-close:hover {
+    padding: 0 8px;
+    background-color: #adadad9f;
+    border-radius: 50%;
+    color: black;   
+}
+
+.modal-update-button {
+    background: linear-gradient(90deg, #393df79a, rgb(18, 63, 250), rgb(20, 20, 169)); 
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-update-button:hover {
+    background-color: var(--azul-hover);
+}
+
+/*SuccessfullEdit*/
 

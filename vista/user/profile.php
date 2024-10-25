@@ -208,12 +208,30 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
 
         <div class="proyectos">
             <h3><svg xmlns="http://www.w3.org/2000/svg" width="22px" viewBox="0 0 24 24"><path fill="black" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h6l2 2h8q.825 0 1.413.588T22 8H4v10l2.4-8h17.1l-2.575 8.575q-.2.65-.737 1.038T19 20z"/></svg>Proyectos</h3>
-           
-            <p id="proyectos"><?php echo isset($_SESSION['proyectos']) ? $_SESSION['proyectos'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>';?></p>
+            
+                <?php if (!empty($_SESSION['proyectos'])): ?> 
+                <p id="proyectos"><?php echo $_SESSION['proyectos']; ?>
+                    <?php if (!empty(trim($_SESSION['proyectos_link']))): ?> 
+                        <a href="<?php echo $_SESSION['proyectos_link']; ?>" id="proyectos-link" target="_blank">Ver Proyecto</a>
+                    <?php endif; ?>
+                </p>
+            <?php endif; ?>
 
-            <p id="proyectos2"><?php echo isset($_SESSION['proyecto_2']) ? $_SESSION['proyecto_2'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>';?></p>
+            <?php if (!empty($_SESSION['proyectos2'])): ?> 
+                <p id="proyectos2"><?php echo $_SESSION['proyectos2']; ?>
+                    <?php if (!empty(trim($_SESSION['proyectos_link2']))): ?> 
+                        <a href="<?php echo $_SESSION['proyectos_link2']; ?>" id="proyectos-link2" target="_blank">Ver Proyecto</a>
+                    <?php endif; ?>
+                </p>
+            <?php endif; ?>
 
-            <p id="proyectos3"><?php echo isset($_SESSION['proyecto_3']) ? $_SESSION['proyecto_3'] : 'Nombre del Proyecto - Breve descripción del proyecto (tecnologías utilizadas, objetivo del proyecto). <a href="#">Ver Proyecto</a>';?></p>
+            <?php if (!empty($_SESSION['proyectos3'])): ?> 
+                <p id="proyectos3"><?php echo $_SESSION['proyectos3']; ?>
+                    <?php if (!empty(trim($_SESSION['proyectos_link3']))): ?> 
+                        <a href="<?php echo $_SESSION['proyectos_link3']; ?>" id="proyectos-link3" target="_blank">Ver Proyecto</a>
+                    <?php endif; ?>
+                </p>
+            <?php endif; ?>
 
         </div>
 
@@ -332,11 +350,21 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
 
                     <label for="proyectos-input">Proyectos:<button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-proyecto" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
                         </button></label>
-                    <textarea type="text" id="proyectos-input" name="proyectos" placeholder="Ej. Proyecto 1, Proyecto 2" spellcheck="false"></textarea>
 
-                    <textarea id="proyectos-input2" name="proyectos2" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+                    <div class="textarea-container">
+                        <textarea type="text" id="proyectos-input" name="proyectos" placeholder="Proyecto 1 ..." spellcheck="false"></textarea>
+                        <input type="text" id="proyectos-input-link" placeholder="Enlace del proyecto (opcional)">
+                    </div>
 
-                    <textarea id="proyectos-input3" name="proyectos3" placeholder="Resumen de tu experiencia laboral" spellcheck="false" style="display:none;"></textarea>
+                    <div class="textarea-container" id="container-proyecto2" style="display:none;">
+                        <textarea type="text" id="proyectos-input2" name="proyectos2" placeholder="Proyecto 2 ..." spellcheck="false"></textarea>
+                        <input type="text" id="proyectos-input-link2" placeholder="Enlace del proyecto 2 (opcional)">
+                    </div>
+
+                    <div class="textarea-container" id="container-proyecto3" style="display:none;">
+                        <textarea type="text" id="proyectos-input3" name="proyectos3" placeholder="Proyecto 3 ..." spellcheck="false"></textarea>
+                        <input type="text" id="proyectos-input-link3" placeholder="Enlace del proyecto 3 (opcional)">
+                    </div>
 
                     <label for="educacion-input">Educación: <button aria-label="agregar otro parrafo" title="Agregar otro parrafo" class="button-mas" id="agregar-educacion" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M10.5 20a1.5 1.5 0 0 0 3 0v-6.5H20a1.5 1.5 0 0 0 0-3h-6.5V4a1.5 1.5 0 0 0-3 0v6.5H4a1.5 1.5 0 0 0 0 3h6.5z"/></g></svg>
                     </button></label>
@@ -348,9 +376,18 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                      <input type="text" id="educacion-input3" name="educacion" placeholder="Ej. PHP, Java, C#" style="display: none;">
                 </div>
             </div>
-
             <button class="button-save-edit" id="saveChangesButton" type="button">Guardar Cambios</button>
             </form>
+    </div>
+</div>
+<div id="updateSuccessModal" class="modal-update-success">
+    <div class="modal-update-content">
+        <span class="modal-update-close">&times;</span>
+        <div class="modal-update-body">
+        <h2>Datos actualizados correctamente</h2>
+        <img src="../../resources/gif/check-animation.gif" alt="Cargando..." class="modal-update-gif">
+        <button id="continueUpdateBtn" class="modal-update-button">Continuar</button>
+        </div>
     </div>
 </div>
 

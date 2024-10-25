@@ -37,18 +37,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($detallesResult->num_rows > 0) {
                     $detalles = $detallesResult->fetch_assoc();
                     // Actualiza los datos de la sesión con los detalles del usuario
-                    $_SESSION['nombre'] = $detalles['nombre'];
-                    $_SESSION['profesion'] = $detalles['profesion'];
-                    $_SESSION['ubicacion'] = $detalles['ubicacion'];
-                    $_SESSION['portafolio'] = $detalles['portafolio'];
-                    $_SESSION['linkedin'] = $detalles['linkedin'];
-                    $_SESSION['github'] = $detalles['github'];
-                    $_SESSION['perfil_desc'] = $detalles['perfil_desc'];
-                    $_SESSION['experiencia'] = $detalles['experiencia'];
-                    $_SESSION['habilidades'] = $detalles['habilidades'];
-                    $_SESSION['proyectos'] = $detalles['proyectos'];
-                    $_SESSION['educacion'] = $detalles['educacion'];
-                    $_SESSION['foto_perfil'] = $detalles['foto_perfil'];
+                    $_SESSION['nombre'] = $detalles['nombre']; 
+                    $_SESSION['profesion'] = $detalles['profesion']; 
+                    $_SESSION['ubicacion'] = $detalles['ubicacion']; 
+                    $_SESSION['portafolio'] = $detalles['portafolio']; 
+                    $_SESSION['linkedin'] = $detalles['linkedin']; 
+                    $_SESSION['github'] = $detalles['github']; 
+                    $_SESSION['perfil_desc'] = $detalles['perfil_desc']; 
+                    $_SESSION['experiencia'] = $detalles['experiencia']; 
+                    $_SESSION['habilidades'] = $detalles['habilidades']; 
+                    $_SESSION['proyectos'] = $detalles['proyectos']; 
+                    $_SESSION['educacion'] = $detalles['educacion']; 
+                    $_SESSION['foto_perfil'] = $detalles['foto_perfil']; 
+                    $_SESSION['perfil_desc2'] = $detalles['perfil_desc2']; 
+                    $_SESSION['experiencia2'] = $detalles['experiencia2']; 
+                    $_SESSION['experiencia3'] = $detalles['experiencia3']; 
+                    $_SESSION['habilidades2'] = $detalles['habilidades2']; 
+                    $_SESSION['habilidades3'] = $detalles['habilidades3']; 
+                    $_SESSION['proyectos_link'] = $detalles['proyectos_link']; 
+                    $_SESSION['proyectos2'] = $detalles['proyectos2']; 
+                    $_SESSION['proyectos_link2'] = $detalles['proyectos_link2']; 
+                    $_SESSION['proyectos3'] = $detalles['proyectos3']; 
+                    $_SESSION['proyectos_link3'] = $detalles['proyectos_link3']; 
+                    $_SESSION['educacion2'] = $detalles['educacion2']; 
+                    $_SESSION['educacion3'] = $detalles['educacion3']; 
                 }
                 
                 echo json_encode(["success" => true]);
