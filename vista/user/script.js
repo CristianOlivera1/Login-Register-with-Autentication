@@ -325,7 +325,7 @@ if (saveChangesButton) {
     });
 }
 
-// Guardar los cambios realizados y mostrarlos en la vista previa
+// Guardar los cambios realizados y mostrarlos en la vista previa 
 function guardarCambios() {
     // Obtener los nuevos valores del modal
     let nuevoNombre = document.getElementById('nombre').value;
@@ -414,7 +414,7 @@ function guardarCambios() {
                        // Si no existe, puedes agregarlo dinámicamente
                        const nuevoElemento = document.createElement('p');
                        nuevoElemento.innerHTML = `<a href="${nuevaUbicacion}" id="ubicacion" target="_blank"><i class="fas fa-map-marker-alt"></i> Ubicación</a>`;
-                       document.querySelector('.icon').appendChild(nuevoElemento);
+                       document.querySelector('.icon-links').appendChild(nuevoElemento);
                    }
                } else if (ubicacionElement) {
                    // Si está vacío y el elemento existe, eliminarlo
@@ -429,7 +429,7 @@ function guardarCambios() {
                    } else {
                        const nuevoElemento = document.createElement('p');
                        nuevoElemento.innerHTML = `<a href="${nuevoPortafolio}" id="portafolio" target="_blank"><i class="fas fa-link"></i> Portafolio</a>`;
-                       document.querySelector('.icon').appendChild(nuevoElemento);
+                       document.querySelector('.icon-links').appendChild(nuevoElemento);
                    }
                } else if (portafolioElement) {
                    portafolioElement.parentElement.remove();
@@ -442,7 +442,7 @@ function guardarCambios() {
                    } else {
                        const nuevoElemento = document.createElement('p');
                        nuevoElemento.innerHTML = `<a href="${nuevoLinkedin}" id="linkedin" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>`;
-                       document.querySelector('.icon').appendChild(nuevoElemento);
+                       document.querySelector('.icon-links').appendChild(nuevoElemento);
                    }
                } else if (linkedinElement) {
                    linkedinElement.parentElement.remove();
@@ -455,7 +455,7 @@ function guardarCambios() {
                    } else {
                        const nuevoElemento = document.createElement('p');
                        nuevoElemento.innerHTML = `<a href="${nuevoGithub}" id="github" target="_blank"><i class="fab fa-github"></i> GitHub</a>`;
-                       document.querySelector('.icon').appendChild(nuevoElemento);
+                       document.querySelector('.icon-links').appendChild(nuevoElemento);
                    }
                } else if (githubElement) {
                    githubElement.parentElement.remove();

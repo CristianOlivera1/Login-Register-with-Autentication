@@ -18,9 +18,27 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
      <!-- Header -->
      <header class="header">
         <nav class="nav">
-            <a href="../../index.php" class="nav_logo">CodeOner</a>
-
-            <ul class="nav_items">
+        <div class="logo-amburguer">
+            <div class="hamburger-menu" id="hamburger-menu">
+                <!-- Ícono de menú hamburguesa -->
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+                    <line x1="4" x2="20" y1="12" y2="12"/>
+                    <line x1="4" x2="20" y1="6" y2="6"/>
+                    <line x1="4" x2="20" y1="18" y2="18"/>
+                </svg>
+                
+                <!-- Ícono de "X" -->
+                <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide" style="display: none;">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </div>
+                <div class="logo">
+                    <a href="profile.php"><img src="../../resources/img/log-CO-minimalist.png" alt="logo" class="logo-co"></a>                 
+                    <a href="profile.php" class="solo-autenticado"><span class="azul">C</span>ode<span class="celeste">O</span>ner</a>
+                </div>
+           </div>
+            <ul class="nav_items" id="nav-items">
                 <li class="nav_item">
                     <a href="../../index.php" class="nav_link">Inicio</a>
                     <a href="#" class="nav_link">Productos</a>
@@ -104,7 +122,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
         </div>
 
         <div class="info-adicional">
-            <div class="icon">
+            <div class="icon-links">
                 <?php if (!empty($_SESSION['ubicacion'])): ?>
                     <p>
                         <a href="<?php echo isset($_SESSION['ubicacion']) ? $_SESSION['ubicacion'] : 'https://github.com/CristianOlivera1'; ?>" id="ubicacion" target="_blank">
@@ -255,9 +273,6 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                 <?php echo $_SESSION['educacion3'];?>
             </p>
             <?php endif; ?>
-
-            
-
         </div>
     </div>
 </div>
@@ -277,8 +292,8 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                     <input type="text" id="profesion-input" name="profesion" placeholder="Ej. Desarrollador Web" spellcheck="false">
 
                     <!-- Sección para editar la foto de perfil -->
+                    <label class="name-ft">Foto de perfil:</label>
                     <div class="image-edit-container">
-                    <label class="name-ft">Foto de perfil:</label> 
                     <div class="perfil-background-edit">
                         <div class="profile-image">
                             <img class="circulo-claro" src="../../resources/img/circle-clar.svg" alt="circulo claro">

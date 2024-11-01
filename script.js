@@ -7,8 +7,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const home = document.querySelector(".home");
   const signupBtn = document.querySelector("#signup");
   const btnRegister = document.querySelector("#button-register");
+  const buttonRegisterHeader = document.querySelector("#button-register-header");
   const loginBtn = document.querySelector("#login");
   const pwShowHide = document.querySelectorAll(".pw_hide");
+
+  /*Menu amburguesa*/
+  const hamburgerMenu = document.getElementById("hamburger-menu");
+  const menuIcon = document.getElementById("menu-icon");
+  const closeIcon = document.getElementById("close-icon");
+  const navItems = document.getElementById("nav-items");
+
+  if (hamburgerMenu) {
+    hamburgerMenu.addEventListener("click", function() {
+      navItems.classList.toggle("open");
+
+      // Alternar visibilidad entre los íconos
+      if (menuIcon.style.display === "none") {
+        menuIcon.style.display = "block";
+        closeIcon.style.display = "none";
+      } else {
+        menuIcon.style.display = "none";
+        closeIcon.style.display = "block";
+      }
+    });
+  }
+  
+  /*Menu amburguesa*/
 
   if (formOpenBtn) {
     formOpenBtn.addEventListener("click", () => {
@@ -17,6 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (btnRegister) { 
     btnRegister.addEventListener("click", () => {
+          home.classList.add("show");
+          formContainer.classList.add("active");
+      });
+  }
+  if (buttonRegisterHeader) { 
+    buttonRegisterHeader.addEventListener("click", () => {
           home.classList.add("show");
           formContainer.classList.add("active");
       });
@@ -31,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if(formCloseBtn){
     // Cerrar el formulario al hacer clic fuera de él
     document.addEventListener("click", (event) => {
-      if (!formContainer.contains(event.target) && !formOpenBtn.contains(event.target)&& !btnRegister.contains(event.target)) {
+      if (!formContainer.contains(event.target) && !formOpenBtn.contains(event.target) && !btnRegister.contains(event.target) && !buttonRegisterHeader.contains(event.target)) {
         home.classList.remove("show");
       }
     });

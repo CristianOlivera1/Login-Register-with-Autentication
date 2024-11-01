@@ -14,6 +14,17 @@
     color: black;
 }
 
+.logo .solo-autenticado{
+    color: rgb(98, 98, 98);
+    font-weight: 500;
+    font-size: 26px;
+    vertical-align: -5px;
+}
+
+.body-profile .hamburger-menu svg{
+    stroke: black;
+}
+
 .nav_items .nav_link:hover{
     color: #888;
 }
@@ -36,18 +47,19 @@ input[type="text"], textarea {
 }
 
 .body-profile .modal-confirmation {
-  display: none; 
-  position: fixed;
-  z-index: 1000; 
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3); 
+    display: none; 
+    position: fixed;
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3); 
+    padding: clamp(10px, 2vw, 20px);
 }
 
-.perfil-container p,.modal-content p, .column li{
-    font-size: 14px;
+.perfil-container p, .modal-content p, .column li {
+    font-size: clamp(13px, 1.5vw, 14px);
 }
 
 svg{
@@ -100,9 +112,10 @@ svg{
 
 .encabezado-perfil h1 {
     color: var(--azul);
-    font-size: 28px;
+    font-size: clamp(24px, 2.5vw, 28px);
     font-weight: 700;
 }
+
 .encabezado-perfil h1 img{
     margin-right: 5px;
     width: 100%;
@@ -117,7 +130,7 @@ svg{
 
 .encabezado p {
     color: #555;
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     margin-right: 10px;
 }
 
@@ -157,12 +170,12 @@ svg{
 }
 
 .perfil-pagina h1 {
-    font-size: 32px;
+    font-size: clamp(28px, 4vw, 32px);
     font-weight: bold;
 }
 
 .perfil-pagina h2 {
-    font-size: 25px;
+    font-size: clamp(20px, 3vw, 25px);
     font-weight: 300;
     margin-bottom: 15px;
 }
@@ -178,26 +191,28 @@ svg{
 
 .foto-perfil {
     width: 100%;
-    max-width: 125px;
+    max-width: clamp(100px, 20vw, 125px);
     height: 100%;
-    height: 125px;
+    height: clamp(100px, 20vw, 125px);
     border-radius: 50%;
     object-fit: cover;
 }
 
-.info-adicional .icon p{
+.info-adicional .icon-links p{
     margin-bottom: 10px;
     color: black;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.info-adicional .icon a{
+.info-adicional .icon-links a{
     color: black;
 }
-.info-adicional .icon a i{
+
+.info-adicional .icon-links a i{
     margin-right: 10px;
 }
+
 #portafolio i {
     margin-right: 4px;
 }
@@ -219,6 +234,7 @@ svg{
 .perfil-container h3 {
     font-weight: 800;
     margin-bottom: 10px;
+    font-size: clamp(18px, 2.5vw, 22px);
 }
 
 .info-adicional,
@@ -247,7 +263,7 @@ svg{
 
 .proyectos a {
     font-weight: bold;
-    font-size: 13px;
+    font-size: clamp(12px, 1.5vw, 13px);
     color: var(--bordes);
     text-decoration: none;
     transition: color 0.3s ease;
@@ -399,7 +415,7 @@ svg{
     background-color: var(--bordes);
 }
 
-.image-edit-container .name-ft {
+.name-ft {
     display: block;
     margin-bottom: 5px;
 }
@@ -421,10 +437,9 @@ svg{
 
 }
 /*editar foto*/
-
 h2 {
     text-align: center;
-    font-size: 24px;
+    font-size: clamp(20px, 2.5vw, 24px);
     margin-bottom: 20px;
 }
 
@@ -462,6 +477,8 @@ h2 {
 .form-row label,.form-row .form-column label {
     font-weight: bold;
     color: #555;
+    font-size: 16px;
+    display: block; 
 }
 
 input{
@@ -595,7 +612,7 @@ input:hover,textarea:hover{
 
 .title-configuration h1 {
     color: var(--azul);
-    font-size: 28px;
+    font-size: clamp(24px, 2.5vw, 28px);
     font-weight: 700;
     margin-bottom: 10px;
 }
@@ -608,7 +625,7 @@ input:hover,textarea:hover{
 
 .title-configuration p{
     color: #555;
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     margin-right: 10px;
 }
 
@@ -632,7 +649,7 @@ input:hover,textarea:hover{
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     transition: background-color 0.3s ease;
 }
 
@@ -677,6 +694,10 @@ input:hover,textarea:hover{
     margin: 0 auto;
 }
 
+.tab-content p{
+    font-size: clamp(14px, 2vw, 15px);
+}
+
 .tab-content a svg{
     margin-right: 10px;
 }
@@ -699,14 +720,21 @@ input:hover,textarea:hover{
     flex-direction: column;
 }
 
-.seguridad label{
-    font-size: 16px;
-   display: block; 
+.tab-content label {
+    font-size: clamp(14px, 2vw, 16px);
 }
 
-#notifications label{
-    font-size: 16px;
-   display: block; 
+.tab-content a {
+    font-size: clamp(14px, 2vw, 16px);
+}
+
+.tab-content a svg {
+    width: clamp(20px, 2.5vw, 24px);
+}
+
+.notification-content{
+    display: flex;
+    gap: 30px;
 }
 
 .seguridad input[type="email"],
@@ -714,7 +742,7 @@ input:hover,textarea:hover{
     padding: 5px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: clamp(13px, 2vw, 14px);
     transition: border-color 0.3s ease;
     vertical-align: 10px;
 }
@@ -733,7 +761,7 @@ input:hover,textarea:hover{
     color: #fff;
     border: none;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: clamp(13px, 2vw, 14px);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -752,8 +780,8 @@ input:hover,textarea:hover{
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: clamp(50px, 10vw, 60px);
+    height: clamp(28px, 5vw, 34px);
 }
 
 .switch input {
@@ -782,8 +810,8 @@ input:hover,textarea:hover{
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: clamp(20px, 4vw, 26px);
+    width: clamp(20px, 4vw, 26px);
     left: 4px;
     bottom: 4px;
     background-color: white;
@@ -937,4 +965,443 @@ input:checked + .slider:before {
 }
 
 /*SuccessfullEdit*/
+
+@media (max-width: 369px) { 
+
+    .body-profile .logo-amburguer{
+        gap: 5px;
+    }
+    .body-profile .logo{
+        gap:5px;
+    }
+    .body-profile .logo-co{
+        margin-top: 7px;
+    }
+
+    .forgot_pw {
+      right: 0;
+    }
+
+    .body-profile .blob {
+        top: 2%;
+        right: 0;
+        width: 130px;
+    }
+
+    .body-profile .encabezado-perfil {
+        margin-top: 80px;
+        padding: 15px;
+    }
+
+    .body-profile .encabezado-perfil img {
+        max-width: 23px;
+    }
+
+    .body-profile .encabezado p {
+        font-size: 13px;
+    }
+
+    .body-profile .controles button {
+        font-size: 13px;
+        padding: 5px 10px;
+        width: 100%;
+        margin-left: -10px;
+    }
+    
+    .body-profile .encabezado{
+        display: block;  
+      }
+
+      .body-profile .perfil-container{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+  }
+  
+  @media (max-width: 480px) {
+    .body-profile .nav_items {
+        background: rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--borde-hover-claro);
+        backdrop-filter: blur(10px); /* Fondo borroso */
+    }
+    
+    .body-profile .solo-autenticado{
+        font-size: 21px ;
+        margin-top: 5px;
+    }
+
+    .body-profile .blob {
+        top: 2%;
+        right: 0;
+        max-width: 160px;
+    }
+    .body-profile .encabezado-perfil {
+        margin-top: 90px;
+        padding: 18px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .body-profile .encabezado-perfil img {
+        max-width: 24px;
+    }
+
+    .body-profile .encabezado p {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .body-profile .encabezado{
+        display: block;  
+      }
+
+      .body-profile .controles button {
+        margin-top: 15px;
+        font-size: 13px;
+        padding: 6px 12px;
+        width: 100%;
+        margin-left: -10px;
+    }
+
+    .body-profile .perfil-container{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .perfil-pagina h1 {
+        font-size: 26px;
+    }
+    .perfil-pagina h2 {
+        font-size: 19px;
+    }
+
+    .perfil-container h3 {
+        font-size: 16px;
+    }
+
+    .form-row{
+        display: block;
+    }
+
+    .modal-content h2{
+        font-size: clamp(20px, 3vw, 21px);
+    }
+
+    .modal-content h2 img {
+        width: clamp(19px, 3vw, 21px);
+    }
+
+    .form-row .form-column label {
+        font-size: clamp(14px, 2vw, 15px);
+    }
+
+    .form__input:not([value=""]) + .form__label {
+        font-size: clamp(13px, 2vw, 14px);
+    }
+
+    input[type="text"], textarea {
+        font-size: clamp(13px, 2vw, 14px);
+    }
+
+    .image-edit-container{
+        display: flex;
+    }
+
+    .modal-content .button-save-edit {
+        font-size: clamp(14px, 2vw, 15px);
+    }
+
+    .form-column .button-mas {
+        padding: 0 2px;
+    }
+
+    .form-column .button-mas svg {
+        width: clamp(14px, 2vw, 15px);
+    }
+    textarea {
+        min-height: 60px;
+        overflow: hidden; /* Ocultar el scroll */
+    }
+
+    .body-profile .title-configuration {
+        margin-top: 90px;
+        padding: 18px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .body-profile .title-configuration img {
+        max-width: 24px;
+    }
+
+    .body-profile .title-configuration p {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .body-profile .title-configuration {
+        margin-top: 90px;
+        padding: 18px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .tabs-menu {
+       display: block;
+        margin-left: 10px;  
+        margin-right: 10px;
+    }
+
+    .tabs-menu svg {
+        width: clamp(18px, 2vw, 20px);
+    }
+
+    .seguridad {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: start;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .form-group{
+        width: 100%;
+    }
+
+    .tabs-content {
+        margin-left: 10px;  
+        margin-right: 10px;
+    }
+
+    .save-button{
+        width: 100%;
+    }
+    
+    .delete-button{
+        width: 100%;
+    }
+
+    .notification-content{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+  }
+  
+  /* Large mobile screens */
+@media (min-width: 481px) and (max-width: 767px) {
+    .body-profile .nav_items {
+        background: rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--borde-hover-claro);
+        backdrop-filter: blur(10px); /* Fondo borroso */
+    }
+
+    .body-profile .solo-autenticado{
+        font-size: 22px ;
+    }
+
+    .body-profile .blob {
+        top: 2%;
+        right: 0;
+        max-width: 170px;
+    }
+    .body-profile .encabezado-perfil {
+        margin-top: 100px;
+        padding: 20px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .body-profile .encabezado-perfil img {
+        max-width: 25px;
+    }
+
+    .body-profile .encabezado p {
+        font-size: 15px;
+        margin-top: 10px;
+    }
+
+    .body-profile .encabezado{
+        display: block;  
+      }
+
+    .body-profile .controles button {
+        margin-top: 15px;
+        padding: 7px 14px;
+        width: 100%;
+        margin-left: -10px;
+    }
+    
+    .body-profile .perfil-container{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .form-row{
+        display: block;
+    }
+
+    .modal-content h2{
+        font-size: clamp(21px, 3vw, 24px);
+    }
+
+    .modal-content h2 img {
+        width: clamp(21px, 3vw, 24px);
+    }
+
+    .form-row .form-column label {
+        font-size: clamp(15px, 2vw, 16px);
+    }
+
+    .form__input:not([value=""]) + .form__label {
+        font-size: clamp(13px, 2vw, 14px);
+    }
+
+    input[type="text"], textarea {
+        font-size: clamp(13px, 2vw, 14px);
+    }
+
+    .image-edit-container{
+        display: flex;
+    }
+
+    .perfil-background-edit {
+        width: 100%;
+    }
+
+    .modal-content .button-save-edit {
+        font-size: clamp(15px, 2vw, 16px);
+    }
+
+    .form-column .button-mas {
+        padding: 0 2px;
+    }
+
+    .form-column .button-mas svg {
+        width: clamp(14px, 2vw, 15px);
+    }
+
+    .body-profile .title-configuration {
+        margin-top: 100px;
+        padding: 20px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .body-profile .title-configuration img {
+        max-width: 25px;
+    }
+
+    .body-profile .title-configuration p {
+        font-size: 15px;
+        margin-top: 10px;
+    }
+
+    .tabs-menu {
+        margin-left: 10px;  
+        margin-right: 10px;
+    }
+
+    .tabs-content {
+        margin-left: 10px;  
+        margin-right: 10px;
+    }
+
+  }
+  
+  /* Tablets */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .body-profile .solo-autenticado{
+        font-size: 24px;
+    }
+
+    .body-profile .blob {
+        top: 2%;
+        right: 0;
+        max-width: 180px;
+    }
+
+    .body-profile .encabezado-perfil {
+        margin-top: 110px;
+        padding: 22px;
+        margin-left: 10px;  
+        margin-right: 10px;
+    }
+
+    .body-profile .encabezado-perfil img {
+        max-width: 26px;
+    }
+
+    .body-profile .encabezado{
+        display: block;  
+    }
+
+    .body-profile .controles button {
+        margin-top: 15px;
+        margin-left: 0;
+        padding: 8px 16px;
+        width: 100%;
+        margin-left: -10px;
+    }   
+    .body-profile .perfil-container{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .form-row{
+        display: block;
+    }
+
+    .perfil-background-edit {
+        width: 100%;
+    }
+
+    .image-edit-container{
+        display: flex;
+    }
+
+    /*contiguration*/
+    .body-profile .title-configuration {
+        padding: 22px;
+        margin-left: 10px;  
+        margin-right: 10px;
+    }
+
+    .body-profile .title-configuration img {
+        max-width: 26px;
+    }
+
+    .tabs-menu {
+        margin-left: 10px;  
+        margin-right: 10px;
+    }
+     /*contiguration*/  
+  }
+  
+  /* Small laptops */
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    .blob {
+        max-width: 190px;
+    }
+  
+  }
+  
+  /* Standard laptops and monitors */
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    .blob {
+        max-width: 200px;
+    }
+  
+  }
+  
+  @media (min-width: 1441px) {
+    .blob {
+        max-width: 250px;
+    }
+  }
 

@@ -17,9 +17,28 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Usuario no encontrado
      <!-- Header -->
      <header class="header">
         <nav class="nav">
-            <a href="../../index.php" class="nav_logo">CodeOner</a>
+        <div class="logo-amburguer">
+            <div class="hamburger-menu" id="hamburger-menu">
+                <!-- Ícono de menú hamburguesa -->
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+                    <line x1="4" x2="20" y1="12" y2="12"/>
+                    <line x1="4" x2="20" y1="6" y2="6"/>
+                    <line x1="4" x2="20" y1="18" y2="18"/>
+                </svg>
+                
+                <!-- Ícono de "X" -->
+                <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide" style="display: none;">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </div>
+                <div class="logo">
+                    <a href="configuration.php"><img src="../../resources/img/log-CO-minimalist.png" alt="logo" class="logo-co"></a>                 
+                    <a href="profile.php" class="solo-autenticado"><span class="azul">C</span>ode<span class="celeste">O</span>ner</a>
+                </div>
+           </div>
 
-            <ul class="nav_items">
+            <ul class="nav_items" id="nav-items">
                 <li class="nav_item">
                     <a href="../../index.php" class="nav_link">Inicio</a>
                     <a href="#" class="nav_link">Productos</a>
@@ -153,12 +172,14 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Usuario no encontrado
         <!-- Notificaciones Tab -->
         <div id="notifications" class="tab-content">
             <h2>Notificaciones</h2>
-            <label>
-                <input type="checkbox" name="email_notifications" checked> Notificaciones por correo
-            </label>
-            <label>
-                <input type="checkbox" name="push_notifications"> Notificaciones push
-            </label>
+            <div class="notification-content">
+                <label>
+                    <input type="checkbox" name="email_notifications" checked> Notificaciones por correo
+                </label>
+                <label>
+                    <input type="checkbox" name="push_notifications"> Notificaciones push
+                </label>
+            </div>
         </div>
 
         <!-- Redes Sociales Tab -->

@@ -28,11 +28,33 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
        <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <a href="index.php" class="nav_logo">CodeOner</a>
-
-            <ul class="nav_items">
+        <div class="logo-amburguer">
+            <div class="hamburger-menu" id="hamburger-menu">
+                <!-- Ícono de menú hamburguesa -->
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+                    <line x1="4" x2="20" y1="12" y2="12"/>
+                    <line x1="4" x2="20" y1="6" y2="6"/>
+                    <line x1="4" x2="20" y1="18" y2="18"/>
+                </svg>
+                
+                <!-- Ícono de "X" -->
+                <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x" style="display: none;">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </div>
+                <div class="logo">
+                    <a href="index.php"><img src="resources/img/log-CO-minimalist.png" alt="logo" class="logo-co"></a>
+                    <a href="index.php" class="nav_logo"> <span class="azul">C</span>ode<span class="celeste">O</span>ner</a>
+                    <?php if ($isAuthenticated): ?>
+                        <a href="index.php" class="solo-cel"><span class="azul">C</span>ode<span class="celeste">O</span>ner</a>
+                        <?php endif; ?>
+                </div>
+        </div>
+            
+            <ul class="nav_items" id="nav-items">
                 <li class="nav_item">
-                    <a href="../../index.php" class="nav_link">Inicio</a>
+                    <a href="index.php" class="nav_link">Inicio</a>
                     <a href="#" class="nav_link">Productos</a>
                     <a href="#" class="nav_link">Servicios</a>
                     <a href="#" class="nav_link">Contacto</a>
@@ -43,7 +65,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
                 <!-- Mostrar botón de inicio de sesión si no está autenticado -->
                  <div class="btn-header">
                     <button class="button-login" id="form-open">Iniciar sesión</button>
-                    <button class="button-register-header" id="form-register">Registrarse</button>
+                    <button class="button-register-header" id="button-register-header">Registrarse</button>
                 </div>
             <?php else: ?>
                  <!-- Mostrar el perfil si está autenticado -->
@@ -100,7 +122,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
          <?php if (!$isAuthenticated): ?>
             <h2 class="titulo-main">Bienvenido, aquí encontrarás</h2>
             <p>Explora las diferentes opciones de <span class="bold">Inicio de sesión</span> y <span class="bold">Registro de usuario</span>, incluyendo métodos de autenticación tradicionales y modernos.</p>
-            <button class="button-register" id="button-register">Regístrate ahora</button>
+            <button class="button-register" id="button-register">Empezar ahora!</button>
             <?php else: ?>
             <!-- Contenido predeterminado o una sección inicial para los usuarios autenticados -->
             <h2 class="titulo-main">Bienvenido, <?php echo htmlspecialchars($nombre); ?>!</h2>
