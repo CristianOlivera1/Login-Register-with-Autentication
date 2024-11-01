@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2024 a las 19:12:30
+-- Tiempo de generación: 01-11-2024 a las 21:01:30
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -54,7 +54,19 @@ CREATE TABLE `usuario_detalles` (
   `habilidades` text DEFAULT NULL,
   `proyectos` text DEFAULT NULL,
   `educacion` varchar(255) DEFAULT NULL,
-  `foto_perfil` varchar(255) DEFAULT NULL
+  `foto_perfil` varchar(255) DEFAULT NULL,
+  `perfil_desc2` text DEFAULT NULL,
+  `experiencia2` text DEFAULT NULL,
+  `experiencia3` text DEFAULT NULL,
+  `habilidades2` text DEFAULT NULL,
+  `habilidades3` text DEFAULT NULL,
+  `educacion2` varchar(255) DEFAULT NULL,
+  `educacion3` varchar(255) DEFAULT NULL,
+  `proyectos_link` varchar(255) DEFAULT NULL,
+  `proyectos2` text DEFAULT NULL,
+  `proyectos_link2` varchar(255) DEFAULT NULL,
+  `proyectos3` text DEFAULT NULL,
+  `proyectos_link3` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
