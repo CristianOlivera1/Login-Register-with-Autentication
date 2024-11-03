@@ -129,7 +129,7 @@ svg{
 }
 
 .encabezado p {
-    color: #555;
+    color: black;
     font-size: clamp(14px, 2vw, 16px);
     margin-right: 10px;
 }
@@ -624,7 +624,7 @@ input:hover,textarea:hover{
 }
 
 .title-configuration p{
-    color: #555;
+    color: black;
     font-size: clamp(14px, 2vw, 16px);
     margin-right: 10px;
 }
@@ -908,7 +908,7 @@ input:checked + .slider:before {
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     max-width: 400px;
-    width: 100%;
+    width: 90%;
     position: relative; 
     display: flex;
     flex-direction: column;
@@ -916,6 +916,8 @@ input:checked + .slider:before {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    margin-left: 0;
+    margin-right: 10px;
 }
 
 .modal-update-body {
@@ -926,8 +928,8 @@ input:checked + .slider:before {
 }
 
 .modal-update-gif {
-    width: 100px;
-    height: 100px;
+    width: clamp(80px, 10vw, 100px);
+    height:clamp(80px, 10vw, 100px);
     margin-top: -10px;
     margin-bottom: 15px;
 }
@@ -957,8 +959,8 @@ input:checked + .slider:before {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-}
+    font-size: clamp(14px, 2vw, 16px);
+    }
 
 .modal-update-button:hover {
     background-color: var(--azul-hover);

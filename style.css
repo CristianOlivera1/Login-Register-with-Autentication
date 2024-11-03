@@ -75,6 +75,18 @@ a {
   pointer-events: none;
 }
 
+.port .line-gradient-cel {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  min-height: 100vh;
+  pointer-events: none;
+}
+
 .header {
   backdrop-filter: blur(12px);
   position: fixed;
@@ -474,14 +486,14 @@ column-gap: 25px;
 
 .dropdown-menu ul li a{
   text-decoration: none;
-  color: #333;
+  color: black;
   display: block;
 }
 
 .dropdown-menu ul li .logout-button{
   border: none;
   background: transparent;
-  color: #333;
+  color: black;
   font-size: 14px;
   cursor: pointer;
 }
@@ -1003,6 +1015,16 @@ text-decoration: underline;
 }
 
 @media (max-width: 480px) {
+  
+  .port .line-gradient-cel {
+    display: block;
+   
+  }
+
+  .port .line-gradient{
+    display: none;
+  }
+
   .nav_items {
     display: none;
     position: absolute;
@@ -1108,6 +1130,10 @@ text-decoration: underline;
 
   .modal-confirmation-content p {
     margin-bottom: clamp(10px, 2vw, 15px);
+  }
+
+  .dropdown-menu .perfil-dropdown span{
+    width: 78%;
   }
 
 }
