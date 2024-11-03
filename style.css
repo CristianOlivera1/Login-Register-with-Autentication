@@ -242,9 +242,9 @@ column-gap: 25px;
 /* Estilos para el modal de confirmación */
 .modal-confirmation-content {
   position: absolute; 
-  top: 50%;
+  top: -100%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%,50%);
   background-color: #ffffff;
   padding: 25px;
   border-radius: 12px; 
@@ -979,6 +979,7 @@ text-decoration: underline;
     font-size: 19px;
     vertical-align: -5px;
 }
+
 .logo-amburguer{
   display: flex;
   gap: 10px;
@@ -1083,7 +1084,7 @@ text-decoration: underline;
   .perfil-dropdown img {
     width: 100%;
     max-width: clamp(70px, 10vw, 85px);
-    height: auto;
+    height: clamp(70px, 10vw, 85px);
   }
 
   .user-status {

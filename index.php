@@ -18,6 +18,20 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/vnd.icon" href="https://github.com/CristianOlivera1/Resources-dev/raw/main/logoCO/favicon.ico">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#AA00D6">
+
+    <meta name="google-site-verification" content="3TrWGT_VRXdTepYdZK9fOd_ZXWc3B7XN_mQb2Rm1EtU" />
+    <meta property="og:title" content="CodeOner 🚀">
+    <meta property="og:description" content="Inicio y Registro con Métodos de autenticación como Google, GitHub, Facebook en CodeOner 🌐">
+    <meta property="og:image" content="https://github.com/CristianOlivera1/Resources-dev/raw/main/logoCO/preview/preview-mini-proyectos.png">
+    <meta property="og:url" content="http://codeoner.rf.gd">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="CodeOner">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 </head>
 
 <body>
