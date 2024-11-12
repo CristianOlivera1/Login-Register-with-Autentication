@@ -13,8 +13,11 @@ Esta aplicación web permite a los usuarios registrarse o iniciar sesión utiliz
 ## 🎥 Demostración
 ![demostracion](https://github.com/user-attachments/assets/e8e4b482-e7dc-44f3-b55e-0986447a7c53)
 
-## 🖼️ Ejemplo de perfil de usuario
+## 🖼️ Ejemplo de perfil de usuario visualizar perfil de usuario [![Ver](https://img.shields.io/badge/VER-%23facc15?logo=eye)]([https://tu-dominio.com](https://codeoner.rf.gd/vista/user/userlink.php?email=oliverachavezcristian%40gmail.com))
+
+
 ![demostracion](https://github.com/CristianOlivera1/Resources-dev/raw/main/login-register/img/Frame%201618873116.svg)
+
 
 ## 💻 Tecnologías Utilizadas
 [![PHP](https://img.shields.io/badge/PHP-56.8%25-blue?logo=php)](https://www.php.net/)
