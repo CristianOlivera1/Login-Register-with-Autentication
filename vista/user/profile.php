@@ -3,6 +3,15 @@ session_start();
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Usuario';
 $nombre = isset($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Nombre Completo Aqui'; 
 $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'foto perfil';
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : 'correo@ejemplo.com';
+
+// Verifica si el usuario no está autenticado
+if (!isset($_SESSION['username'])) {
+    // Redirige a index.php si no hay una sesión activa
+    header("Location: ../../index.php");
+    exit(); 
+}
+$userlink = "http://localhost:3000/vista/user/userlink.php?email=" . urlencode($email);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,10 +114,16 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
             <p>¡Hola, <span class="azul"><?php echo htmlspecialchars($nombre); ?>!</span>, ¡Bienvenido a tu perfil! Aquí puedes ver toda la información sobre ti.</p>
             <div class="controles">
               <button id="editar-perfil" onclick="abrirModal()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>Editar</button>
+          
             </div>
         </div>
     </div>
-
+    <div class="copiar">
+        <button class="btn-copiar" id="copiar-link" onclick="copiarLink()" aria-label="copiar" title="Copiar y compartir enlace">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 13a5 5 0 0 0 8 1l4-4a1 1 0 0 0-7-7l-2 2m3 6a5 5 0 0 0-8-1l-4 4a1 1 0 0 0 7 7l2-2"/>
+            </svg> Copiar enlace
+        </button>
+    </div>
     <div class="perfil-container">  
     <div class="column">
         <div class="perfil-pagina">
@@ -463,6 +478,20 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'fot
     <script src='https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.4/randomColor.min.js'></script>
     <script src="../../script.js"></script>
     <script src="script.js"></script>
+    <script>
+        function copiarLink() {
+            const link = "<?php echo $userlink; ?>";
+            navigator.clipboard.writeText(link).then(() => {
+            const button = document.getElementById('copiar-link');
+            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M21.546 5.111a1.5 1.5 0 0 1 0 2.121L10.303 18.475a1.6 1.6 0 0 1-2.263 0L2.454 12.89a1.5 1.5 0 1 1 2.121-2.121l4.596 4.596L19.424 5.111a1.5 1.5 0 0 1 2.122 0"/></g></svg> Copiado!';
+            setTimeout(() => {
+                button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 13a5 5 0 0 0 8 1l4-4a1 1 0 0 0-7-7l-2 2m3 6a5 5 0 0 0-8-1l-4 4a1 1 0 0 0 7 7l2-2"/></svg> Copiar enlace';
+            }, 2000);
+            }).catch(err => {
+            console.error("Error al copiar el enlace: ", err);
+            });
+        }
+    </script>
 </body>
 </html>
 

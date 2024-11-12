@@ -159,6 +159,34 @@ svg{
     background-color: var(--azul-hover); 
 }
 
+.body-profile .copiar{
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 30px;
+    margin-right:18%; 
+    margin-bottom: -40px;
+}
+
+.body-profile .btn-copiar{
+    display: flex;
+    padding: 8px 18px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: clamp(13px, 2vw, 14px);
+}
+
+.body-profile .btn-copiar svg{
+    margin-right: 5px;
+}
+
+.body-profile .btn-copiar:hover {
+    background-color: #383838;
+}
+
 .column {
     flex: 1;
     min-width: 280px;
@@ -1080,6 +1108,10 @@ input:checked + .slider:before {
         width: 100%;
         margin-left: -10px;
     }
+    
+    .body-profile .btn-copiar{
+        padding: 6px 12px;
+    }
 
     .body-profile .perfil-container{
         margin-left: 10px;
@@ -1230,11 +1262,16 @@ input:checked + .slider:before {
         right: 0;
         max-width: 170px;
     }
+
     .body-profile .encabezado-perfil {
         margin-top: 100px;
         padding: 20px;
         margin-right: 10px;
         margin-left: 10px;
+    }
+
+    .body-profile .btn-copiar{
+        margin-right: clamp(10%, 4vw, 18%); 
     }
 
     .body-profile .encabezado-perfil img {

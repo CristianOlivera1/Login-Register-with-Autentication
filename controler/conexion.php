@@ -10,5 +10,4 @@ if ($mysqli->connect_error) {
     echo json_encode(["success" => false, "message" => "Conexión fallida: " . $mysqli->connect_error]);
     exit();
 }
-
 ?>

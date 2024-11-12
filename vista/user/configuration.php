@@ -3,6 +3,12 @@ session_start();
 $nombre = isset($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Nombre Completo Aqui'; 
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Usuario';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Usuario no encontrado';
+// Verifica si el usuario no está autenticado
+if (!isset($_SESSION['username'])) {
+    // Redirige a index.php si no hay una sesión activa
+    header("Location: ../../index.php");
+    exit(); 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +40,7 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'Usuario no encontrado
             </div>
                 <div class="logo">
                     <a href="configuration.php"><img src="../../resources/img/log-CO-minimalist.png" alt="logo" class="logo-co"></a>                 
-                    <a href="profile.php" class="solo-autenticado"><span class="azul">C</span>ode<span class="celeste">O</span>ner</a>
+                    <a href="configuration.php" class="solo-autenticado"><span class="azul">C</span>ode<span class="celeste">O</span>ner</a>
                 </div>
            </div>
 
