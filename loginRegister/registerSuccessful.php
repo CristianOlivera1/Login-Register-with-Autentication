@@ -1,8 +1,12 @@
 <?php
 session_start(); 
-
 // Verifica si el nombre de usuario está disponible
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : "Usuario";
+if (!isset($_SESSION['username'])) {
+  // Redirige a index.php si no hay una sesión activa
+  header("Location: ../../index.php");
+  exit(); 
+}
 ?>
 
 <!DOCTYPE html>

@@ -111,6 +111,13 @@ $mysqli->close();
                 <div class="logo">
                     <a href="#"><img src="../../resources/img/log-CO-minimalist.png" alt="logo" class="logo-co"></a>                 
                     <a href="#" class="solo-autenticado"><span class="azul">C</span>ode<span class="celeste">O</span>ner</a>
+                    <style>
+                        @media (max-width: 480px) {
+                            .solo-autenticado {
+                                display: none;
+                            }
+                        }
+                    </style>
                 </div>
            </div>
             <ul class="nav_items" id="nav-items">
