@@ -1,4 +1,5 @@
 # Inicio de sesión y registro con métodos de autenticación 🚀
+![postspark_export_2025-03-04_17-29-38](https://github.com/user-attachments/assets/ba1a01d2-bde7-4af9-b22b-4ed28a03aae0)
 
 ## 📝 Descripción
 Esta aplicación web permite a los usuarios registrarse o iniciar sesión utilizando tanto métodos de autenticación social (como Google, Facebook, etc.) como métodos tradicionales (usuario y contraseña). Los usuarios autenticados tienen acceso a su perfil personal donde pueden gestionar su información.
