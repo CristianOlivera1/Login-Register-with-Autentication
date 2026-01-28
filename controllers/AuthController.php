@@ -55,7 +55,7 @@ class AuthController {
                 ]
             ]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Invalid credentials']);
+            echo json_encode(['success' => false, 'message' => 'Credenciales inválidas']);
         }
     }
 
@@ -64,7 +64,7 @@ class AuthController {
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
-            echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+            echo json_encode(['success' => false, 'message' => 'Método no permitido']);
             return;
         }
 
@@ -72,7 +72,7 @@ class AuthController {
         
         if (!$input || !isset($input['email']) || !isset($input['password'])) {
             http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Email and password are required']);
+            echo json_encode(['success' => false, 'message' => 'El correo electrónico y la contraseña son obligatorios']);
             return;
         }
 
@@ -83,22 +83,22 @@ class AuthController {
         $lastName = $input['lastName'] ?? '';
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(['success' => false, 'message' => 'Invalid email format']);
+            echo json_encode(['success' => false, 'message' => 'Formato de correo electrónico inválido']);
             return;
         }
 
         if (strlen($password) < 8) {
-            echo json_encode(['success' => false, 'message' => 'Password must be at least 8 characters']);
+            echo json_encode(['success' => false, 'message' => 'La contraseña debe tener al menos 8 caracteres']);
             return;
         }
 
         if ($password !== $confirmPassword) {
-            echo json_encode(['success' => false, 'message' => 'Passwords do not match']);
+            echo json_encode(['success' => false, 'message' => 'Las contraseñas no coinciden']);
             return;
         }
 
         if ($this->userModel->findByEmail($email)) {
-            echo json_encode(['success' => false, 'message' => 'Email already registered']);
+            echo json_encode(['success' => false, 'message' => 'El correo electrónico ya está registrado']);
             return;
         }
 
@@ -116,7 +116,7 @@ class AuthController {
             $this->startUserSession($newUser);
             echo json_encode([
                 'success' => true, 
-                'message' => 'Registration successful',
+                'message' => 'Registro exitoso',
                 'user' => [
                     'id' => $newUser['id'],
                     'email' => $newUser['email'],
@@ -126,7 +126,7 @@ class AuthController {
                 ]
             ]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Registration failed']);
+            echo json_encode(['success' => false, 'message' => 'Error en el registro']);
         }
     }
 
@@ -135,7 +135,7 @@ class AuthController {
         session_destroy();
         
         header('Content-Type: application/json');
-        echo json_encode(['success' => true, 'message' => 'Logged out successfully']);
+        echo json_encode(['success' => true, 'message' => 'Cierre de sesión exitoso']);
     }
 
     public function checkAuth() {
