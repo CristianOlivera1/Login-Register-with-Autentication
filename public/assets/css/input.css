@@ -5,7 +5,6 @@ body {
     background-color: #030305;
 }
 
-/* Subtle Glow Animation */
 @keyframes subtle-pulse {
 
     0%,
@@ -24,10 +23,33 @@ body {
     animation: subtle-pulse 4s infinite ease-in-out;
 }
 
-/* Typing Cursor */
 .cursor-blink {
     border-right: 2px solid #00e1ff;
     animation: blink 1s step-end infinite;
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.token-key {
+    color: #00e1ff;
+}
+
+.token-string {
+    color: #a5f3fc;
+}
+
+.token-number {
+    color: #f472b6;
+}
+
+.token-bool {
+    color: #34d399;
+}
+
+.token-null {
+    color: #94a3b8;
 }
 
 @keyframes blink {
@@ -48,6 +70,97 @@ body {
     color: #0099ff;
 }
 
-button{
+button {
     cursor: pointer;
+}
+
+#select-menu.active {
+    opacity: 1;
+    invisible: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+
+.token-key {
+    color: #0ea5e9;
+}
+
+.token-string {
+    color: #10b981;
+}
+
+.a4-paper {
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 639px) {
+    .a4-paper {
+        transform: none !important;
+        width: 100% !important;
+        min-height: auto;
+    }
+}
+
+.cv-page-break {
+    page-break-before: always;
+    margin-top: 20mm;
+    border-top: 2px dashed #e2e8f0;
+    padding-top: 10mm;
+}
+
+#select-menu.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+.json-editor {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    line-height: 1.6;
+    tab-size: 2;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification {
+    animation: slideInRight 0.3s ease-out;
+}
+
+.custom-scroll {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #9F9F9F #16161a;
+}
+
+.custom-scroll::-webkit-scrollbar {
+    width: 6px; 
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    background: #16161a; 
+    border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #00e1ff; 
+    border-radius: 10px;
+    border: 1px solid #16161a; 
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #0099ff;
 }
