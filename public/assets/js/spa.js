@@ -1,8 +1,18 @@
 document.addEventListener('click', e => {
-    if (e.target.matches('a') && e.target.getAttribute('href').startsWith('/')) {
-        e.preventDefault();
-        const url = e.target.href;
+    const link = e.target.closest('a');
+
+    if (!link || !link.getAttribute('href')) return;
+
+    const href = link.getAttribute('href');
+
+    if (href.startsWith('/') && !link.hasAttribute('data-reload')) {
+        // Excluir la ruta CV de SPA
+        if (href.match(/^\/CV\/[a-z0-9\-]+$/)) {
+            return; 
+        }
         
+        e.preventDefault();
+        const url = link.href;
         loadPage(url);
     }
 });
@@ -18,5 +28,6 @@ async function loadPage(url) {
 
     document.getElementById('app-content').innerHTML = html;
 }
+
 
 window.addEventListener('popstate', () => loadPage(window.location.href));
