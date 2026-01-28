@@ -14,10 +14,10 @@ $user = $isAuthenticated ? [
 
 <header>
 <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#030305]/80 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
             <a href="/" class="text-white text-xl font-medium tracking-tight flex items-center gap-2 group">
-                <div class="w-8 h-8 rounded bg-gradient-to-br from-[#0099ff] to-[#00e1ff] flex items-center justify-center text-black">
-                    <iconify-icon icon="solar:code-square-linear" stroke-width="1.5" width="20"></iconify-icon>
+                <div class="w-8 h-8 rounded flex items-center justify-center text-black">
+                    <img src="/assets/img/logo-co.svg" alt="logo-codeoner" class="w-8 h-8 group-hover:rotate-12 transition-transform">
                 </div>
                 <span class="tracking-tighter">Codeoner</span>
             </a>
@@ -26,12 +26,11 @@ $user = $isAuthenticated ? [
                 <a href="/" class="hover:text-[#00e1ff] transition-colors">Inicio</a>
                 <?php if ($isAuthenticated): ?>
                 <a href="/profile" class="hover:text-[#00e1ff] transition-colors">Perfil</a>
-                <a href="/CV" class="hover:text-[#00e1ff] transition-colors">Generar CV</a>
                 <?php endif; ?>
+                <a href="/generate-cv" data-reload class="hover:text-[#00e1ff] transition-colors">Generar CV</a>
             </div>
 
             <?php if (!$isAuthenticated): ?>
-            <!-- Auth buttons for non-authenticated users -->
             <div class="flex items-center gap-4">
                 <a href="#auth" class="hidden sm:block text-sm hover:text-white transition-colors">Iniciar sesión</a>
                 <a href="#auth" class="text-sm bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-full transition-all flex items-center gap-2">
@@ -40,7 +39,6 @@ $user = $isAuthenticated ? [
                 </a>
             </div>
             <?php else: ?>
-            <!-- User menu for authenticated users -->
             <div class="flex items-center gap-4">
                 <div class="hidden sm:flex items-center gap-3 text-sm">
                     <?php if (!empty($user['avatar'])): ?>
@@ -59,14 +57,13 @@ $user = $isAuthenticated ? [
                         <iconify-icon icon="solar:alt-arrow-down-linear" width="12"></iconify-icon>
                     </button>
                     
-                    <!-- Dropdown menu -->
                     <div class="absolute right-0 mt-2 w-48 bg-[#0a0b0f] border border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                         <div class="p-2">
                             <a href="/profile" class="block px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md transition-colors">
                                 <iconify-icon icon="solar:user-linear" width="16" class="mr-2"></iconify-icon>
                                 Mi Perfil
                             </a>
-                            <a href="/CV" class="block px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md transition-colors">
+                            <a href="/generate-cv" data-reload class="block px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md transition-colors">
                                 <iconify-icon icon="solar:document-linear" width="16" class="mr-2"></iconify-icon>
                                 Generar CV
                             </a>
