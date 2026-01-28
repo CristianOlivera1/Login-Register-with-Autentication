@@ -138,7 +138,7 @@ CREATE TABLE cv_skills (
 
 -- INSERTAR PLANTILLAS BÁSICAS
 
--- Plantilla Minimalista (como el ejemplo que proporcionaste)
+-- Plantilla Harvard
 INSERT INTO cv_templates (id, name, description, template_data) VALUES 
 (
     UUID(),

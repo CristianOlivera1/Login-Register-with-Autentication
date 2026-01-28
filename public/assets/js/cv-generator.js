@@ -29,28 +29,23 @@ class CVGenerator {
         // Esperar a que el DOM esté completamente cargado
         this.jsonEditor = document.getElementById('json-editor');
         this.previewContainer = document.querySelector('.a4-paper');
-        this.uploadBtn = document.querySelector('[title="Upload JSON"]');
-        this.formatBtn = document.querySelector('[title="Format Code"]');
-        this.copyBtn = document.querySelector('[title="Copy"]');
+        this.uploadBtn = document.getElementById('upload-json-btn');
+        this.formatBtn = document.getElementById('format-code-btn');
+        this.copyBtn = document.getElementById('copy-btn');
         this.previewBtn = document.getElementById('preview-btn');
         this.exportBtn = document.querySelector('button:has([icon="solar:download-minimalistic-linear"])');
         this.validationStatus = document.querySelector('.h-8.bg-\\[\\#0099ff\\]\\/10');
         
-        // Template selector
         this.templateSelect = document.getElementById('custom-select');
         this.templateOptions = document.querySelectorAll('.option-btn');
         
-        // Save status indicator
         this.saveStatusIndicator = document.querySelector('.auto-save-status');
         
-        // Word wrap button
-        this.wordWrapBtn = document.querySelector('[title="Toggle Word Wrap"]');
+        this.wordWrapBtn = document.getElementById('word-wrap-btn');
         
-        // Tabs
         this.jsonTab = document.getElementById('tab-json');
         this.toonTab = document.getElementById('tab-toon');
         
-        // Verificar que los elementos críticos existan
         if (!this.jsonEditor) {
             console.warn('JSON Editor not found in DOM');
         }
@@ -58,37 +53,30 @@ class CVGenerator {
             console.warn('Preview Container not found in DOM');
         }
         
-        // Inicializar resizable splitter
         this.initializeResizer();
     }
 
     initializeEventListeners() {
-        // Upload JSON file
         if (this.uploadBtn) {
             this.uploadBtn.addEventListener('click', () => this.uploadJSONFile());
         }
 
-        // Format JSON
         if (this.formatBtn) {
             this.formatBtn.addEventListener('click', () => this.formatJSON());
         }
 
-        // Copy JSON
         if (this.copyBtn) {
             this.copyBtn.addEventListener('click', () => this.copyJSON());
         }
 
-        // Export PDF
         if (this.exportBtn) {
             this.exportBtn.addEventListener('click', () => this.exportToPDF());
         }
 
-        // Preview button functionality
         if (this.previewBtn) {
             this.previewBtn.addEventListener('click', () => this.handlePreview());
         }
 
-        // Template selection
         if (this.templateOptions) {
             this.templateOptions.forEach(option => {
                 option.addEventListener('click', (e) => {
@@ -109,7 +97,6 @@ class CVGenerator {
             this.jsonEditor.addEventListener('paste', (e) => this.handlePaste(e));
         }
 
-        // Tab switching
         this.initializeTabs();
     }
 
@@ -135,10 +122,8 @@ class CVGenerator {
             const text = span.textContent.trim();
             if (text === 'JSON Source' || text === 'TOON Source') {
                 if (text === tabName) {
-                    // Activar el tab seleccionado
                     span.className = 'text-xs text-[#00e1ff] border-b border-[#00e1ff] h-10 flex items-center px-1 font-medium';
                 } else {
-                    // Desactivar otros tabs
                     span.className = 'text-xs text-slate-500 hover:text-slate-300 h-10 flex items-center px-1 cursor-pointer transition-colors';
                 }
             }
@@ -240,10 +225,18 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             if (data.success && data.templates) {
                 this.availableTemplates = data.templates;
 
-                // Establecer la primera plantilla como seleccionada por defecto
-                if (data.templates.length > 0) {
+                // Buscar Harvard Professional como plantilla por defecto
+                const harvardTemplate = data.templates.find(t => 
+                    t.name === 'Harvard Profesional' || t.name.toLowerCase().includes('harvard')
+                );
+                
+                if (harvardTemplate) {
+                    this.currentTemplate = harvardTemplate.id;
+                } else {
                     this.currentTemplate = data.templates[0].id;
+                    console.log('Harvard no encontrado, usando:', data.templates[0].name);
                 }
+                
                 return true;
             }
             return false;
@@ -280,6 +273,14 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
                 try {
                     this.currentCVData = JSON.parse(data.cv.cv_data);
+                    
+                    // Establecer la plantilla correcta si existe template_id en la BD
+                    if (data.cv.template_id) {
+                        this.currentTemplate = data.cv.template_id;
+                        
+                        this.updateCustomSelect();
+                    }
+                    
                     this.displayJSONInEditor(this.currentCVData);
 
                     // Cargar el título en el editor de nombre
@@ -293,22 +294,17 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                     console.log('User CV loaded successfully:', this.userCV);
                 } catch (parseError) {
                     console.error('Error parsing user CV data:', parseError);
-                    // Si hay error de parsing, cargar ejemplo
                     await this.loadExampleCV();
                 }
             } else if (data.success && !data.has_cv) {
-                // Usuario autenticado pero NO tiene CV - cargar plantilla de ejemplo personalizada
-                console.log('User authenticated but no CV found, loading personalized example template');
                 this.userCV = null;
                 await this.loadExampleCV();
             } else {
-                // Error o usuario no autenticado
                 console.log('Loading example CV (not authenticated)');
                 await this.loadExampleCV();
             }
         } catch (error) {
             console.error('Error loading user CV:', error);
-            // En caso de error, cargar ejemplo
             await this.loadExampleCV();
         }
     }
@@ -330,6 +326,17 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
             if (data.success && data.cv_data) {
                 this.currentCVData = data.cv_data;
+                
+                // Para usuarios no autenticados, usar Harvard por defecto si no hay plantilla seleccionada
+                if (!this.isAuthenticated && !this.currentTemplate) {
+                    const harvardTemplate = this.availableTemplates.find(t => 
+                        t.name === 'Harvard Profesional' || t.name.toLowerCase().includes('harvard')
+                    );
+                    if (harvardTemplate) {
+                        this.currentTemplate = harvardTemplate.id;
+                    }
+                }
+                
                 this.displayJSONInEditor(this.currentCVData);
 
                 // Cargar título en el editor de nombre
@@ -453,7 +460,6 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                 let newLeftWidth = startLeftWidth + diffX;
                 let newRightWidth = startRightWidth - diffX;
                 
-                // Límites mínimos (20% cada panel)
                 const minWidth = totalWidth * 0.2;
                 
                 if (newLeftWidth < minWidth) {
@@ -494,22 +500,20 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             this.jsonEditor.style.whiteSpace = 'pre';
             this.jsonEditor.style.wordWrap = 'normal';
             this.jsonEditor.style.overflowWrap = 'normal';
-            this.wordWrapBtn.style.color = '#64748b'; // text-slate-500
+            this.wordWrapBtn.style.color = '#64748b';
         } else {
             this.jsonEditor.style.whiteSpace = 'pre-wrap';
             this.jsonEditor.style.wordWrap = 'break-word';
             this.jsonEditor.style.overflowWrap = 'break-word';
-            this.wordWrapBtn.style.color = '#00e1ff'; // active color
+            this.wordWrapBtn.style.color = '#00e1ff'; 
         }
     }
 
     scheduleAutoSave() {
-        // Cancelar cualquier guardado pendiente
         if (this.autoSaveTimeout) {
             clearTimeout(this.autoSaveTimeout);
         }
 
-        // Programar nuevo guardado después del delay
         this.autoSaveTimeout = setTimeout(() => {
             this.performAutoSave();
         }, this.autoSaveDelay);
@@ -542,7 +546,6 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             return;
         }
 
-        // Verificar si estamos en modo TOON buscando el tab activo
         let isTOONMode = false;
         const allSpans = document.querySelectorAll('span');
         allSpans.forEach(span => {
@@ -628,12 +631,16 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
     async changeTemplate(templateId) {
         this.currentTemplate = templateId;
+        
+        // Mostrar estado "Guardando" inmediatamente
+        if (this.isAuthenticated && this.currentCVData) {
+            this.hasUnsavedChanges = true;
+            this.updateSaveStatus('Guardando...', 'saving');
+            this.scheduleAutoSave();
+        }
+        
         await this.updatePreview();
-
-        console.log("Template changed to:", templateId);
-    }
-
-    async updatePreview() {
+        
         if (!this.currentCVData) return;
 
         if (!this.previewContainer) {
@@ -643,7 +650,6 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
         const cvHTML = this.generateCVHTML(this.currentCVData, this.currentTemplate);
         this.previewContainer.innerHTML = cvHTML;
-
     }
 
     generateCVHTML(cvData, template) {
@@ -653,6 +659,18 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         const education = cvData.education || [];
         const skills = cvData.skills || [];
         const languages = cvData.languages || [];
+        
+        // Verificar si es la plantilla Harvard
+        const isHarvardTemplate = this.availableTemplates.find(t => 
+            t.id === template && 
+            (t.name === 'Harvard Profesional' || t.name.toLowerCase().includes('harvard'))
+        );
+        
+        if (isHarvardTemplate) {
+            return this.generateHarvardTemplate(cvData);
+        }
+        
+        console.log('Usando plantilla estándar para:', template);
 
         let html = `
             <!-- CV Header -->
@@ -811,6 +829,131 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
         return html;
     }
+    
+    generateHarvardTemplate(cvData) {
+        const basics = cvData.basics || {};
+        const work = cvData.work || [];
+        const projects = cvData.projects || [];
+        const education = cvData.education || [];
+        const skills = cvData.skills || [];
+        const languages = cvData.languages || [];
+        
+        return `
+            <style>
+                .font-stix {
+                    font-family: 'STIX Two Text', serif;
+                }
+            </style>
+            
+            <div class="font-stix text-slate-900">
+                <!-- Header -->
+                <header class="text-center mb-3">
+                    <h1 class="text-3xl font-bold tracking-tight mb-2">${basics.name || 'Nombre Completo'}</h1>
+                    <div class="flex justify-center flex-wrap gap-2 text-[11pt] text-slate-800">
+                        ${basics.location ? `<span>${typeof basics.location === 'object' ? (basics.location.city + ', ' + basics.location.region) : basics.location}</span>` : ''}
+                        ${basics.location && basics.url ? '<span class="text-slate-500">•</span>' : ''}
+                        ${basics.url ? `<a href="${basics.url}" target="_blank" class="text-blue-600">${basics.url.replace(/^https?:\/\//, '')}</a>` : ''}
+                        ${(basics.location || basics.url) && basics.phone ? '<span class="text-slate-500">•</span>' : ''}
+                        ${basics.phone ? `<span>${basics.phone}</span>` : ''}
+                        ${((basics.location || basics.url || basics.phone) && basics.email) ? '<span class="text-slate-500">•</span>' : ''}
+                        ${basics.email ? `<span>${basics.email}</span>` : ''}
+                    </div>
+                    <hr class="mt-1 border-slate-800 border-b">
+                </header>
+    
+                <!-- Summary -->
+                ${basics.summary ? `
+                <section class="mb-3">
+                    <p class="text-[11pt] text-slate-800 italic leading-snug">
+                        ${basics.summary}
+                    </p>
+                </section>
+                ` : ''}
+    <!-- Experiencia Laboral -->
+                ${work.length > 0 ? `
+                <section class="mb-3">
+                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Experiencia Profesional</h2>
+                    ${work.map((job, index) => `
+                        <div class="${index < work.length - 1 ? 'mb-5' : ''}">
+                            <div class="flex justify-between items-baseline">
+                                <h3 class="font-bold text-[12pt]">${job.name || 'Empresa'}</h3>
+                                <span class="font-bold text-[11pt]">${job.location || ''}</span>
+                            </div>
+                            <div class="flex justify-between items-baseline mb-2">
+                                <span class="text-[11pt]">${job.position || 'Cargo'}</span>
+                                <span class="italic text-[10pt]">${this.formatDateRange(job.startDate, job.endDate)}</span>
+                            </div>
+                            ${job.highlights && job.highlights.length > 0 ? `
+                                <ul class="list-disc list-outside ml-5 space-y-0.5 text-[10.5pt] text-slate-800">
+                                    ${job.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </section>
+                ` : ''}
+                <!-- Proyectos -->
+                ${projects.length > 0 ? `
+                <section class="mb-3">
+                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Proyectos</h2>
+                    ${projects.map((project, index) => `
+                        <div class="${index < projects.length - 1 ? 'mb-5' : ''}">
+                            <div class="flex justify-between items-baseline">
+                                <h3 class="font-bold text-[12pt]">${project.name || 'Proyecto'}</h3>
+                                <span class="font-bold text-[11pt]">${project.type || 'Proyecto Personal'}</span>
+                            </div>
+                            <div class="flex justify-between items-baseline mb-2">
+                                <span class="text-[11pt]">${project.role || 'Desarrollador'}</span>
+                                <span class="italic text-[10pt]">${this.formatDateRange(project.startDate, project.endDate)}</span>
+                            </div>
+                            ${project.highlights && project.highlights.length > 0 ? `
+                                <ul class="list-disc list-outside ml-5 space-y-0.5 text-[10.5pt] text-slate-800">
+                                    ${project.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                            ${project.technologies && project.technologies.length > 0 ? `
+                                <p class="text-[10pt] mt-1">
+                                    <span class="italic">Tecnologías:</span> ${project.technologies.join(', ')}
+                                </p>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </section>
+                ` : ''}
+    
+                <!-- Educación -->
+                ${education.length > 0 ? `
+                <section class="mb-3">
+                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Educación</h2>
+                    ${education.map(edu => `
+                        <div class="flex justify-between items-baseline">
+                            <h3 class="font-bold text-[12pt]">${edu.institution || 'Universidad'}</h3>
+                            <span class="font-bold text-[11pt]">${edu.location || ''}</span>
+                        </div>
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-[11pt]">${edu.studyType || ''} ${edu.area ? 'en ' + edu.area : ''}</span>
+                            <span class="italic text-[10pt]">${this.formatDateRange(edu.startDate, edu.endDate)}</span>
+                        </div>
+                    `).join('')}
+                </section>
+                ` : ''}
+    
+                <!-- Skills -->
+                ${skills.length > 0 ? `
+                <section>
+                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Skills Adicionales</h2>
+                    <ul class="list-disc list-outside ml-5 space-y-1 text-[11pt] text-slate-800">
+                        ${skills.map(skillGroup => {
+                            const skillsText = skillGroup.keywords ? skillGroup.keywords.join(', ') : skillGroup.name;
+                            return `<li>${skillsText}</li>`;
+                        }).join('')}
+                        ${languages.length > 0 ? `<li>Idiomas: ${languages.map(lang => `${lang.language} (${lang.fluency || 'Intermedio'})`).join(', ')}</li>` : ''}
+                    </ul>
+                </section>
+                ` : ''}
+            </div>
+        `;
+    }
 
     formatDateRange(startDate, endDate) {
         const formatDate = (dateStr) => {
@@ -852,50 +995,6 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         }
     }
 
-    saveToLocalStorage() {
-        if (this.currentCVData) {
-            localStorage.setItem('codeoner_cv_data', JSON.stringify(this.currentCVData));
-            localStorage.setItem('codeoner_cv_template', this.currentTemplate);
-
-            // Guardar el título también
-            if (this.currentCVData.basics?.name) {
-                localStorage.setItem('codeoner_cv_title', this.currentCVData.basics.name);
-            }
-        }
-    }
-
-    loadFromLocalStorage() {
-        if (!this.isAuthenticated) {
-            const savedData = localStorage.getItem('codeoner_cv_data');
-            const savedTemplate = localStorage.getItem('codeoner_cv_template');
-            const savedTitle = localStorage.getItem('codeoner_cv_title');
-
-            if (savedData) {
-                try {
-                    this.currentCVData = JSON.parse(savedData);
-                    this.displayJSONInEditor(this.currentCVData);
-
-                    // Cargar título en el editor de nombre
-                    if (this.filenameEditor && savedTitle) {
-                        this.filenameEditor.textContent = savedTitle;
-                    } else if (this.filenameEditor && this.currentCVData.basics?.name) {
-                        this.filenameEditor.textContent = this.currentCVData.basics.name;
-                    }
-
-                    this.updatePreview();
-                    this.markAsSaved();
-                    this.updateSaveStatus('Auto guardado', 'success');
-                } catch (e) {
-                    console.error('Error loading from localStorage:', e);
-                }
-            }
-
-            if (savedTemplate && this.availableTemplates.some(t => t.id === savedTemplate)) {
-                this.currentTemplate = savedTemplate;
-            }
-        }
-    }
-
     async saveToDatabase() {
         try {
             const response = await fetch('/cv/save', {
@@ -934,16 +1033,142 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
     }
 
     async exportToPDF() {
-        this.showNotification('Generando PDF...', 'info');
 
         try {
-            // Obtener el contenido del CV
+            // Determinar si estamos usando plantilla Harvard
+            let isHarvardTemplate = false;
+            const templateObj = this.availableTemplates.find(t => t.id === this.currentTemplate);
+            if (templateObj) {
+                isHarvardTemplate = templateObj.name === 'Harvard Profesional' || 
+                                   templateObj.name.toLowerCase().includes('harvard');
+            }
+
             const cvContent = this.previewContainer.innerHTML;
             const cvTitle = this.userCV?.title || this.filenameEditor?.textContent?.trim() || 'Mi CV';
             const filename = this.generateSlug(cvTitle) + '.pdf';
 
-            // Crear una ventana nueva con el contenido del CV para imprimir
             const printWindow = window.open('', '_blank');
+            
+            let fontImport, bodyStyles;
+            
+            if (isHarvardTemplate) {
+                fontImport = "@import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');";
+                bodyStyles = `
+                    body {
+                        font-family: 'STIX Two Text', serif;
+                        line-height: 1.4;
+                        color: #0f172a;
+                    }
+                    .font-stix {
+                        font-family: 'STIX Two Text', serif;
+                    }
+                    .text-[11pt] {
+                        font-size: 10pt;
+                    }
+                    .text-\[12pt\] {
+                        font-size: 10pt;
+                    }
+                    .text-\[10pt\] {
+                        font-size: 10pt;
+                    }
+                    .text-\[10\.5pt\] {
+                        font-size: 10.5pt;
+                    }
+                    .border-\[1\.5px\] {
+                        border-width: 0.5px;
+                    }
+                    .border-slate-800 {
+                        border-color: #1e293b;
+                    }
+                    .border-b-2 {
+                        border-bottom-width: 1px;
+                    }
+                    .text-center{
+                        text-align: center;
+                    }
+                    .mb-4{
+                        margin-bottom: 0.5rem;
+                    }
+                    .flex{
+                        display: flex;
+                    }
+                    .justify-center{
+                        justify-content: center;
+                    }
+                    .flex-wrap{
+                        flex-wrap: wrap;
+                    }
+                    .text-[11pt]{
+                        font-size: 10pt;
+                    }
+                    .gap-2{
+                        gap: 0.5rem;
+                    }
+                    .list-disc{
+                        list-style-type: disc;
+                    }
+                    .list-outside{
+                        list-style-position: outside;
+                    }
+                    .tracking-wide{
+                        letter-spacing: 0.05em;
+                    }
+                    .ml-5{
+                        margin-left: 1.25rem;
+                    }
+                    .mb-3 { margin-bottom: 0.1rem; }
+                    .space-y-0.5{
+                        row-gap: 0.125rem;}
+                    
+                    .text-[10.5pt]{
+                        font-size: 10.5pt;
+                    }
+                    h2{
+                        margin:0;
+                        padding:0;
+                    }
+                    h1, h2, h3, p, ul {
+                        font-size: inherit; 
+                        font-weight: inherit; 
+                    }
+
+                    a {
+                        color: inherit;
+                        text-decoration: inherit; 
+                    }
+
+                    ul {
+                        list-style: none; 
+                    }
+                    .text-slate-900 {
+                        color: #0f172a;
+                    }
+                    .text-slate-800 {
+                        color: #1e293b;
+                    }
+                    .text-slate-700 {
+                        color: #334155;
+                    }
+                    .text-slate-500 {
+                        color: #64748b;
+                    }
+                    .text-blue-600 {
+                        color: #2563eb;
+                    }
+                `;
+            } else {
+                // Estilos para plantilla estándar
+                fontImport = "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');";
+                bodyStyles = `
+                    body {
+                        font-family: 'Inter', sans-serif;
+                        line-height: 1.5;
+                        color: #1f2937;
+                        padding: 15mm;
+                    }
+                `;
+            }
+            
             printWindow.document.write(`
                 <!DOCTYPE html>
                 <html>
@@ -951,7 +1176,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                     <meta charset="UTF-8">
                     <title>${cvTitle}</title>
                     <style>
-                        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+                        ${fontImport}
                         
                         * { margin: 0; padding: 0; box-sizing: border-box; }
                         @media print {
@@ -965,8 +1190,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                             page-break-after: avoid;
                         }
                         }
-                        body {
-                            font-family: 'Inter', sans-serif;
+                        ${bodyStyles}
                             line-height: 1.6;
                             color: #1e293b;
                             background: white;
@@ -1005,9 +1229,9 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                             display: block;
                         }
 
-                        .w-32 { width: 8rem; } /* 128px */
+                        .w-32 { width: 8rem; } 
                         .h-32 { height: 8rem; }
-                        .w-28 { width: 7rem; } /* 112px */
+                        .w-28 { width: 7rem; } 
                         .h-28 { height: 7rem; }
                         .object-cover { object-fit: cover; }
                         .rounded-xl { border-radius: 0.75rem; }
@@ -1032,7 +1256,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                         
                         .mb-8 { margin-bottom: 2rem; }
                         .mb-6 { margin-bottom: 1.5rem; }
-                        .mb-4 { margin-bottom: 1rem; }
+                        .mb-4 { margin-bottom: 0.5rem; }
                         .mb-3 { margin-bottom: 0.75rem; }
                         .mb-2 { margin-bottom: 0.5rem; }
                         .mb-1 { margin-bottom: 0.25rem; }
@@ -1195,6 +1419,94 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             if (text) {
                 text.className = `text-xs font-medium status-text ${config.color}`;
             }
+        }
+    }
+
+    async updatePreview() {
+        if (!this.currentCVData) return;
+
+        if (!this.previewContainer) {
+            console.warn('Preview container not found, cannot update preview');
+            return;
+        }
+
+        // Mostrar loader mientras se genera la vista previa
+        const loader = this.previewContainer.querySelector('#loader');
+        const content = this.previewContainer.querySelector('#cv-content');
+        
+        if (loader) loader.style.display = 'flex';
+        if (content) content.style.display = 'none';
+
+        try {
+            const cvHTML = this.generateCVHTML(this.currentCVData, this.currentTemplate);
+            
+            if (content) {
+                content.innerHTML = cvHTML;
+                content.style.display = 'block';
+            } else {
+                // Si no existe el contenedor de contenido, crear uno
+                this.previewContainer.innerHTML = `<div id="cv-content">${cvHTML}</div>`;
+            }
+            
+            if (loader) loader.style.display = 'none';
+        } catch (error) {
+            console.error('Error updating preview:', error);
+            if (loader) loader.style.display = 'none';
+        }
+    }
+
+    saveToLocalStorage() {
+        try {
+            localStorage.setItem('codeoner_cv_data', JSON.stringify(this.currentCVData));
+            localStorage.setItem('codeoner_cv_template', this.currentTemplate);
+            if (this.currentCVData.basics?.name) {
+                localStorage.setItem('codeoner_cv_title', this.currentCVData.basics.name);
+            }
+        } catch (error) {
+            console.error('Error saving to localStorage:', error);
+        }
+    }
+
+    loadFromLocalStorage() {
+        if (!localStorage) return false;
+
+        try {
+            const savedData = localStorage.getItem('codeoner_cv_data');
+            const savedTemplate = localStorage.getItem('codeoner_cv_template');
+            const savedTitle = localStorage.getItem('codeoner_cv_title');
+
+            if (savedData) {
+                this.currentCVData = JSON.parse(savedData);
+                this.displayJSONInEditor(this.currentCVData);
+
+                // Cargar título en el editor de nombre
+                if (this.filenameEditor && savedTitle) {
+                    this.filenameEditor.textContent = savedTitle;
+                } else if (this.filenameEditor && this.currentCVData.basics?.name) {
+                    this.filenameEditor.textContent = this.currentCVData.basics.name;
+                }
+
+                this.updatePreview();
+                this.markAsSaved();
+                this.updateSaveStatus('Auto guardado', 'success');
+                return true;
+            }
+            
+            if (savedTemplate && this.availableTemplates.some(t => t.id === savedTemplate)) {
+                this.currentTemplate = savedTemplate;
+            }
+            
+            return false;
+        } catch (error) {
+            console.error('Error loading from localStorage:', error);
+            return false;
+        }
+    }
+    
+    updateCustomSelect() {
+        // Notificar al custom-select que se actualice con la plantilla actual
+        if (window.customSelectInstance && window.customSelectInstance.updateSelectedTemplate) {
+            window.customSelectInstance.updateSelectedTemplate(this.currentTemplate);
         }
     }
 }

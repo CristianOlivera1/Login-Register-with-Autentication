@@ -28,6 +28,29 @@
   ],
   "projects": [
     {
+      "name": "Chat AI - Plataforma de generación de Imágenes y Videos",
+      "role": "Desarrollador FullStack",
+      "type": "Proyecto Personal",
+      "startDate": "2025-11",
+      "endDate": "2026-02",
+      "description": "Aplicación integral de IA para la generación de contenido visual y chat conversacional fluido.",
+      "highlights": [
+        "Desarrollé una aplicación integral de IA para la generación de imágenes y videos a partir de descripciones textuales mediante Google Gemini y Freepik API.",
+        "Implementé un sistema de chat conversacional, con una interacción fluida y respuestas instantáneas.",
+        "Configuré un sistema de autenticación completa con Google OAuth a través de Supabase y gestión de base de datos relacional en PostgreSQL.",
+        "Implementé una lógica de almacenamiento dual que gestiona de forma diferenciada el historial de conversaciones para usuarios autenticados y anónimos."
+      ],
+      "technologies": [
+        "Next.js 15",
+        "Tailwind CSS",
+        "Google Gemini",
+        "Supabase",
+        "Freepik API",
+        "PostgreSQL",
+        "AI Elements"
+      ]
+    },
+    {
       "name": "Apu Nina - Sistema de Gestión de Incendios Forestales",
       "role": "Desarrollador FullStack",
       "type": "Proyecto Académico",
@@ -40,22 +63,16 @@
         "Integré funcionalidades de localización GPS en tiempo real y sistema de notificaciones push.",
         "Optimicé la exportación de datos en múltiples formatos (JSON, CSV, Excel)."
       ],
-      "technologies": ["Angular", "Spring Boot", "MySQL", "Supabase", "Tailwind CSS", "Google Cloud", "LeafletJS", "UIAvatars API"]
-    },
-    {
-      "name": "Pacha App - Gestión de Actividades con Información Meteorológica",
-      "role": "Desarrollador Mobile/Backend",
-      "type": "Proyecto Académico",
-      "startDate": "2025-06",
-      "endDate": "2025-08",
-      "description": "Aplicación móvil Android para gestión de actividades con integración meteorológica",
-      "highlights": [
-        "Construí una aplicación móvil Android para gestión de actividades con integración meteorológica.",
-        "Implementé autenticación Firebase y notificaciones FCM para engagement en tiempo real.",
-        "Implementé autenticación con Google OAuth.",
-        "Integré OpenWeatherMap API y servicios de geolocalización para funcionalidades contextuales."
-      ],
-      "technologies": ["Android Studio", "Spring Boot", "Firebase", "MySQL", "Supabase", "OpenWeather API", "Google Cloud"]
+      "technologies": [
+        "Angular",
+        "Spring Boot",
+        "MySQL",
+        "Supabase",
+        "Tailwind CSS",
+        "Google Cloud",
+        "LeafletJS",
+        "UIAvatars API"
+      ]
     },
     {
       "name": "Unamba Forum - Plataforma de Foro Universitario",
@@ -70,7 +87,16 @@
         "Optimicé el sistema de notificaciones push reduciendo la latencia en un 60%.",
         "Diseñé una arquitectura escalable para múltiples carreras universitarias con roles diferenciados."
       ],
-      "technologies": ["Angular 20", "Spring Boot", "MySQL", "Tailwind CSS", "Supabase", "Google Cloud", "UIAvatars API", "The Cat API"]
+      "technologies": [
+        "Angular 20",
+        "Spring Boot",
+        "MySQL",
+        "Tailwind CSS",
+        "Supabase",
+        "Google Cloud",
+        "UIAvatars API",
+        "The Cat API"
+      ]
     }
   ],
   "education": [

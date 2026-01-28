@@ -37,16 +37,16 @@
                 <span id="tab-toon" class="text-xs text-slate-500 hover:text-slate-300 h-10 flex items-center px-1 cursor-pointer transition-colors">TOON Source</span>
             </div>
             <div class="flex items-center gap-3">
-                <button class="text-slate-500 hover:text-white transition-colors" title="Alternar ajuste de líneas">
+                <button id="word-wrap-btn" class="text-slate-500 hover:text-white transition-colors" title="Alternar ajuste de líneas">
                     <iconify-icon icon="fluent:text-first-line-20-filled" width="16"></iconify-icon>
                 </button>
-                <button class="text-slate-500 hover:text-white transition-colors" title="Formatear JSON">
+                <button id="format-code-btn" class="text-slate-500 hover:text-white transition-colors" title="Formatear JSON">
                     <iconify-icon icon="tabler:code-dots" width="16"></iconify-icon>
                 </button>
-                <button class="text-slate-500 hover:text-white transition-colors" title="Subir JSON">
+                <button id="upload-json-btn" class="text-slate-500 hover:text-white transition-colors" title="Subir JSON">
                     <iconify-icon icon="solar:upload-minimalistic-linear" width="16"></iconify-icon>
                 </button>
-                <button class="text-slate-500 hover:text-white transition-colors" title="Copiar al portapapeles" id="copy-json-btn">
+                <button id="copy-btn" class="text-slate-500 hover:text-white transition-colors" title="Copiar al portapapeles">
                     <iconify-icon icon="solar:copy-linear" width="16"></iconify-icon>
                 </button>
             </div>

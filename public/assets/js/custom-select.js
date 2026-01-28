@@ -2,11 +2,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectButton = document.getElementById('select-button');
     const selectMenu = document.getElementById('select-menu');
     const selectedValueText = document.getElementById('selected-value');
-    const options = document.querySelectorAll('.option-btn');
 
     if (!selectButton || !selectMenu || !selectedValueText) {
         return;
     }
+
+    let availableTemplates = [];
+
+    // Crear instancia global para sincronización con cv-generator
+    window.customSelectInstance = {
+        updateSelectedTemplate: function(templateId) {
+            const template = availableTemplates.find(t => t.id === templateId);
+            if (template) {
+                selectedValueText.textContent = template.name;
+                console.log('Custom-select sincronizado con plantilla:', template.name);
+            }
+        }
+    };
 
     loadTemplates();
 
@@ -27,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             
             if (data.success && data.templates) {
+                availableTemplates = data.templates;
                 updateTemplateOptions(data.templates);
             }
         } catch (error) {
@@ -47,7 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
             option.setAttribute('data-name', template.name);
             
             let icon = 'solar:document-text-linear';
-            if (template.name.toLowerCase().includes('moderno')) {
+            if (template.name.toLowerCase().includes('harvard')) {
+                icon = 'simple-line-icons:graduation';
+            } else if (template.name.toLowerCase().includes('moderno')) {
                 icon = 'solar:magic-stick-3-linear';
             } else if (template.name.toLowerCase().includes('creativ')) {
                 icon = 'solar:star-rainbow-linear';
@@ -64,11 +79,42 @@ document.addEventListener('DOMContentLoaded', function() {
         updateOptionListeners();
         
         if (templates.length > 0) {
-            selectedValueText.textContent = templates[0].name;
-            
-            if (window.cvGenerator) {
-                window.cvGenerator.currentTemplate = templates[0].id;
-            }
+            // Dar tiempo para que cvGenerator se inicialice completamente
+            setTimeout(() => {
+                let defaultTemplate;
+                
+                // Si cvGenerator ya tiene una plantilla seleccionada, usar esa
+                if (window.cvGenerator && window.cvGenerator.currentTemplate) {
+                    defaultTemplate = templates.find(t => t.id === window.cvGenerator.currentTemplate);
+                    console.log('Usando plantilla desde cvGenerator:', defaultTemplate?.name);
+                }
+                
+                // Si no hay plantilla en cvGenerator, buscar Harvard como default
+                if (!defaultTemplate) {
+                    defaultTemplate = templates.find(t => t.name === 'Harvard Profesional');
+                    console.log('Forzando plantilla Harvard por defecto:', defaultTemplate?.name);
+                    
+                    // Asignar Harvard a cvGenerator si no tiene plantilla
+                    if (window.cvGenerator && defaultTemplate) {
+                        window.cvGenerator.currentTemplate = defaultTemplate.id;
+                        window.cvGenerator.updatePreview(); // Actualizar vista previa
+                        console.log('Template Harvard asignado a cvGenerator:', defaultTemplate.id);
+                    }
+                }
+                
+                // Fallback al primer template
+                if (!defaultTemplate) {
+                    defaultTemplate = templates[0];
+                    console.log('Usando primer template como fallback:', defaultTemplate?.name);
+                    
+                    if (window.cvGenerator) {
+                        window.cvGenerator.currentTemplate = defaultTemplate.id;
+                        window.cvGenerator.updatePreview();
+                    }
+                }
+                
+                selectedValueText.textContent = defaultTemplate.name;
+            }, 100); // Reducir el delay para mejor sincronización
         }
     }
 

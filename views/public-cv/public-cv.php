@@ -15,14 +15,10 @@ $isAuthenticated = isset($_SESSION['user_id']);
             display: none !important;
         }
 
-        .a4-paper {
-            transform: none !important;
-            margin: 0 !important;
-            box-shadow: none !important;
-        }
     }
 </style>
 
+<!-- CV PUBLICO -->
 <main class="py-8">
     <div class="max-w-4xl mx-auto px-4">
         <div class="a4-paper mx-auto p-8 md:p-12">
@@ -34,7 +30,166 @@ $isAuthenticated = isset($_SESSION['user_id']);
             $education = $cvData['education'] ?? [];
             $skills = $cvData['skills'] ?? [];
             $languages = $cvData['languages'] ?? [];
+            
+            // Verificar si debe usar plantilla Harvard
+            $templateName = $cv['template_name'] ?? '';
+            $isHarvardTemplate = stripos($templateName, 'harvard') !== false;
             ?>
+            
+            <?php if ($isHarvardTemplate): ?>
+                <!-- Plantilla Harvard Professional -->
+                <style>
+                    .font-stix {
+                        font-family: 'STIX Two Text', serif;
+                    }
+                </style>
+                
+                <div class="font-stix text-slate-900">
+                    <!-- Header -->
+                    <header class="text-center mb-3">
+                        <h1 class="text-3xl font-bold tracking-tight mb-2"><?php echo htmlspecialchars($basics['name'] ?? 'Nombre Completo'); ?></h1>
+                        <div class="flex justify-center flex-wrap gap-2 text-[11pt] text-slate-700">
+                            <?php if (!empty($basics['location'])): ?>
+                                <span>
+                                    <?php 
+                                    if (is_array($basics['location'])) {
+                                        echo htmlspecialchars(($basics['location']['city'] ?? '') . ', ' . ($basics['location']['region'] ?? ''));
+                                    } else {
+                                        echo htmlspecialchars($basics['location']);
+                                    }
+                                    ?>
+                                </span>
+                            <?php endif; ?>
+                            <?php if (!empty($basics['location']) && !empty($basics['url'])): ?>
+                                <span class="text-slate-500">•</span>
+                            <?php endif; ?>
+                            <?php if (!empty($basics['url'])): ?>
+                                <a href="<?php echo htmlspecialchars($basics['url']); ?>" target="_blank" class="text-blue-600">
+                                    <?php echo htmlspecialchars(preg_replace('/^https?:\/\//', '', $basics['url'])); ?>
+                                </a>
+                            <?php endif; ?>
+                            <?php if ((!empty($basics['location']) || !empty($basics['url'])) && !empty($basics['phone'])): ?>
+                                <span class="text-slate-500">•</span>
+                            <?php endif; ?>
+                            <?php if (!empty($basics['phone'])): ?>
+                                <span><?php echo htmlspecialchars($basics['phone']); ?></span>
+                            <?php endif; ?>
+                            <?php if (((!empty($basics['location']) || !empty($basics['url']) || !empty($basics['phone'])) && !empty($basics['email']))): ?>
+                                <span class="text-slate-500">•</span>
+                            <?php endif; ?>
+                            <?php if (!empty($basics['email'])): ?>
+                                <span><?php echo htmlspecialchars($basics['email']); ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <hr class="mt-1 border-slate-800 border-b">
+                    </header>
+        
+                    <!-- Summary -->
+                    <?php if (!empty($basics['summary'])): ?>
+                    <section class="mb-3">
+                        <p class="text-[11pt] text-slate-800 italic leading-snug">
+                            <?php echo nl2br(htmlspecialchars($basics['summary'])); ?>
+                        </p>
+                    </section>
+                    <?php endif; ?>
+
+                    <!-- Experiencia Laboral -->
+                    <?php if (!empty($work)): ?>
+                    <section class="mb-3">
+                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Experiencia Profesional</h2>
+                        <?php foreach ($work as $index => $job): ?>
+                            <div class="<?php echo ($index < count($work) - 1) ? 'mb-5' : ''; ?>">
+                                <div class="flex justify-between items-baseline">
+                                    <h3 class="font-bold text-[12pt]"><?php echo htmlspecialchars($job['name'] ?? 'Empresa'); ?></h3>
+                                    <span class="font-bold text-[11pt]"><?php echo htmlspecialchars($job['location'] ?? ''); ?></span>
+                                </div>
+                                <div class="flex justify-between items-baseline mb-2">
+                                    <span class="text-[11pt]"><?php echo htmlspecialchars($job['position'] ?? 'Cargo'); ?></span>
+                                    <span class="italic text-[10pt]"><?php echo htmlspecialchars(formatDateRange($job['startDate'] ?? '', $job['endDate'] ?? '')); ?></span>
+                                </div>
+                                <?php if (!empty($job['highlights'])): ?>
+                                    <ul class="list-disc list-outside ml-5 space-y-0.5 text-[10.5pt] text-slate-800">
+                                        <?php foreach ($job['highlights'] as $highlight): ?>
+                                            <li><?php echo htmlspecialchars($highlight); ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </section>
+                    <?php endif; ?>
+        
+                    <!-- Proyectos -->
+                    <?php if (!empty($projects)): ?>
+                    <section class="mb-3">
+                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Proyectos</h2>
+                        <?php foreach ($projects as $index => $project): ?>
+                            <div class="<?php echo ($index < count($projects) - 1) ? 'mb-5' : ''; ?>">
+                                <div class="flex justify-between items-baseline">
+                                    <h3 class="font-bold text-[12pt]"><?php echo htmlspecialchars($project['name'] ?? 'Proyecto'); ?></h3>
+                                    <span class="font-bold text-[11pt]"><?php echo htmlspecialchars($project['type'] ?? 'Proyecto Personal'); ?></span>
+                                </div>
+                                <div class="flex justify-between items-baseline mb-2">
+                                    <span class="text-[11pt]"><?php echo htmlspecialchars($project['role'] ?? 'Desarrollador'); ?></span>
+                                    <span class="italic text-[10pt]"><?php echo htmlspecialchars(formatDateRange($project['startDate'] ?? '', $project['endDate'] ?? '')); ?></span>
+                                </div>
+                                <?php if (!empty($project['highlights'])): ?>
+                                    <ul class="list-disc list-outside ml-5 space-y-0.5 text-[10.5pt] text-slate-800">
+                                        <?php foreach ($project['highlights'] as $highlight): ?>
+                                            <li><?php echo htmlspecialchars($highlight); ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                                <?php if (!empty($project['technologies'])): ?>
+                                    <p class="text-[10pt] mt-1">
+                                        <span class="italic">Tecnologías:</span> <?php echo htmlspecialchars(implode(', ', $project['technologies'])); ?>
+                                    </p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </section>
+                    <?php endif; ?>
+
+                    <!-- Educación -->
+                    <?php if (!empty($education)): ?>
+                    <section class="mb-3">
+                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Educación</h2>
+                        <?php foreach ($education as $edu): ?>
+                            <div class="flex justify-between items-baseline">
+                                <h3 class="font-bold text-[12pt]"><?php echo htmlspecialchars($edu['institution'] ?? 'Universidad'); ?></h3>
+                                <span class="font-bold text-[11pt]"><?php echo htmlspecialchars($edu['location'] ?? ''); ?></span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <span class="text-[11pt]"><?php echo htmlspecialchars(($edu['studyType'] ?? '') . (!empty($edu['area']) ? ' en ' . $edu['area'] : '')); ?></span>
+                                <span class="italic text-[10pt]"><?php echo htmlspecialchars(formatDateRange($edu['startDate'] ?? '', $edu['endDate'] ?? '')); ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    </section>
+                    <?php endif; ?>
+        
+                    <!-- Skills -->
+                    <?php if (!empty($skills)): ?>
+                    <section>
+                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Skills Adicionales</h2>
+                        <ul class="list-disc list-outside ml-5 space-y-1 text-[11pt] text-slate-800">
+                            <?php foreach ($skills as $skillGroup): ?>
+                                <li><?php echo htmlspecialchars((!empty($skillGroup['keywords']) ? implode(', ', $skillGroup['keywords']) : $skillGroup['name'])); ?></li>
+                            <?php endforeach; ?>
+                            <?php if (!empty($languages)): ?>
+                                <li>Idiomas: <?php 
+                                    $langTexts = [];
+                                    foreach ($languages as $lang) {
+                                        $langTexts[] = htmlspecialchars($lang['language'] . ' (' . ($lang['fluency'] ?? 'Intermedio') . ')');
+                                    }
+                                    echo implode(', ', $langTexts);
+                                ?></li>
+                            <?php endif; ?>
+                        </ul>
+                    </section>
+                    <?php endif; ?>
+                </div>
+            <?php else: ?>
+                <!-- Plantilla Estándar -->
 
             <header class="mb-8 border-b border-slate-200 pb-6 flex items-start gap-6">
                 <?php if (!empty($basics['image'])): ?>
@@ -238,8 +393,8 @@ $isAuthenticated = isset($_SESSION['user_id']);
                     </div>
                 </section>
             <?php endif; ?>
+            <?php endif; // Fin plantilla estándar ?>
         </div>
-    </div>
     </div>
 </main>
 

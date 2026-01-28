@@ -427,7 +427,9 @@ class CVController
                 if (!empty($user['email'])) {
                     $data['basics']['email'] = $user['email'];
                 }
-                // Limpiar campos que el usuario debería llenar
+                if (!empty($user['avatar'])) {
+                    $data['basics']['image'] = $user['avatar'];
+                }
                 $data['basics']['url'] = 'https://github.com/' . strtolower(str_replace(' ', '', $user['firstName'] ?? 'usuario'));
             }
         }

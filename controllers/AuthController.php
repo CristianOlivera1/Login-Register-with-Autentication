@@ -107,7 +107,7 @@ class AuthController {
             'password' => $password,
             'firstName' => $firstName,
             'lastName' => $lastName,
-            'avatar' => 'https://img.freepik.com/vector-premium/icono-usuario-simple-3d-aislado_169241-6922.jpg'
+            'avatar'    => 'https://api.dicebear.com/9.x/pixel-art/svg?seed=' . urlencode($firstName ?: $email)
         ];
 
         $newUser = $this->userModel->create($userData);

@@ -136,9 +136,27 @@ if (str_starts_with($route, 'CV/')) {
     $slug = substr($route, 3);
     if (preg_match('/^[a-z0-9\-]+$/', $slug)) {
         require_once __DIR__ . '/../controllers/CVController.php';
+        require_once __DIR__ . '/../src/CV.php';
         $cvController = new CVController();
-        $cvController->getPublicCV($slug);
-        exit;
+        
+        $cvModel = new CV();
+        $cv = $cvModel->getCVBySlug($slug);
+        
+        if ($cv) {
+            $cvController->getPublicCV($slug);
+            exit;
+        } else {
+            $similarCV = $cvModel->findSimilarCV($slug);
+            
+            if ($similarCV) {
+                header("Location: /CV/{$similarCV['slug']}", true, 302);
+                exit;
+            } else {
+                http_response_code(404);
+                include __DIR__ . '/../views/404.php';
+                exit;
+            }
+        }
     }
 }
 
