@@ -1,0 +1,120 @@
+{
+  "basics": {
+    "name": "Cristian Olivera Chávez",
+    "label": "Desarrollador de Aplicaciones Web",
+    "image": "https://github.com/CristianOlivera1.png",
+    "email": "oliverachavezcristian@gmail.com",
+    "phone": "+51 954 306 632",
+    "url": "https://github.com/CristianOlivera1",
+    "summary": "Mi responsabilidad es algo que me caracteriza. Estoy constantemente en busca de oportunidades para nunca dejar de aprender y así perfeccionar mis habilidades. Desarrollador de aplicaciones web con conocimientos en tecnologías como Angular, React, Spring Boot, bases de datos y demás.",
+    "location": {
+      "city": "Abancay",
+      "region": "Apurímac"
+    }
+  },
+  "work": [
+    {
+      "name": "Codideep E.I.R.L",
+      "position": "Frontend Engineer",
+      "location": "Abancay, Apurímac",
+      "startDate": "2025-09",
+      "endDate": "2026-03",
+      "highlights": [
+        "Diseñé y desarrollé un sistema centralizado de gestión de gastos, estandarizando componentes técnicos para optimizar los ciclos de entrega de producto.",
+        "Ejecuté con éxito la actualización y refactorización de múltiples plataformas hacia versiones estables de Laravel y Angular, garantizando la escalabilidad a largo plazo.",
+        "Participé en el ciclo completo de desarrollo (FullStack) de un sistema de administración para centros deportivos, mejorando la eficiencia operativa en el manejo de reservas."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Apu Nina - Sistema de Gestión de Incendios Forestales",
+      "role": "Desarrollador FullStack",
+      "type": "Proyecto Académico",
+      "startDate": "2025-05",
+      "endDate": "2025-08",
+      "description": "Sistema web completo para la gestión y monitoreo de incendios forestales",
+      "highlights": [
+        "Desarrollé un sistema web completo para la gestión y monitoreo de incendios forestales.",
+        "Implementé autenticación con Google OAuth y sistema de roles para diferentes tipos de usuarios.",
+        "Integré funcionalidades de localización GPS en tiempo real y sistema de notificaciones push.",
+        "Optimicé la exportación de datos en múltiples formatos (JSON, CSV, Excel)."
+      ],
+      "technologies": ["Angular", "Spring Boot", "MySQL", "Supabase", "Tailwind CSS", "Google Cloud", "LeafletJS", "UIAvatars API"]
+    },
+    {
+      "name": "Pacha App - Gestión de Actividades con Información Meteorológica",
+      "role": "Desarrollador Mobile/Backend",
+      "type": "Proyecto Académico",
+      "startDate": "2025-06",
+      "endDate": "2025-08",
+      "description": "Aplicación móvil Android para gestión de actividades con integración meteorológica",
+      "highlights": [
+        "Construí una aplicación móvil Android para gestión de actividades con integración meteorológica.",
+        "Implementé autenticación Firebase y notificaciones FCM para engagement en tiempo real.",
+        "Implementé autenticación con Google OAuth.",
+        "Integré OpenWeatherMap API y servicios de geolocalización para funcionalidades contextuales."
+      ],
+      "technologies": ["Android Studio", "Spring Boot", "Firebase", "MySQL", "Supabase", "OpenWeather API", "Google Cloud"]
+    },
+    {
+      "name": "Unamba Forum - Plataforma de Foro Universitario",
+      "role": "Desarrollador FullStack",
+      "type": "Proyecto Personal",
+      "startDate": "2024-11",
+      "endDate": "Actual",
+      "description": "Plataforma completa de foro con publicaciones multimedia y sistema de comentarios anidados",
+      "highlights": [
+        "Desarrollé una plataforma completa de foro con publicaciones multimedia y sistema de comentarios anidados.",
+        "Implementé reacciones en tiempo real y perfiles de usuario personalizables.",
+        "Optimicé el sistema de notificaciones push reduciendo la latencia en un 60%.",
+        "Diseñé una arquitectura escalable para múltiples carreras universitarias con roles diferenciados."
+      ],
+      "technologies": ["Angular 20", "Spring Boot", "MySQL", "Tailwind CSS", "Supabase", "Google Cloud", "UIAvatars API", "The Cat API"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Nacional Micaela Bastidas de Apurímac",
+      "studyType": "Ingeniería Informática y Sistemas",
+      "location": "Abancay, Apurímac",
+      "startDate": "2022-04",
+      "endDate": "2027-04"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Tecnologías",
+      "keywords": [
+        "Angular",
+        "NextJs",
+        "Tailwind CSS",
+        "Bootstrap",
+        "Spring Boot",
+        "Laravel",
+        "MySQL",
+        "PostgreSQL",
+        "Android Studio",
+        "Firebase",
+        "Google Cloud",
+        "Supabase",
+        "Git",
+        "GitHub"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Español",
+      "fluency": "Nativo"
+    },
+    {
+      "language": "Quechua",
+      "fluency": "Nativo"
+    },
+    {
+      "language": "Inglés",
+      "fluency": "Básico"
+    }
+  ]
+}
