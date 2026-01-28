@@ -77,9 +77,84 @@ if (str_starts_with($route, 'auth/')) {
     }
 }
 
+// Manejar rutas de CV
+if (str_starts_with($route, 'cv/')) {
+    $cvRoute = substr($route, 3);
+    
+    switch ($cvRoute) {
+        case 'example':
+            require_once __DIR__ . '/../controllers/CVController.php';
+            $cvController = new CVController();
+            $cvController->getExampleCV();
+            exit;
+            
+        case 'generate':
+            require_once __DIR__ . '/../controllers/CVController.php';
+            $cvController = new CVController();
+            $cvController->generateCV();
+            exit;
+            
+        case 'templates':
+            require_once __DIR__ . '/../controllers/CVController.php';
+            $cvController = new CVController();
+            $cvController->getTemplates();
+            exit;
+            
+        case 'save':
+            require_once __DIR__ . '/../controllers/CVController.php';
+            $cvController = new CVController();
+            $cvController->saveCV();
+            exit;
+            
+        case 'save-title':
+            require_once __DIR__ . '/../controllers/CVController.php';
+            $cvController = new CVController();
+            $cvController->saveTitle();
+            exit;
+            
+        case 'user-cv':
+            require_once __DIR__ . '/../controllers/CVController.php';
+            $cvController = new CVController();
+            $cvController->getUserCV();
+            exit;
+            exit;
+            
+        default:
+            // Verificar si es un slug de CV público
+            if (preg_match('/^[a-z0-9\-]+$/', $cvRoute)) {
+                require_once __DIR__ . '/../controllers/CVController.php';
+                $cvController = new CVController();
+                $cvController->getPublicCV($cvRoute);
+                exit;
+            }
+            break;
+    }
+}
+
+// Manejar rutas de CV públicos con CV/ (mayúscula)
+if (str_starts_with($route, 'CV/')) {
+    $slug = substr($route, 3);
+    if (preg_match('/^[a-z0-9\-]+$/', $slug)) {
+        require_once __DIR__ . '/../controllers/CVController.php';
+        $cvController = new CVController();
+        $cvController->getPublicCV($slug);
+        exit;
+    }
+}
+
+// Manejar rutas de CV públicos (legacy con cv/ minúscula)
+if (preg_match('/^cv\/([a-z0-9\-]+)$/', $route, $matches)) {
+    $slug = $matches[1];
+    require_once __DIR__ . '/../controllers/CVController.php';
+    $cvController = new CVController();
+    $cvController->getPublicCV($slug);
+    exit;
+}
+
 $routes = [
-    'home'    => 'home/home.php',
-    'profile' => 'profile/profile.php'
+    'home'        => 'home/home.php',
+    'profile'     => 'profile/profile.php',
+    'generate-cv' => 'generate-cv/generate-cv.php',
 ];
 
 $viewPath = __DIR__ . '/../views/' . ($routes[$route] ?? '404.php');
