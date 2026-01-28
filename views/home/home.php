@@ -5,25 +5,25 @@ if (session_status() == PHP_SESSION_NONE) {
 $isAuthenticated = isset($_SESSION['user_id']);
 ?>
 
-<section class="relative pt-24 pb-16">
+<section class="relative pb-16">
     <div class="max-w-7xl mx-auto px-6 text-center">
+        <img src="/assets/img/logo-json2cv.png" alt="logo-json2cv" class="mx-auto w-xl mt-10 sm:mt-0" />
         <p class="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto">
-            Escribe tu historial profesional en JSON simple y deja que nuestro motor genere un currículum minimalista y perfecto al instante.
+            Escribe tu historial profesional en JSON y deja que nuestro motor genere un currículum minimalista y perfecto al instante.
         </p>
-
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <button class="h-12 px-8 rounded-full bg-[#00e1ff] text-[#030305] font-medium hover:bg-[#0099ff] hover:text-white transition-all flex items-center gap-2 shadow-[0_0_20px_-5px_#00e1ff]">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 sm:mb-16">
+            <a href="/generate-cv" data-reload class="h-12 px-8 rounded-full bg-[#00e1ff] text-[#030305] font-medium hover:bg-[#0099ff] hover:text-white transition-all flex items-center gap-2 shadow-[0_0_20px_-5px_#00e1ff]">
                 <iconify-icon icon="solar:rocket-2-linear" stroke-width="1.5" width="20"></iconify-icon>
                 Generar CV
-            </button>
-            <button class="h-12 px-8 rounded-full border border-white/10 hover:border-white/20 hover:bg-white/5 text-white transition-all flex items-center gap-2">
+            </a>
+            <a href="https://github.com/CristianOlivera1/Login-Register-with-Autentication" target="_blank" class="h-12 px-8 rounded-full border border-white/10 hover:border-white/20 hover:bg-white/5 text-white transition-all flex items-center gap-2">
                 <iconify-icon icon="line-md:github-loop" width="24" height="24"></iconify-icon>
                 Ver Código
-            </button>
+            </a>
         </div>
 
         <div class="relative max-w-5xl mx-auto">
-            <div class="absolute -inset-1 bg-gradient-to-r from-[#0099ff] to-[#00e1ff] rounded-2xl opacity-20 blur-xl"></div>
+            <div class="absolute -inset-1 bg-linear-to-r from-[#0099ff] to-[#00e1ff] rounded-2xl opacity-40 blur-lg"></div>
 
             <div class="relative bg-[#0a0a0c] border border-white/10 rounded-xl overflow-hidden shadow-2xl grid md:grid-cols-2 h-[500px] md:h-[600px]">
 
