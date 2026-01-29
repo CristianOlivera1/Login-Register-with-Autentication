@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const template = availableTemplates.find(t => t.id === templateId);
             if (template) {
                 selectedValueText.textContent = template.name;
-                console.log('Custom-select sincronizado con plantilla:', template.name);
             }
         }
     };
@@ -86,26 +85,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Si cvGenerator ya tiene una plantilla seleccionada, usar esa
                 if (window.cvGenerator && window.cvGenerator.currentTemplate) {
                     defaultTemplate = templates.find(t => t.id === window.cvGenerator.currentTemplate);
-                    console.log('Usando plantilla desde cvGenerator:', defaultTemplate?.name);
                 }
                 
                 // Si no hay plantilla en cvGenerator, buscar Harvard como default
                 if (!defaultTemplate) {
                     defaultTemplate = templates.find(t => t.name === 'Harvard Profesional');
-                    console.log('Forzando plantilla Harvard por defecto:', defaultTemplate?.name);
                     
-                    // Asignar Harvard a cvGenerator si no tiene plantilla
                     if (window.cvGenerator && defaultTemplate) {
                         window.cvGenerator.currentTemplate = defaultTemplate.id;
-                        window.cvGenerator.updatePreview(); // Actualizar vista previa
-                        console.log('Template Harvard asignado a cvGenerator:', defaultTemplate.id);
+                        window.cvGenerator.updatePreview();
                     }
                 }
                 
-                // Fallback al primer template
                 if (!defaultTemplate) {
                     defaultTemplate = templates[0];
-                    console.log('Usando primer template como fallback:', defaultTemplate?.name);
                     
                     if (window.cvGenerator) {
                         window.cvGenerator.currentTemplate = defaultTemplate.id;
@@ -114,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 selectedValueText.textContent = defaultTemplate.name;
-            }, 100); // Reducir el delay para mejor sincronización
+            }, 100); 
         }
     }
 
@@ -136,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.cvGenerator.changeTemplate(value);
                 }
                 
-                console.log("Plantilla seleccionada:", { id: value, name: text });
             });
         });
     }

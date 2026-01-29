@@ -117,7 +117,6 @@ if (str_starts_with($route, 'cv/')) {
             $cvController = new CVController();
             $cvController->getUserCV();
             exit;
-            exit;
             
         default:
             // Verificar si es un slug de CV público
@@ -128,6 +127,54 @@ if (str_starts_with($route, 'cv/')) {
                 exit;
             }
             break;
+    }
+}
+
+// Manejar rutas de perfil
+if (str_starts_with($route, 'profile/')) {
+    $profileRoute = substr($route, 8);
+    
+    switch ($profileRoute) {
+        case 'get':
+            require_once __DIR__ . '/../controllers/ProfileController.php';
+            $profileController = new ProfileController();
+            $profileController->getProfile();
+            exit;
+            
+        case 'update':
+            require_once __DIR__ . '/../controllers/ProfileController.php';
+            $profileController = new ProfileController();
+            $profileController->updateProfile();
+            exit;
+            
+        case 'upload-avatar':
+            require_once __DIR__ . '/../controllers/ProfileController.php';
+            $profileController = new ProfileController();
+            $profileController->uploadAvatar();
+            exit;
+            
+        case 'remove-avatar':
+            require_once __DIR__ . '/../controllers/ProfileController.php';
+            $profileController = new ProfileController();
+            $profileController->removeAvatar();
+            exit;
+            
+        case 'toggle-cv-visibility':
+            require_once __DIR__ . '/../controllers/ProfileController.php';
+            $profileController = new ProfileController();
+            $profileController->toggleCVVisibility();
+            exit;
+            
+        case 'change-password':
+            require_once __DIR__ . '/../controllers/ProfileController.php';
+            $profileController = new ProfileController();
+            $profileController->changePassword();
+            exit;
+            
+        default:
+            http_response_code(404);
+            echo "Profile route not found: " . $profileRoute;
+            exit;
     }
 }
 

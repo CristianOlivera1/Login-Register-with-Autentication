@@ -5,13 +5,14 @@ class AuthModal {
         this.registerForm = document.getElementById('registerForm');
         this.toggleBtn = document.getElementById('toggleForm');
         this.closeBtn = document.getElementById('closeModal');
+        this.modalBackdrop = document.getElementById('modalBackdrop');
         this.modalTitle = document.getElementById('modalTitle');
-        this.modalSubtitle = document.getElementById('modalSubtitle');
         this.authMessage = document.getElementById('authMessage');
-        
+        this.loginSubmitBtn = document.getElementById('loginSubmitBtn');
+        this.registerSubmitBtn = document.getElementById('registerSubmitBtn');
         this.isLoginMode = true;
         this.config = null;
-        
+
         this.initEventListeners();
         this.loadConfig().then(() => {
             this.checkAuthStatus();
@@ -30,9 +31,11 @@ class AuthModal {
     initEventListeners() {
         this.closeBtn.addEventListener('click', () => this.closeModal());
         this.toggleBtn.addEventListener('click', () => this.toggleMode());
-        
+
         this.modal.addEventListener('click', (e) => {
-            if (e.target === this.modal) this.closeModal();
+            if (e.target.classList.contains('items-center')) {
+                this.closeModal();
+            }
         });
 
         this.loginForm.addEventListener('submit', (e) => this.handleLogin(e));
@@ -49,6 +52,21 @@ class AuthModal {
                 this.openModal(isRegister);
             });
         });
+
+        document.querySelectorAll('#authModal .toggle-password').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = btn.parentElement.querySelector('input');
+            const icon = btn.querySelector('iconify-icon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('icon', 'line-md:watch-loop');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('icon', 'line-md:watch-off-loop');
+            }
+        });
+    });
     }
 
     openModal(isRegister = false) {
@@ -75,13 +93,11 @@ class AuthModal {
     updateModalMode() {
         if (this.isLoginMode) {
             this.modalTitle.textContent = 'Iniciar Sesión';
-            this.modalSubtitle.textContent = 'Accede a tu cuenta en Codeoner';
             this.loginForm.classList.remove('hidden');
             this.registerForm.classList.add('hidden');
             this.toggleBtn.textContent = '¿No tienes cuenta? Regístrate';
         } else {
             this.modalTitle.textContent = 'Crear Cuenta';
-            this.modalSubtitle.textContent = 'Únete a la comunidad de Codeoner';
             this.loginForm.classList.add('hidden');
             this.registerForm.classList.remove('hidden');
             this.toggleBtn.textContent = '¿Ya tienes cuenta? Inicia sesión';
@@ -90,7 +106,7 @@ class AuthModal {
 
     async handleLogin(e) {
         e.preventDefault();
-        
+        const originalText = this.loginSubmitBtn.innerHTML;
         const formData = new FormData(this.loginForm);
         const data = {
             email: formData.get('email'),
@@ -98,8 +114,8 @@ class AuthModal {
         };
 
         try {
-            this.showMessage('Iniciando sesión...', 'info');
-            
+            this.setLoadingState(this.loginSubmitBtn, true, 'Iniciando sesión...');
+
             const response = await fetch('/auth/login', {
                 method: 'POST',
                 headers: {
@@ -111,23 +127,63 @@ class AuthModal {
             const result = await response.json();
 
             if (result.success) {
-                this.showMessage('¡Inicio de sesión exitoso!', 'success');
+                this.closeModal();
+
                 setTimeout(() => {
-                    this.closeModal();
+                    this.showNotification('¡Inicio de sesión exitoso!', 'success');
                     this.updateAuthState(result.user);
-                    window.location.reload();
-                }, 1000);
+
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }, 300);
             } else {
+                this.setLoadingState(this.loginSubmitBtn, false, originalText);
                 this.showMessage(result.message, 'error');
             }
         } catch (error) {
+            this.setLoadingState(this.loginSubmitBtn, false, originalText);
             this.showMessage('Error de conexión. Inténtalo de nuevo.', 'error');
         }
     }
 
+    setLoadingState(button, isLoading, text) {
+        button.disabled = isLoading;
+        if (isLoading) {
+            button.innerHTML = `
+            <span class="flex items-center justify-center gap-2">
+                <iconify-icon icon="line-md:loading-twotone-loop" width="20"></iconify-icon>
+                ${text}
+            </span>`;
+            button.classList.add('opacity-70', 'cursor-not-allowed');
+        } else {
+            button.innerHTML = text;
+            button.classList.remove('opacity-70', 'cursor-not-allowed');
+        }
+    }
+
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 transition-all duration-300 ${type === 'success' ? 'bg-green-500' :
+            type === 'error' ? 'bg-red-500' :
+                type === 'warning' ? 'bg-yellow-500' :
+                    'bg-blue-500'
+            }`;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
     async handleRegister(e) {
         e.preventDefault();
-        
+        const originalText = this.registerSubmitBtn.innerHTML;
         const formData = new FormData(this.registerForm);
         const data = {
             firstName: formData.get('firstName'),
@@ -143,8 +199,8 @@ class AuthModal {
         }
 
         try {
-            this.showMessage('Creando cuenta...', 'info');
-            
+            this.setLoadingState(this.registerSubmitBtn, true, 'Creando cuenta...');
+
             const response = await fetch('/auth/register', {
                 method: 'POST',
                 headers: {
@@ -156,16 +212,20 @@ class AuthModal {
             const result = await response.json();
 
             if (result.success) {
-                this.showMessage('¡Cuenta creada exitosamente!', 'success');
+                this.closeModal();
                 setTimeout(() => {
-                    this.closeModal();
+                    this.showNotification('¡Cuenta creada exitosamente!', 'success');
                     this.updateAuthState(result.user);
-                    window.location.reload();
-                }, 1000);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                }, 300);
             } else {
+                this.setLoadingState(this.registerSubmitBtn, false, originalText);
                 this.showMessage(result.message, 'error');
             }
         } catch (error) {
+            this.setLoadingState(this.registerSubmitBtn, false, originalText);
             this.showMessage('Error de conexión. Inténtalo de nuevo.', 'error');
         }
     }
@@ -192,7 +252,7 @@ class AuthModal {
         try {
             const response = await fetch('/auth/check');
             const result = await response.json();
-            
+
             if (result.authenticated) {
                 this.updateAuthState(result.user);
             }
@@ -202,7 +262,7 @@ class AuthModal {
     }
 
     updateAuthState(user) {
-        
+
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('oauth_success')) {
             window.history.replaceState({}, document.title, window.location.pathname);
@@ -214,7 +274,7 @@ class AuthModal {
         try {
             const response = await fetch('/auth/logout');
             const result = await response.json();
-            
+
             if (result.success) {
                 window.location.reload();
             }

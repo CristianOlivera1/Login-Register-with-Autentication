@@ -9,10 +9,9 @@
         </div>
 
         <div class="flex gap-6 text-xs text-slate-500">
-            <a href="#" class="hover:text-white transition-colors">Privacy</a>
-            <a href="#" class="hover:text-white transition-colors">Terms</a>
-            <a href="#" class="hover:text-white transition-colors">Twitter</a>
-            <a href="#" class="hover:text-white transition-colors">GitHub</a>
+            <a href="/" data-reload class="hover:text-white transition-colors">Inicio</a>
+            <a href="/generate-cv" data-reload class="hover:text-white transition-colors">Generar CV</a>
+            <a href="https://github.com/CristianOlivera1" target="_blank" class="hover:text-white transition-colors">GitHub</a>
         </div>
 
         <div class="text-xs text-slate-600">

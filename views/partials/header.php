@@ -61,7 +61,7 @@ $user = $isAuthenticated ? [
 
                         <div class="absolute right-0 mt-2 w-48 bg-[#0a0b0f] border border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                             <div class="p-2">
-                                <a href="/profile" class="block px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md transition-colors">
+                                <a href="/profile" data-reload class="block px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md transition-colors">
                                     <iconify-icon icon="solar:user-linear" width="16" class="mr-2"></iconify-icon>
                                     Mi Perfil
                                 </a>

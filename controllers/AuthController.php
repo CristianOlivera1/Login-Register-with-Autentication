@@ -14,7 +14,7 @@ class AuthController {
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
-            echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+            echo json_encode(['success' => false, 'message' => 'Método no permitido']);
             return;
         }
 
@@ -22,7 +22,7 @@ class AuthController {
         
         if (!$input || !isset($input['email']) || !isset($input['password'])) {
             http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Email and password are required']);
+            echo json_encode(['success' => false, 'message' => 'El correo electrónico y la contraseña son obligatorios']);
             return;
         }
 
@@ -30,12 +30,12 @@ class AuthController {
         $password = $input['password'];
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(['success' => false, 'message' => 'Invalid email format']);
+            echo json_encode(['success' => false, 'message' => 'Formato inválido de correo electrónico']);
             return;
         }
 
         if (strlen($password) < 8) {
-            echo json_encode(['success' => false, 'message' => 'Password must be at least 8 characters']);
+            echo json_encode(['success' => false, 'message' => 'La contraseña debe tener al menos 8 caracteres']);
             return;
         }
 
@@ -45,7 +45,7 @@ class AuthController {
             $this->startUserSession($user);
             echo json_encode([
                 'success' => true, 
-                'message' => 'Login successful',
+                'message' => 'Inicio de sesión exitoso',
                 'user' => [
                     'id' => $user['id'],
                     'email' => $user['email'],
@@ -107,7 +107,8 @@ class AuthController {
             'password' => $password,
             'firstName' => $firstName,
             'lastName' => $lastName,
-            'avatar'    => 'https://api.dicebear.com/9.x/pixel-art/svg?seed=' . urlencode($firstName ?: $email)
+            'avatar'    => 'https://api.dicebear.com/9.x/pixel-art/svg?seed=' . urlencode($firstName ?: $email),
+            'auth_provider' => 'manual'
         ];
 
         $newUser = $this->userModel->create($userData);

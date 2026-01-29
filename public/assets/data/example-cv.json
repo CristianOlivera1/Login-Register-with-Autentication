@@ -41,7 +41,7 @@
         "Implementé una lógica de almacenamiento dual que gestiona de forma diferenciada el historial de conversaciones para usuarios autenticados y anónimos."
       ],
       "technologies": [
-        "Next.js 15",
+        "Next.js",
         "Tailwind CSS",
         "Google Gemini",
         "Supabase",
@@ -88,7 +88,7 @@
         "Diseñé una arquitectura escalable para múltiples carreras universitarias con roles diferenciados."
       ],
       "technologies": [
-        "Angular 20",
+        "Angular",
         "Spring Boot",
         "MySQL",
         "Tailwind CSS",
@@ -113,7 +113,7 @@
       "name": "Tecnologías",
       "keywords": [
         "Angular",
-        "NextJs",
+        "Next.js",
         "Tailwind CSS",
         "Bootstrap",
         "Spring Boot",

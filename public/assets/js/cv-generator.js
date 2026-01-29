@@ -291,7 +291,6 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                     this.updatePreview();
                     this.markAsSaved();
                     this.updateSaveStatus('Auto guardado', 'success');
-                    console.log('User CV loaded successfully:', this.userCV);
                 } catch (parseError) {
                     console.error('Error parsing user CV data:', parseError);
                     await this.loadExampleCV();
@@ -669,8 +668,6 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         if (isHarvardTemplate) {
             return this.generateHarvardTemplate(cvData);
         }
-        
-        console.log('Usando plantilla estándar para:', template);
 
         let html = `
             <!-- CV Header -->
@@ -858,7 +855,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                         ${((basics.location || basics.url || basics.phone) && basics.email) ? '<span class="text-slate-500">•</span>' : ''}
                         ${basics.email ? `<span>${basics.email}</span>` : ''}
                     </div>
-                    <hr class="mt-1 border-slate-800 border-b">
+                    <hr class="mt-1 border-slate-300 border-b">
                 </header>
     
                 <!-- Summary -->
@@ -869,10 +866,10 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                     </p>
                 </section>
                 ` : ''}
-    <!-- Experiencia Laboral -->
+            <!-- Experiencia Laboral -->
                 ${work.length > 0 ? `
                 <section class="mb-3">
-                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Experiencia Profesional</h2>
+                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Experiencia Profesional</h2>
                     ${work.map((job, index) => `
                         <div class="${index < work.length - 1 ? 'mb-5' : ''}">
                             <div class="flex justify-between items-baseline">
@@ -895,7 +892,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                 <!-- Proyectos -->
                 ${projects.length > 0 ? `
                 <section class="mb-3">
-                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Proyectos</h2>
+                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Proyectos</h2>
                     ${projects.map((project, index) => `
                         <div class="${index < projects.length - 1 ? 'mb-5' : ''}">
                             <div class="flex justify-between items-baseline">
@@ -924,7 +921,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                 <!-- Educación -->
                 ${education.length > 0 ? `
                 <section class="mb-3">
-                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Educación</h2>
+                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Educación</h2>
                     ${education.map(edu => `
                         <div class="flex justify-between items-baseline">
                             <h3 class="font-bold text-[12pt]">${edu.institution || 'Universidad'}</h3>
@@ -941,7 +938,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                 <!-- Skills -->
                 ${skills.length > 0 ? `
                 <section>
-                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Skills Adicionales</h2>
+                    <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Skills Adicionales</h2>
                     <ul class="list-disc list-outside ml-5 space-y-1 text-[11pt] text-slate-800">
                         ${skills.map(skillGroup => {
                             const skillsText = skillGroup.keywords ? skillGroup.keywords.join(', ') : skillGroup.name;
@@ -990,7 +987,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         } else {
             statusContainer.className = 'h-8 bg-red-500/10 border-t border-red-500/20 flex items-center justify-between px-4 text-xs';
             statusContainer.querySelector('.flex').className = 'flex items-center gap-2 text-red-400';
-            statusIcon.setAttribute('icon', 'solar:close-circle-linear');
+            statusIcon.setAttribute('icon', 'line-md:close-small');
             statusText.textContent = 'JSON inválido';
         }
     }
@@ -1077,8 +1074,8 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                     .border-\[1\.5px\] {
                         border-width: 0.5px;
                     }
-                    .border-slate-800 {
-                        border-color: #1e293b;
+                    .border-slate-300 {
+                        border-color: #cbd5e1;
                     }
                     .border-b-2 {
                         border-bottom-width: 1px;
@@ -1195,7 +1192,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                             color: #1e293b;
                             background: white;
                         }
-                        
+                      
                         .a4-paper {
                             width: 216mm;
                             min-height: 297mm;
@@ -1228,7 +1225,6 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                             max-width: 100%;
                             display: block;
                         }
-
                         .w-32 { width: 8rem; } 
                         .h-32 { height: 8rem; }
                         .w-28 { width: 7rem; } 

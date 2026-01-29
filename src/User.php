@@ -42,13 +42,14 @@ class User {
         $avatar = $data['avatar'] ?? null;
         $firstName = $data['firstName'] ?? null;
         $lastName = $data['lastName'] ?? null;
+        $authProvider = $data['auth_provider'] ?? 'manual';
 
         $stmt = $this->connection->prepare("
-            INSERT INTO users (id, email, password, avatar, firstName, lastName) 
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO users (id, email, password, avatar, firstName, lastName, auth_provider) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         
-        $stmt->bind_param("ssssss", $id, $email, $password, $avatar, $firstName, $lastName);
+        $stmt->bind_param("sssssss", $id, $email, $password, $avatar, $firstName, $lastName, $authProvider);
         
         if ($stmt->execute()) {
             return $this->findById($id);

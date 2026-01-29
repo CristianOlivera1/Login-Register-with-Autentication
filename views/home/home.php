@@ -8,8 +8,21 @@ $isAuthenticated = isset($_SESSION['user_id']);
 <section class="relative pb-16">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <img src="/assets/img/logo-json2cv.png" alt="logo-json2cv" class="mx-auto w-xl mt-10 sm:mt-0" />
-        <p class="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto">
-            Escribe tu historial profesional en JSON y deja que nuestro motor genere un currículum minimalista y perfecto al instante.
+          <p class="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto">
+            Escribe tu historial profesional en 
+            <span class="relative inline-block">
+                <!-- Estilo resaltado para JSON -->
+                <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FA736C] to-[#D93C47]">
+                    JSON
+                </span>
+                <span class="absolute -bottom-1 left-0 w-full">
+                    <img src="/assets/img/line-draw.svg" alt="line draw" class="w-full h-auto" />
+                </span>
+                <span class="absolute -bottom-1 left-0 w-full opacity-20">
+                    <img src="/assets/img/line-static.svg" alt="line draw" class="w-full h-auto" />
+                </span>
+            </span>
+            y deja que nuestro motor genere un currículum minimalista y perfecto al instante.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 sm:mb-16">
             <a href="/generate-cv" data-reload class="h-12 px-8 rounded-full bg-[#00e1ff] text-[#030305] font-medium hover:bg-[#0099ff] hover:text-white transition-all flex items-center gap-2 shadow-[0_0_20px_-5px_#00e1ff]">

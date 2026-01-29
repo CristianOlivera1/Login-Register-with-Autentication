@@ -3,22 +3,15 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $isAuthenticated = isset($_SESSION['user_id']);
+
+// Verificar si el CV es público antes de mostrar
+if (!isset($cv) || !$cv['is_public']) {
+    // Redirigir a página de error 404 si el CV no es público
+    http_response_code(404);
+    include __DIR__ . '/../404.php';
+    exit;
+}
 ?>
-
-<style>
-    @media print {
-        body {
-            margin: 0;
-        }
-
-        .no-print {
-            display: none !important;
-        }
-
-    }
-</style>
-
-<!-- CV PUBLICO -->
 <main class="py-8">
     <div class="max-w-4xl mx-auto px-4">
         <div class="a4-paper mx-auto p-8 md:p-12">
@@ -81,7 +74,7 @@ $isAuthenticated = isset($_SESSION['user_id']);
                                 <span><?php echo htmlspecialchars($basics['email']); ?></span>
                             <?php endif; ?>
                         </div>
-                        <hr class="mt-1 border-slate-800 border-b">
+                        <hr class="mt-1 border-slate-300 border-b">
                     </header>
         
                     <!-- Summary -->
@@ -96,7 +89,7 @@ $isAuthenticated = isset($_SESSION['user_id']);
                     <!-- Experiencia Laboral -->
                     <?php if (!empty($work)): ?>
                     <section class="mb-3">
-                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Experiencia Profesional</h2>
+                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Experiencia Profesional</h2>
                         <?php foreach ($work as $index => $job): ?>
                             <div class="<?php echo ($index < count($work) - 1) ? 'mb-5' : ''; ?>">
                                 <div class="flex justify-between items-baseline">
@@ -122,7 +115,7 @@ $isAuthenticated = isset($_SESSION['user_id']);
                     <!-- Proyectos -->
                     <?php if (!empty($projects)): ?>
                     <section class="mb-3">
-                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Proyectos</h2>
+                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Proyectos</h2>
                         <?php foreach ($projects as $index => $project): ?>
                             <div class="<?php echo ($index < count($projects) - 1) ? 'mb-5' : ''; ?>">
                                 <div class="flex justify-between items-baseline">
@@ -153,7 +146,7 @@ $isAuthenticated = isset($_SESSION['user_id']);
                     <!-- Educación -->
                     <?php if (!empty($education)): ?>
                     <section class="mb-3">
-                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Educación</h2>
+                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Educación</h2>
                         <?php foreach ($education as $edu): ?>
                             <div class="flex justify-between items-baseline">
                                 <h3 class="font-bold text-[12pt]"><?php echo htmlspecialchars($edu['institution'] ?? 'Universidad'); ?></h3>
@@ -170,7 +163,7 @@ $isAuthenticated = isset($_SESSION['user_id']);
                     <!-- Skills -->
                     <?php if (!empty($skills)): ?>
                     <section>
-                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-800 mb-3">Skills Adicionales</h2>
+                        <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Skills Adicionales</h2>
                         <ul class="list-disc list-outside ml-5 space-y-1 text-[11pt] text-slate-800">
                             <?php foreach ($skills as $skillGroup): ?>
                                 <li><?php echo htmlspecialchars((!empty($skillGroup['keywords']) ? implode(', ', $skillGroup['keywords']) : $skillGroup['name'])); ?></li>

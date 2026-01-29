@@ -370,4 +370,34 @@ class CV {
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
     }
+
+    public function getPublicCVs($limit = 20, $offset = 0) {
+        $stmt = $this->connection->prepare("
+            SELECT cv.*, u.firstName, u.lastName, u.avatar, t.name as template_name
+            FROM user_cvs cv
+            INNER JOIN users u ON cv.user_id = u.id
+            LEFT JOIN cv_templates t ON cv.template_id = t.id
+            WHERE cv.is_public = 1
+            ORDER BY cv.view_count DESC, cv.updated_at DESC
+            LIMIT ? OFFSET ?
+        ");
+        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $cvs = [];
+        while ($row = $result->fetch_assoc()) {
+            $cvs[] = $row;
+        }
+        
+        return $cvs;
+    }
+
+    public function getPublicCVsCount() {
+        $stmt = $this->connection->prepare("SELECT COUNT(*) as count FROM user_cvs WHERE is_public = 1");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['count'];
+    }
 }
