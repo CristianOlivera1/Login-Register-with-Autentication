@@ -6,8 +6,11 @@ CREATE TABLE users (
     firstName VARCHAR(150),
     lastName VARCHAR(250),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    auth_provider ENUM('manual', 'google', 'github', 'facebook') DEFAULT 'manual',
+    last_password_change TIMESTAMP NULL,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+CREATE INDEX idx_users_auth_provider ON users(auth_provider);
 
 -- 1. PLANTILLAS DE CV (Templates)
 CREATE TABLE cv_templates (
@@ -30,7 +33,7 @@ CREATE TABLE user_cvs (
     template_id CHAR(36) NOT NULL,
     cv_data JSON NOT NULL, -- Datos completos del CV en JSON
     original_json_input TEXT, -- JSON original subido por el usuario
-    is_public BOOLEAN DEFAULT FALSE,
+    is_public BOOLEAN DEFAULT TRUE,
     view_count INT DEFAULT 0,
     last_viewed_at TIMESTAMP NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
