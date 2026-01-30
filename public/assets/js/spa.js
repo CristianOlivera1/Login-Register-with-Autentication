@@ -6,8 +6,8 @@ document.addEventListener('click', e => {
     const href = link.getAttribute('href');
 
     if (href.startsWith('/') && !link.hasAttribute('data-reload')) {
-        // Excluir la ruta CV de SPA
-        if (href.match(/^\/CV\/[a-z0-9\-]+$/)) {
+        // Excluir las rutas de CV de SPA (ambas mayúscula y minúscula)
+        if (href.match(/^\/(CV|cv)\/[a-z0-9\-]+$/)) {
             return; 
         }
         
