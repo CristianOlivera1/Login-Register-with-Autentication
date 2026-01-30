@@ -146,7 +146,6 @@ class ProfileController {
         $userId = $_SESSION['user_id'];
         $user = $this->userModel->findById($userId);
         
-        // Generar avatar por defecto
         $defaultAvatar = 'https://api.dicebear.com/9.x/pixel-art/svg?seed=' . urlencode($user['firstName'] ?: $user['email']);
         
         $updated = $this->profileModel->updateAvatar($userId, $defaultAvatar);
@@ -195,7 +194,6 @@ class ProfileController {
         $input = json_decode(file_get_contents('php://input'), true);
         $userId = $_SESSION['user_id'];
 
-        // Validar que no sea usuario OAuth
         $user = $this->userModel->findById($userId);
         if ($user['auth_provider'] !== 'manual') {
             echo json_encode(['success' => false, 'message' => 'No puedes cambiar la contraseña de cuentas OAuth']);
@@ -272,7 +270,6 @@ class ProfileController {
     private function uploadAvatarFile($file, $userId) {
         $uploadDir = __DIR__ . '/../public/assets/avatars/';
         
-        // Crear directorio si no existe
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }

@@ -229,10 +229,15 @@ class OAuthController {
         $existingUser = $this->userModel->findByEmail($userInfo['email']);
 
         if ($existingUser) {
-            // User exists, log them in
+            // User exists, update auth_provider if it changed and log them in
+            if ($existingUser['auth_provider'] !== $provider) {
+                $this->userModel->updateAuthProvider($existingUser['id'], $provider);
+                $existingUser['auth_provider'] = $provider;
+            }
             $this->startUserSession($existingUser);
         } else {
-            // Create new user
+            // Create new user with correct auth_provider
+            $userInfo['auth_provider'] = $provider;
             $newUser = $this->userModel->create($userInfo);
             if ($newUser) {
                 $this->startUserSession($newUser);

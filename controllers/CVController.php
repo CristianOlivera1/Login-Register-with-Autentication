@@ -112,18 +112,19 @@ class CVController
 
             if (!$cv) {
                 error_log("CV not found for slug: " . $slug);
-                http_response_code(404);
+                
+                ob_start();
                 include __DIR__ . '/../views/404.php';
-                return;
+                $content = ob_get_clean();
+                
+                include __DIR__ . '/../views/layouts/main.php';
+                exit;
             }
 
             error_log("CV found - ID: " . $cv['id'] . ", Title: " . ($cv['title'] ?? 'N/A'));
 
-            // Incrementar contador de vistas
             $this->cvModel->incrementViewCount($cv['id']);
 
-            // Preparar datos para la vista - $cv ya contiene cv_data
-            // La vista usará $cv directamente
             $pageTitle = $cv['title'] ?? 'CV';
 
             // Renderizar con layout principal
