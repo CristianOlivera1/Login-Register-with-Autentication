@@ -196,6 +196,45 @@ INSERT INTO cv_templates (id, name, description, template_data) VALUES
     )
 );
 
+INSERT INTO cv_templates (id, name, description, template_data, is_active, created_at, updated_at) 
+VALUES (
+    UUID(),
+    'Modern Chronological',
+    'Plantilla Modern Chronological 2026 con máxima puntuación ATS, diseño profesional y optimizada para sistemas de seguimiento de candidatos',
+    JSON_OBJECT(
+        'layout', 'chronological-modern',
+        'type', 'chronological', 
+        'sections', JSON_ARRAY(
+            'personal_info',
+            'professional_summary',
+            'work_experience',
+            'skills',
+            'education',
+            'projects'
+        ),
+        'colors', JSON_OBJECT(
+            'primary', '#1a202c',
+            'secondary', '#2d3748',
+            'accent', '#e2e8f0',
+            'text', '#1a202c'
+        ),
+        'fonts', JSON_OBJECT(
+            'primary', 'Inter',
+            'secondary', 'Inter'
+        ),
+        'ats_score', 95,
+        'features', JSON_ARRAY(
+            'ats_optimized',
+            'clean_design', 
+            'professional_layout',
+            'minimal_graphics'
+        )
+    ),
+    TRUE,
+    NOW(),
+    NOW()
+);
+
 -- ÍNDICES PARA PERFORMANCE
 -- Para búsquedas rápidas de CV públicos
 CREATE INDEX idx_public_cvs ON user_cvs (is_public, updated_at DESC);

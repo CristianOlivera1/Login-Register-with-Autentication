@@ -143,11 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const errorText = document.getElementById("signup-error-text");
 
         if (data.success) {
-          // Redirigir al agradecimientp si el registro es exitoso
           window.location.href = "loginRegister/registerSuccessful.php";
           
         } else {
-          // Mostrar el mensaje de error en el formulario
           errorText.textContent = data.message; 
           errorMessage.style.display = "block";
         }
@@ -164,27 +162,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropdownMenu = document.getElementById('dropdown-menu');
     const perfilDropdown = document.querySelector(".perfil-dropdown");
     
-      // Verifica si el usuario está autenticado antes de añadir los eventos
       if (profileIcon && dropdownMenu) { 
         profileIcon.addEventListener('click', function () {
             dropdownMenu.classList.toggle('open');
         });
 
-        // Cierra el menú desplegable al hacer clic fuera de él
         document.addEventListener('click', function (e) {
             if (!profileIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
                 dropdownMenu.classList.remove('open');
             }
         });
 
-            // Generar un fondo aleatorio para el perfil al iniciar sesión
         if (perfilDropdown) {
           generateGradient(perfilDropdown);
         }
        }
-    //manejar el menu desplegalbe del perfil
     
-        // Función para generar un gradiente aleatorio y aplicarlo al elemento dado
   function generateGradient(element) {
     let gradient = "", mode = "";
 
