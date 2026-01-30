@@ -26,7 +26,7 @@
 
     <?php
     $currentPath = $_SERVER['REQUEST_URI'];
-    $isPublicCV = preg_match('/^\/CV\/[a-z0-9\-]+$/', $currentPath);
+    $isPublicCV = preg_match('/^\/(CV|cv)\/[a-z0-9\-]+/', $currentPath);
     $isGenerator = strpos($currentPath, '/generate-cv') !== false;
     ?>
 

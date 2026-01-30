@@ -32,7 +32,7 @@
                         minlength="8"
                         class="w-full px-4 py-3 bg-white/5 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0099ff] focus:border-transparent"
                         placeholder="••••••••">
-                    <button type="button" class="toggle-password absolute right-3 top-1/2 text-gray-500 hover:text-gray-700">
+                    <button type="button" class="toggle-password absolute right-3 top-10 text-gray-500 hover:text-gray-700 flex items-center">
                         <iconify-icon icon="line-md:watch-off-loop" width="20"></iconify-icon>
                     </button>
                 </div>
@@ -87,7 +87,7 @@
                         minlength="8"
                         class="w-full px-4 py-3 bg-white/5 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0099ff] focus:border-transparent"
                         placeholder="••••••••">
-                    <button type="button" class="toggle-password absolute right-3 top-1/2 text-gray-500 hover:text-gray-700">
+                    <button type="button" class="toggle-password absolute right-3 top-10 text-gray-500 hover:text-gray-700 flex items-center">
                         <iconify-icon icon="line-md:watch-off-loop" width="20"></iconify-icon>
                     </button>
                 </div>
@@ -102,7 +102,7 @@
                         minlength="8"
                         class="w-full px-4 py-3 bg-white/5 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#0099ff] focus:border-transparent"
                         placeholder="••••••••">
-                    <button type="button" class="toggle-password absolute right-3 top-1/2 text-gray-500 hover:text-gray-700">
+                    <button type="button" class="toggle-password absolute right-3 top-10 text-gray-500 hover:text-gray-700 flex items-center">
                         <iconify-icon icon="line-md:watch-off-loop" width="20"></iconify-icon>
                     </button>
                 </div>

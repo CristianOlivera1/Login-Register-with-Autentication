@@ -8,8 +8,8 @@ $isAuthenticated = isset($_SESSION['user_id']);
 <section class="relative pb-16">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <img src="/assets/img/logo-json2cv.png" alt="logo-json2cv" class="mx-auto w-xl mt-10 sm:mt-0" />
-          <p class="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto">
-            Escribe tu historial profesional en 
+        <p class="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto">
+            Escribe tu historial profesional en
             <span class="relative inline-block">
                 <!-- Estilo resaltado para JSON -->
                 <span class="font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FA736C] to-[#D93C47]">
@@ -35,7 +35,13 @@ $isAuthenticated = isset($_SESSION['user_id']);
             </a>
         </div>
 
+        <img src="/assets/img/background-video.jpg"
+            alt="background-video"
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-7xl h-full object-cover opacity-90 -z-10"
+            style="border-radius: 80px; corner-shape: squircle;">
+
         <div class="relative max-w-5xl mx-auto">
+
             <div class="absolute -inset-1 bg-linear-to-r from-[#0099ff] to-[#00e1ff] rounded-2xl opacity-40 blur-lg"></div>
 
             <div class="relative bg-[#0a0a0c] border border-white/10 rounded-xl overflow-hidden shadow-2xl grid md:grid-cols-2 h-[500px] md:h-[600px]">
@@ -111,5 +117,6 @@ $isAuthenticated = isset($_SESSION['user_id']);
                 </div>
             </div>
         </div>
+
     </div>
 </section>

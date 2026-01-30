@@ -156,8 +156,8 @@ class CV {
             FROM user_cvs cv
             LEFT JOIN users u ON cv.user_id = u.id
             LEFT JOIN cv_templates t ON cv.template_id = t.id
-            WHERE cv.slug LIKE ?
-            ORDER BY cv.updated_at DESC
+            WHERE cv.is_public = 1 AND cv.slug LIKE ?
+            ORDER BY cv.view_count DESC, cv.updated_at DESC
             LIMIT 1
         ");
         $similarSlug = $slug . '%';
@@ -169,16 +169,57 @@ class CV {
             return $result->fetch_assoc();
         }
         
-        // Si no encuentra similar, buscar cualquier CV público más reciente
+        return null;
+    }
+
+    public function getMostPopularCV() {
+        // Obtener el CV público con más vistas
         $stmt = $this->connection->prepare("
             SELECT cv.*, u.firstName, u.lastName, u.avatar, 
                    COALESCE(t.name, 'Default') as template_name
             FROM user_cvs cv
             LEFT JOIN users u ON cv.user_id = u.id
             LEFT JOIN cv_templates t ON cv.template_id = t.id
+            WHERE cv.is_public = 1
             ORDER BY cv.view_count DESC, cv.updated_at DESC
             LIMIT 1
         ");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        
+        return null;
+    }
+
+    public function getRandomPopularCV() {
+        // Obtener un CV aleatorio de los 5 más populares
+        $stmt = $this->connection->prepare("
+            SELECT cv.*, u.firstName, u.lastName, u.avatar, 
+                   COALESCE(t.name, 'Default') as template_name
+            FROM user_cvs cv
+            LEFT JOIN users u ON cv.user_id = u.id
+            LEFT JOIN cv_templates t ON cv.template_id = t.id
+            WHERE cv.is_public = 1
+            ORDER BY cv.view_count DESC, cv.updated_at DESC
+            LIMIT 5
+        ");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $cvs = [];
+        while ($row = $result->fetch_assoc()) {
+            $cvs[] = $row;
+        }
+        
+        if (!empty($cvs)) {
+            return $cvs[array_rand($cvs)];
+        }
+        
+        return null;
+
         $stmt->execute();
         $result = $stmt->get_result();
         

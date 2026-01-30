@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <main class="max-w-6xl mx-auto flex-1 flex flex-col min-w-0 bg-[#030305]">
     <div
-        class="h-16 border-b border-white/5 bg-[#030305] flex items-center justify-between px-0 sm:px-6 z-10 shrink-0 mt-16">
+        class="h-16 border-b border-white/5 bg-[#030305] flex items-center justify-between px-0 sm:px-6 z-10 shrink-0 mt-14">
         <div class="flex items-center gap-2 text-sm">
             <span class="text-slate-500">Cuenta</span>
             <iconify-icon icon="solar:alt-arrow-right-linear" width="12" class="text-slate-600"></iconify-icon>

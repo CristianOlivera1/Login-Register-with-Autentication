@@ -1,4 +1,4 @@
-<header class="mt-16 h-16 border-b border-white/5 bg-[#030305] flex items-center justify-between px-4 lg:px-6 z-20">
+<header class="mt-14 h-16 border-b border-white/5 bg-[#030305] flex items-center justify-between px-4 lg:px-6 z-20">
     <div class="flex items-center gap-6">
         <div class="h-6 w-px bg-white/10 hidden sm:block"></div>
         <div class="flex items-center gap-2 text-sm">

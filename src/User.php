@@ -93,6 +93,12 @@ class User {
         return false;
     }
 
+    public function updateAuthProvider($id, $provider) {
+        $stmt = $this->connection->prepare("UPDATE users SET auth_provider = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?");
+        $stmt->bind_param("ss", $provider, $id);
+        return $stmt->execute();
+    }
+
     private function generateUUID() {
         return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             mt_rand(0, 0xffff), mt_rand(0, 0xffff),
