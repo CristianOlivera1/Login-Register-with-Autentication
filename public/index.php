@@ -196,12 +196,20 @@ if (str_starts_with($route, 'CV/')) {
             $similarCV = $cvModel->findSimilarCV($slug);
             
             if ($similarCV) {
-                header("Location: /CV/{$similarCV['slug']}", true, 302);
+                header("Location: /cv/{$similarCV['slug']}", true, 302);
                 exit;
             } else {
-                http_response_code(404);
-                include __DIR__ . '/../views/404.php';
-                exit;
+                // Si no hay CV similar, redirigir al CV más popular
+                $popularCV = $cvModel->getRandomPopularCV();
+                
+                if ($popularCV) {
+                    header("Location: /cv/{$popularCV['slug']}?suggested=1", true, 302);
+                    exit;
+                } else {
+                    http_response_code(404);
+                    include __DIR__ . '/../views/404.php';
+                    exit;
+                }
             }
         }
     }
@@ -211,9 +219,36 @@ if (str_starts_with($route, 'CV/')) {
 if (preg_match('/^cv\/([a-z0-9\-]+)$/', $route, $matches)) {
     $slug = $matches[1];
     require_once __DIR__ . '/../controllers/CVController.php';
+    require_once __DIR__ . '/../src/CV.php';
     $cvController = new CVController();
-    $cvController->getPublicCV($slug);
-    exit;
+    $cvModel = new CV();
+    
+    $cv = $cvModel->getCVBySlug($slug);
+    
+    if ($cv) {
+        $cvController->getPublicCV($slug);
+        exit;
+    } else {
+        // Intentar encontrar CV similar primero
+        $similarCV = $cvModel->findSimilarCV($slug);
+        
+        if ($similarCV) {
+            header("Location: /cv/{$similarCV['slug']}", true, 302);
+            exit;
+        } else {
+            // Si no hay CV similar, redirigir al CV más popular
+            $popularCV = $cvModel->getRandomPopularCV();
+            
+            if ($popularCV) {
+                header("Location: /cv/{$popularCV['slug']}?suggested=1", true, 302);
+                exit;
+            } else {
+                http_response_code(404);
+                include __DIR__ . '/../views/404.php';
+                exit;
+            }
+        }
+    }
 }
 
 $routes = [
