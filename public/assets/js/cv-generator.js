@@ -665,8 +665,19 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             (t.name === 'Harvard Profesional' || t.name.toLowerCase().includes('harvard'))
         );
         
+        // Verificar si es la plantilla Creativo Moderno
+        const isModernChronological = this.availableTemplates.find(t => 
+            t.id === template && 
+            (t.name === 'Modern Chronological' || t.name.toLowerCase().includes('modern chronological') || 
+             t.name.toLowerCase().includes('chronological') || t.name.toLowerCase().includes('platinum'))
+        );
+        
         if (isHarvardTemplate) {
             return this.generateHarvardTemplate(cvData);
+        }
+        
+        if (isModernChronological) {
+            return this.generateModernChronologicalTemplate(cvData);
         }
 
         let html = `
@@ -951,6 +962,117 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             </div>
         `;
     }
+    
+    generateModernChronologicalTemplate(cvData) {
+        const basics = cvData.basics || {};
+        const work = cvData.work || [];
+        const projects = cvData.projects || [];
+        const education = cvData.education || [];
+        const skills = cvData.skills || [];
+        const languages = cvData.languages || [];
+        
+        return `
+            <style>
+                .cv-body { font-family: 'Inter', sans-serif; line-height: 1.5; color: #1a202c; }
+                .section-header { 
+                    display: flex; 
+                    align-items: center; 
+                    text-transform: uppercase; 
+                    letter-spacing: 0.05em; 
+                    font-weight: 700; 
+                    font-size: 10pt; 
+                    color: #2d3748;
+                    border-bottom: 1px solid #e2e8f0;
+                    margin-bottom: 12px;
+                    margin-top: 20px;
+                    padding-bottom: 4px;
+                }
+            </style>
+
+            <div class="cv-body p-2">
+                <!-- Header Minimalista -->
+                <header class="text-center mb-8">
+                    <h1 class="text-4xl font-extrabold tracking-tighter text-slate-900 mb-3">
+                        ${basics.name || 'Nombre Completo'}
+                    </h1>
+                    <div class="flex justify-center flex-wrap gap-x-4 text-[9.5pt] text-slate-600 font-medium">
+                        ${basics.phone ? `<span>${basics.phone}</span>` : ''}
+                        ${basics.phone && basics.email ? '<span class="text-slate-300">|</span>' : ''}
+                        ${basics.email ? `<span>${basics.email}</span>` : ''}
+                        ${(basics.phone || basics.email) && basics.location ? '<span class="text-slate-300">|</span>' : ''}
+                        ${basics.location ? `<span>${typeof basics.location === 'object' ? (basics.location.city || basics.location) : basics.location}</span>` : ''}
+                        ${(basics.phone || basics.email || basics.location) && basics.url ? '<span class="text-slate-300">|</span>' : ''}
+                        ${basics.url ? `<a href="${basics.url}" class="text-slate-900 underline decoration-slate-300">Portafolio</a>` : ''}
+                    </div>
+                </header>
+
+                <!-- Resumen Ejecutivo -->
+                ${basics.summary ? `
+                <section>
+                    <h2 class="section-header">Perfil Profesional</h2>
+                    <p class="text-[10pt] text-slate-700 text-justify">
+                        ${basics.summary}
+                    </p>
+                </section>
+                ` : ''}
+
+                <!-- Experiencia: El núcleo del CV -->
+                ${work.length > 0 ? `
+                <section>
+                    <h2 class="section-header">Experiencia Profesional</h2>
+                    ${work.map(job => `
+                        <div class="mb-5">
+                            <div class="flex justify-between items-baseline mb-1">
+                                <h3 class="text-[11pt] font-bold text-slate-900">${job.name || 'Empresa'}</h3>
+                                <span class="text-[9pt] font-semibold text-slate-500">${this.formatDateRange(job.startDate, job.endDate)}</span>
+                            </div>
+                            <div class="flex justify-between items-baseline mb-2">
+                                <span class="text-[10pt] font-medium text-slate-700 italic">${job.position || 'Cargo'}</span>
+                                <span class="text-[9pt] text-slate-400">${job.location || ''}</span>
+                            </div>
+                            ${job.highlights && job.highlights.length > 0 ? `
+                                <ul class="list-disc ml-4 space-y-1">
+                                    ${job.highlights.map(h => `<li class="text-[9.5pt] text-slate-700 pl-1">${h}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </section>
+                ` : ''}
+
+                <!-- Habilidades: Agrupadas para lectura rápida -->
+                ${skills.length > 0 ? `
+                <section>
+                    <h2 class="section-header">Habilidades y Competencias</h2>
+                    <div class="grid grid-cols-1 gap-2">
+                        ${skills.map(skill => `
+                            <p class="text-[9.5pt]">
+                                <span class="font-bold text-slate-800">${skill.name || 'Categoría'}:</span>
+                                <span class="text-slate-600">${skill.keywords ? skill.keywords.join(', ') : ''}</span>
+                            </p>
+                        `).join('')}
+                    </div>
+                </section>
+                ` : ''}
+
+                <!-- Educación -->
+                ${education.length > 0 ? `
+                <section>
+                    <h2 class="section-header">Formación Académica</h2>
+                    ${education.map(edu => `
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-[10pt] font-bold text-slate-900">${edu.institution || 'Universidad'}</h3>
+                            <span class="text-[9pt] text-slate-500">${this.formatDateRange(edu.startDate, edu.endDate)}</span>
+                        </div>
+                        <p class="text-[9.5pt] text-slate-700">
+                            ${(edu.studyType || '') + (edu.area ? " en " + edu.area : (edu.field ? " en " + edu.field : ""))}
+                        </p>
+                    `).join('')}
+                </section>
+                ` : ''}
+            </div>
+        `;
+    }
 
     formatDateRange(startDate, endDate) {
         const formatDate = (dateStr) => {
@@ -1032,12 +1154,18 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
     async exportToPDF() {
 
         try {
-            // Determinar si estamos usando plantilla Harvard
+            // Determinar qué plantilla estamos usando
             let isHarvardTemplate = false;
+            let isModernChronological = false;
             const templateObj = this.availableTemplates.find(t => t.id === this.currentTemplate);
+            
             if (templateObj) {
                 isHarvardTemplate = templateObj.name === 'Harvard Profesional' || 
                                    templateObj.name.toLowerCase().includes('harvard');
+                isModernChronological = templateObj.name === 'Modern Chronological' || 
+                                       templateObj.name.toLowerCase().includes('modern chronological') ||
+                                       templateObj.name.toLowerCase().includes('chronological') ||
+                                       templateObj.name.toLowerCase().includes('platinum');
             }
 
             const cvContent = this.previewContainer.innerHTML;
@@ -1151,6 +1279,164 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                     }
                     .text-blue-600 {
                         color: #2563eb;
+                    }
+                `;
+            } else if (isModernChronological) {
+                // Estilos para plantilla Modern Chronological / Platinum Standard
+                fontImport = "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');";
+                bodyStyles = `
+                    body {
+                        font-family: 'Inter', sans-serif;
+                        line-height: 1.5;
+                        color: #1a202c;
+                        padding: 10mm;
+                    }
+                    .cv-body {
+                        font-family: 'Inter', sans-serif;
+                        line-height: 1.5;
+                        color: #1a202c;
+                    }
+                    .section-header {
+                        display: flex;
+                        align-items: center;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        font-weight: 700;
+                        font-size: 10pt;
+                        color: #2d3748;
+                        border-bottom: 1px solid #e2e8f0;
+                        margin-bottom: 12px;
+                        margin-top: 20px;
+                        padding-bottom: 4px;
+                    }
+                    .text-4xl {
+                        font-size: 24pt;
+                    }
+                    .font-extrabold {
+                        font-weight: 800;
+                    }
+                    .tracking-tighter {
+                        letter-spacing: -0.025em;
+                    }
+                    .text-slate-900 {
+                        color: #0f172a;
+                    }
+                    .text-slate-800 {
+                        color: #1e293b;
+                    }
+                    .text-slate-700 {
+                        color: #334155;
+                    }
+                    .text-slate-600 {
+                        color: #475569;
+                    }
+                    .text-slate-500 {
+                        color: #64748b;
+                    }
+                    .text-slate-400 {
+                        color: #94a3b8;
+                    }
+                    .text-slate-300 {
+                        color: #cbd5e1;
+                    }
+                    .text-[11pt] {
+                        font-size: 11pt;
+                    }
+                    .text-[10pt] {
+                        font-size: 10pt;
+                    }
+                    .text-[9.5pt] {
+                        font-size: 9.5pt;
+                    }
+                    .text-[9pt] {
+                        font-size: 9pt;
+                    }
+                    .font-bold {
+                        font-weight: 700;
+                    }
+                    .font-semibold {
+                        font-weight: 600;
+                    }
+                    .font-medium {
+                        font-weight: 500;
+                    }
+                    .italic {
+                        font-style: italic;
+                    }
+                    .text-center {
+                        text-align: center;
+                    }
+                    .text-justify {
+                        text-align: justify;
+                    }
+                    .flex {
+                        display: flex;
+                    }
+                    .justify-center {
+                        justify-content: center;
+                    }
+                    .justify-between {
+                        justify-content: space-between;
+                    }
+                    .items-center {
+                        align-items: center;
+                    }
+                    .items-baseline {
+                        align-items: baseline;
+                    }
+                    .flex-wrap {
+                        flex-wrap: wrap;
+                    }
+                    .gap-x-4 {
+                        column-gap: 1rem;
+                    }
+                    .mb-8 {
+                        margin-bottom: 2rem;
+                    }
+                    .mb-5 {
+                        margin-bottom: 1.25rem;
+                    }
+                    .mb-3 {
+                        margin-bottom: 0.75rem;
+                    }
+                    .mb-2 {
+                        margin-bottom: 0.5rem;
+                    }
+                    .mb-1 {
+                        margin-bottom: 0.25rem;
+                    }
+                    .ml-4 {
+                        margin-left: 1rem;
+                    }
+                    .p-2 {
+                        padding: 0.5rem;
+                    }
+                    .pl-1 {
+                        padding-left: 0.25rem;
+                    }
+                    .list-disc {
+                        list-style-type: disc;
+                    }
+                    .space-y-1 > * + * {
+                        margin-top: 0.25rem;
+                    }
+                    .grid-cols-1 {
+                        grid-template-columns: repeat(1, minmax(0, 1fr));
+                    }
+                    .gap-2 {
+                        gap: 0.5rem;
+                    }
+                    .grid {
+                        display: grid;
+                    }
+                    .underline {
+                        text-decoration: underline;
+                    }
+                    .decoration-slate-300 {
+                        text-decoration-color: #cbd5e1;
+                    }
+                    a {
+                        color: inherit;
                     }
                 `;
             } else {
@@ -1363,7 +1649,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             return;
         }
 
-        window.open(`/CV/${this.userCV.slug}`, '_blank');
+        window.open(`/cv/${this.userCV.slug}`, '_blank');
     }
 
     generateSlug(name) {

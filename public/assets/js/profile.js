@@ -108,7 +108,7 @@ class ProfileManager {
             if (titleElement) titleElement.textContent = cvData.title || 'Mi CV';
             if (slugElement) {
                 slugElement.innerHTML = `<iconify-icon icon="line-md:link" width="10"></iconify-icon> /${cvData.slug}`;
-                slugElement.href = `/CV/${cvData.slug}`;
+                slugElement.href = `/cv/${cvData.slug}`;
             }
             if (viewsElement) viewsElement.textContent = cvData.view_count || 0;
         }

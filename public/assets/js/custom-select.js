@@ -61,9 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
             let icon = 'solar:document-text-linear';
             if (template.name.toLowerCase().includes('harvard')) {
                 icon = 'simple-line-icons:graduation';
-            } else if (template.name.toLowerCase().includes('moderno')) {
+            } else if (template.name.toLowerCase().includes('modern') || template.name.toLowerCase().includes('chronological')) {
+                icon = 'solar:calendar-linear';
+            } else if (template.name.toLowerCase().includes('creativo') || template.name.toLowerCase().includes('moderno')) {
                 icon = 'solar:magic-stick-3-linear';
-            } else if (template.name.toLowerCase().includes('creativ')) {
+            } else if (template.name.toLowerCase().includes('platinum')) {
                 icon = 'solar:star-rainbow-linear';
             }
             
