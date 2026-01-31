@@ -1669,7 +1669,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         }
 
         if (!this.userCV || !this.userCV.slug) {
-            this.showNotification('Primero debes guardar tu CV para poder previsualizarlo', 'warning');
+            this.showNotification('Error al cargar tu CV. Intenta recargar la página', 'error');
             return;
         }
 
@@ -1735,7 +1735,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             icon.className = `status-icon ${config.color}`;
 
             if (text) {
-                text.className = `text-xs font-medium status-text ${config.color}`;
+                text.className = `hidden md:flex text-xs font-medium status-text ${config.color}`;
             }
         }
     }
