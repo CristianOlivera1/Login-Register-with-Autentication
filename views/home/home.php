@@ -61,7 +61,7 @@ $isAuthenticated = isset($_SESSION['user_id']);
                         aria-hidden="true">
 
                     <video
-                        class="relative z-10 w-full h-auto shadow-2xl block scale-125"
+                        class="relative z-10 w-full h-auto shadow-2xl block scale-105"
                         autoplay
                         muted
                         loop
