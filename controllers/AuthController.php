@@ -1,12 +1,15 @@
 <?php
 
 require_once __DIR__ . '/../src/User.php';
+require_once __DIR__ . '/../src/CV.php';
 
 class AuthController {
     private $userModel;
+    private $cvModel;
 
     public function __construct() {
         $this->userModel = new User();
+        $this->cvModel = new CV();
     }
 
     public function login() {
@@ -114,6 +117,16 @@ class AuthController {
         $newUser = $this->userModel->create($userData);
 
         if ($newUser) {
+            // Crear CV por defecto para el nuevo usuario
+            $defaultImage = 'https://api.dicebear.com/9.x/pixel-art/svg?seed=' . urlencode($newUser['firstName'] ?: $newUser['email']);
+            $this->cvModel->createDefaultCV(
+                $newUser['id'],
+                $newUser['firstName'],
+                $newUser['lastName'],
+                $newUser['email'],
+                $defaultImage
+            );
+            
             $this->startUserSession($newUser);
             echo json_encode([
                 'success' => true, 

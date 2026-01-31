@@ -1,12 +1,15 @@
 <?php
 
 require_once __DIR__ . '/../src/User.php';
+require_once __DIR__ . '/../src/CV.php';
 
 class OAuthController {
     private $userModel;
+    private $cvModel;
 
     public function __construct() {
         $this->userModel = new User();
+        $this->cvModel = new CV();
     }
 
     public function googleCallback() {
@@ -240,6 +243,15 @@ class OAuthController {
             $userInfo['auth_provider'] = $provider;
             $newUser = $this->userModel->create($userInfo);
             if ($newUser) {
+                // Crear CV por defecto para el nuevo usuario OAuth
+                $this->cvModel->createDefaultCV(
+                    $newUser['id'],
+                    $newUser['firstName'],
+                    $newUser['lastName'],
+                    $newUser['email'],
+                    $newUser['avatar'] // Usar imagen de perfil de la red social
+                );
+                
                 $this->startUserSession($newUser);
             } else {
                 $this->redirectWithError('Failed to create user account');
