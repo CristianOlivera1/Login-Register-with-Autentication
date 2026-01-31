@@ -441,4 +441,137 @@ class CV {
         $row = $result->fetch_assoc();
         return $row['count'];
     }
+
+    public function createDefaultCV($userId, $userFirstName = '', $userLastName = '', $userEmail = '', $userImage = '') {
+        // Obtener template por defecto (generalmente el primero)
+        $templates = $this->getAllTemplates();
+        if (empty($templates)) {
+            return false;
+        }
+        
+        $defaultTemplate = $templates[0];
+        
+        $defaultCVData = [
+            "basics" => [
+                "name" => trim($userFirstName . ' ' . $userLastName) ?: "Tu Nombre Completo",
+                "label" => "Título Profesional",
+                "email" => $userEmail ?: "tu.email@ejemplo.com",
+                "image" => $userImage ?: "",
+                "phone" => "Tu teléfono",
+                "url" => "https://tu-portafolio.com",
+                "summary" => "Breve descripción profesional que destaque tus fortalezas, experiencia y objetivos de carrera.",
+                "location" => [
+                    "address" => "",
+                    "postalCode" => "",
+                    "city" => "Tu Ciudad",
+                    "countryCode" => "TU",
+                    "region" => "Tu País"
+                ],
+                "profiles" => [
+                    [
+                        "network" => "LinkedIn",
+                        "username" => "tu-usuario",
+                        "url" => "https://linkedin.com/in/tu-usuario"
+                    ]
+                ]
+            ],
+            "work" => [
+                [
+                    "name" => "Nombre de la Empresa",
+                    "position" => "Tu Cargo",
+                    "location" => "Ciudad, País",
+                    "startDate" => "2023-01",
+                    "endDate" => "",
+                    "description" => "Descripción del puesto y responsabilidades principales.",
+                    "highlights" => [
+                        "Logro destacado 1",
+                        "Logro destacado 2"
+                    ],
+                    "technologies" => []
+                ]
+            ],
+            "education" => [
+                [
+                    "institution" => "Universidad/Instituto",
+                    "studyType" => "Grado/Título",
+                    "area" => "Área de estudio",
+                    "location" => "Ciudad, País",
+                    "startDate" => "2020",
+                    "endDate" => "2024",
+                    "gpa" => "",
+                    "honors" => "",
+                    "description" => ""
+                ]
+            ],
+            "projects" => [
+                [
+                    "name" => "Proyecto Destacado",
+                    "role" => "Tu Rol",
+                    "type" => "personal",
+                    "description" => "Descripción del proyecto y tecnologías utilizadas.",
+                    "highlights" => [
+                        "Característica principal 1",
+                        "Característica principal 2"
+                    ],
+                    "technologies" => ["Tecnología 1", "Tecnología 2"],
+                    "startDate" => "2024-01",
+                    "endDate" => "2024-06",
+                    "url" => ""
+                ]
+            ],
+            "skills" => [
+                [
+                    "name" => "Lenguajes de Programación",
+                    "level" => "Intermedio",
+                    "keywords" => ["JavaScript", "Python", "PHP"]
+                ],
+                [
+                    "name" => "Frameworks",
+                    "level" => "Intermedio", 
+                    "keywords" => ["React", "Laravel", "Express"]
+                ],
+                [
+                    "name" => "Herramientas",
+                    "level" => "Intermedio",
+                    "keywords" => ["Git", "Docker", "VS Code"]
+                ]
+            ],
+            "languages" => [
+                [
+                    "language" => "Español",
+                    "fluency" => "Nativo"
+                ],
+                [
+                    "language" => "Inglés", 
+                    "fluency" => "Intermedio"
+                ]
+            ]
+        ];
+
+        $userName = trim($userFirstName . ' ' . $userLastName) ?: 'usuario';
+        $slug = $this->generateSlug($userName . '-cv');
+        
+        // Verificar que el slug sea único
+        $originalSlug = $slug;
+        $counter = 1;
+        while ($this->slugExists($slug)) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
+        $data = [
+            'user_id' => $userId,
+            'template_id' => $defaultTemplate['id'],
+            'cv_data' => $defaultCVData,
+            'original_json_input' => json_encode($defaultCVData, JSON_PRETTY_PRINT),
+            'slug' => $slug,
+            'title' => 'Mi CV'
+        ];
+
+        return $this->createCV($data);
+    }
+
+    private function generateSlug($text) {
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $text), '-'));
+    }
 }

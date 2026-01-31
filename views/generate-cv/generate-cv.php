@@ -3,15 +3,15 @@
         <div class="h-6 w-px bg-white/10 hidden sm:block"></div>
         <div class="flex items-center gap-2 text-xs md:text-sm">
             <span class="text-slate-500">Generar CV</span>
-            <iconify-icon icon="solar:alt-arrow-right-linear" width="12" class="text-slate-600 hidden sm:block"></iconify-icon>
+            <iconify-icon icon="solar:alt-arrow-right-linear" width="12" class="text-slate-600"></iconify-icon>
             <span class="text-white font-medium">Editor</span>
         </div>
     </div>
 
     <div class="flex items-center gap-2 md:gap-3">
-        <div class="hidden xl:flex items-center gap-2 mr-2 auto-save-status">
+        <div class="flex items-center gap-2 mr-2 auto-save-status">
             <iconify-icon icon="mdi:cloud-check-outline" width="18" class="status-icon text-green-500"></iconify-icon>
-            <span class="text-xs text-green-500 font-medium status-text">Auto guardado</span>
+            <span class="hidden md:flex text-xs text-green-500 font-medium status-text">Auto guardado</span>
         </div>
 
         <button id="preview-btn" class="h-8 md:h-9 px-3 md:px-4 rounded-lg border border-white/10 bg-white/5 text-white text-xs font-medium hover:bg-white/10 transition-all flex items-center gap-2">
