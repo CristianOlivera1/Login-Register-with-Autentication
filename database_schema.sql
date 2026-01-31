@@ -1,7 +1,7 @@
 CREATE TABLE users (
     id CHAR(36) PRIMARY KEY NOT NULL,
     email VARCHAR(150) NOT NULL,
-    password VARCHAR(150) NOT NULL,
+    password VARCHAR(150) NULL, 
     avatar VARCHAR(200),
     firstName VARCHAR(150),
     lastName VARCHAR(250),

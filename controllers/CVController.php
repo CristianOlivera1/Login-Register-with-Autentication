@@ -394,44 +394,65 @@ class CVController
     {
         header('Content-Type: application/json');
 
-        $filePath = $_SERVER['DOCUMENT_ROOT'] . '/assets/data/example-cv.json';
+        // Usar ruta relativa desde el directorio del controlador
+        $filePath = __DIR__ . '/../public/assets/data/example-cv.json';
 
         if (!file_exists($filePath)) {
-            echo json_encode(['success' => false, 'message' => 'Archivo no encontrado']);
+            error_log("Example CV file not found at: " . $filePath);
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Archivo de ejemplo no encontrado']);
             return;
         }
 
         $jsonContent = file_get_contents($filePath);
+        if ($jsonContent === false) {
+            error_log("Failed to read example CV file");
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Error al leer archivo de ejemplo']);
+            return;
+        }
+
         $data = json_decode($jsonContent, true);
+        if ($data === null) {
+            error_log("Failed to decode JSON from example CV file");
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Error al procesar archivo JSON']);
+            return;
+        }
 
         // Si el usuario está autenticado, personalizar la plantilla con sus datos
         session_start();
         if (isset($_SESSION['user_id'])) {
-            // Obtener datos del usuario
-            require_once __DIR__ . '/../config/database.php';
-            $db = new Database();
-            $conn = $db->getConnection();
-            
-            $stmt = $conn->prepare("SELECT firstName, lastName, email, avatar FROM users WHERE id = ?");
-            $stmt->bind_param("s", $_SESSION['user_id']);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            
-            if ($result->num_rows > 0) {
-                $user = $result->fetch_assoc();
-                $fullName = trim(($user['firstName'] ?? '') . ' ' . ($user['lastName'] ?? ''));
+            try {
+                // Obtener datos del usuario
+                require_once __DIR__ . '/../config/database.php';
+                $db = new Database();
+                $conn = $db->getConnection();
                 
-                // Personalizar los datos básicos con la información del usuario
-                if (!empty($fullName)) {
-                    $data['basics']['name'] = $fullName;
+                $stmt = $conn->prepare("SELECT firstName, lastName, email, avatar FROM users WHERE id = ?");
+                $stmt->bind_param("s", $_SESSION['user_id']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                
+                if ($result->num_rows > 0) {
+                    $user = $result->fetch_assoc();
+                    $fullName = trim(($user['firstName'] ?? '') . ' ' . ($user['lastName'] ?? ''));
+                    
+                    // Personalizar los datos básicos con la información del usuario
+                    if (!empty($fullName)) {
+                        $data['basics']['name'] = $fullName;
+                    }
+                    if (!empty($user['email'])) {
+                        $data['basics']['email'] = $user['email'];
+                    }
+                    if (!empty($user['avatar'])) {
+                        $data['basics']['image'] = $user['avatar'];
+                    }
+                    $data['basics']['url'] = 'https://github.com/' . strtolower(str_replace(' ', '', $user['firstName'] ?? 'usuario'));
                 }
-                if (!empty($user['email'])) {
-                    $data['basics']['email'] = $user['email'];
-                }
-                if (!empty($user['avatar'])) {
-                    $data['basics']['image'] = $user['avatar'];
-                }
-                $data['basics']['url'] = 'https://github.com/' . strtolower(str_replace(' ', '', $user['firstName'] ?? 'usuario'));
+            } catch (Exception $e) {
+                error_log("Error personalizing example CV: " . $e->getMessage());
+                // Continuar con datos por defecto si hay error
             }
         }
 

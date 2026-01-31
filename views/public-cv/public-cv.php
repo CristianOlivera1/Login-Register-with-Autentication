@@ -555,15 +555,6 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                     img.src = window.location.origin + img.src;
                 }
             }
-
-            img.addEventListener('error', function() {
-                console.log('Error loading image:', this.src);
-                this.style.display = 'none';
-            });
-
-            img.addEventListener('load', function() {
-                console.log('Image loaded successfully:', this.src);
-            });
         });
     });
 </script>
