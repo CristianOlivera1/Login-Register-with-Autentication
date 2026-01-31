@@ -29,7 +29,7 @@ CREATE TABLE user_cvs (
     id CHAR(36) PRIMARY KEY NOT NULL,
     user_id CHAR(36) NOT NULL,
     title VARCHAR(150) NOT NULL DEFAULT 'Mi CV',
-    slug VARCHAR(100) UNIQUE NOT NULL, -- Para URL pública (ej: olivera-chavez-cristian)
+    slug VARCHAR(100) UNIQUE NOT NULL,
     template_id CHAR(36) NOT NULL,
     cv_data JSON NOT NULL, -- Datos completos del CV en JSON
     original_json_input TEXT, -- JSON original subido por el usuario
@@ -74,11 +74,11 @@ CREATE TABLE cv_work_experience (
     position VARCHAR(150) NOT NULL,
     location VARCHAR(150),
     start_date DATE NOT NULL,
-    end_date DATE NULL, -- NULL = trabajo actual
+    end_date DATE NULL, 
     is_current BOOLEAN DEFAULT FALSE,
     description TEXT,
-    achievements JSON, -- Array de logros/responsabilidades
-    technologies JSON, -- Array de tecnologías usadas
+    achievements JSON, 
+    technologies JSON,
     display_order INT DEFAULT 0,
     
     FOREIGN KEY (cv_id) REFERENCES user_cvs(id) ON DELETE CASCADE,
@@ -95,8 +95,8 @@ CREATE TABLE cv_projects (
     start_date DATE,
     end_date DATE,
     description TEXT,
-    achievements JSON, -- Array de logros específicos del proyecto
-    technologies JSON, -- Array de tecnologías usadas
+    achievements JSON, 
+    technologies JSON, 
     project_url VARCHAR(255),
     github_url VARCHAR(255),
     demo_url VARCHAR(255),
@@ -117,7 +117,7 @@ CREATE TABLE cv_education (
     start_date DATE,
     end_date DATE,
     gpa VARCHAR(20),
-    honors VARCHAR(255), -- Ej: "Matrícula de Honor en Programación"
+    honors VARCHAR(255),
     description TEXT,
     display_order INT DEFAULT 0,
     
@@ -126,12 +126,11 @@ CREATE TABLE cv_education (
 );
 
 -- 7. HABILIDADES Y COMPETENCIAS
-
 CREATE TABLE cv_skills (
     id CHAR(36) PRIMARY KEY NOT NULL,
     cv_id CHAR(36) NOT NULL,
     skill_category VARCHAR(100) NOT NULL, -- Ej: "Lenguajes", "Frameworks", "Tools"
-    skills JSON NOT NULL, -- Array de habilidades
+    skills JSON NOT NULL, 
     proficiency_level VARCHAR(50) DEFAULT 'intermediate',
     display_order INT DEFAULT 0,
     
@@ -140,7 +139,6 @@ CREATE TABLE cv_skills (
 );
 
 -- INSERTAR PLANTILLAS BÁSICAS
-
 -- Plantilla Harvard
 INSERT INTO cv_templates (id, name, description, template_data) VALUES 
 (
@@ -196,6 +194,7 @@ INSERT INTO cv_templates (id, name, description, template_data) VALUES
     )
 );
 
+-- Plantilla Chronological
 INSERT INTO cv_templates (id, name, description, template_data, is_active, created_at, updated_at) 
 VALUES (
     UUID(),
