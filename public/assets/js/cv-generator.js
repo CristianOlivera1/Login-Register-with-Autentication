@@ -4,8 +4,8 @@ class CVGenerator {
         this.currentTemplate = null;
         this.availableTemplates = [];
         this.isAuthenticated = false;
-        this.autoSaveTimeout = null; // Para debouncing
-        this.autoSaveDelay = 2000; // 2 segundos de delay
+        this.autoSaveTimeout = null; 
+        this.autoSaveDelay = 2000;
         this.userCV = null;
         this.lastSavedData = null;
         this.hasUnsavedChanges = false;
@@ -17,7 +17,6 @@ class CVGenerator {
                 if (this.isAuthenticated) {
                     this.loadUserCV();
                 } else {
-                    // Para usuarios no autenticados, cargar desde localStorage o ejemplo
                     this.loadExampleCV();
                 }
             });
@@ -35,24 +34,24 @@ class CVGenerator {
         this.previewBtn = document.getElementById('preview-btn');
         this.exportBtn = document.querySelector('button:has([icon="solar:download-minimalistic-linear"])');
         this.validationStatus = document.querySelector('.h-8.bg-\\[\\#0099ff\\]\\/10');
-        
+
         this.templateSelect = document.getElementById('custom-select');
         this.templateOptions = document.querySelectorAll('.option-btn');
-        
+
         this.saveStatusIndicator = document.querySelector('.auto-save-status');
-        
+
         this.wordWrapBtn = document.getElementById('word-wrap-btn');
-        
+
         this.jsonTab = document.getElementById('tab-json');
         this.toonTab = document.getElementById('tab-toon');
-        
+
         if (!this.jsonEditor) {
             console.warn('JSON Editor not found in DOM');
         }
         if (!this.previewContainer) {
             console.warn('Preview Container not found in DOM');
         }
-        
+
         this.initializeResizer();
     }
 
@@ -86,12 +85,10 @@ class CVGenerator {
             });
         }
 
-        // Word wrap toggle
         if (this.wordWrapBtn) {
             this.wordWrapBtn.addEventListener('click', () => this.toggleWordWrap());
         }
 
-        // JSON Editor changes - auto-save con debouncing si está habilitado
         if (this.jsonEditor) {
             this.jsonEditor.addEventListener('input', () => this.handleJSONChange());
             this.jsonEditor.addEventListener('paste', (e) => this.handlePaste(e));
@@ -101,21 +98,26 @@ class CVGenerator {
     }
 
     initializeTabs() {
-        // Buscar los tabs por su contenido de texto con un pequeño delay
         setTimeout(() => {
             const allSpans = document.querySelectorAll('span');
             allSpans.forEach(span => {
                 const text = span.textContent.trim();
-                if (text === 'JSON Source' || text === 'TOON Source') {
+
+                if (text === 'JSON Source') {
                     span.style.cursor = 'pointer';
                     span.addEventListener('click', () => this.switchTab(text));
+                }
+                // TOON bloqueado hasta nueva funcionalidad
+                else if (text === 'TOON Source') {
+                    span.style.cursor = 'not-allowed';
+                    span.title = "Funcionalidad disponible próximamente";
+                    span.classList.add('opacity-50');
                 }
             });
         }, 100);
     }
 
     switchTab(tabName) {
-        // Buscar todos los spans que pueden ser tabs
         const allSpans = document.querySelectorAll('span');
 
         allSpans.forEach(span => {
@@ -144,10 +146,8 @@ class CVGenerator {
     showTOONEditor() {
         if (!this.jsonEditor) return;
 
-        // Generar TOON (Template Object Oriented Notation) basado en el CV actual
         const toonContent = this.generateTOON(this.currentCVData || {});
 
-        // Mostrar contenido TOON
         this.jsonEditor.innerHTML = `<pre style="color: #94a3b8; font-family: monospace; font-size: 0.875rem; line-height: 1.5;">${toonContent}</pre>`;
     }
 
@@ -226,17 +226,17 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                 this.availableTemplates = data.templates;
 
                 // Buscar Harvard Professional como plantilla por defecto
-                const harvardTemplate = data.templates.find(t => 
+                const harvardTemplate = data.templates.find(t =>
                     t.name === 'Harvard Profesional' || t.name.toLowerCase().includes('harvard')
                 );
-                
+
                 if (harvardTemplate) {
                     this.currentTemplate = harvardTemplate.id;
                 } else {
                     this.currentTemplate = data.templates[0].id;
                     console.log('Harvard no encontrado, usando:', data.templates[0].name);
                 }
-                
+
                 return true;
             }
             return false;
@@ -273,14 +273,14 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
                 try {
                     this.currentCVData = JSON.parse(data.cv.cv_data);
-                    
+
                     // Establecer la plantilla correcta si existe template_id en la BD
                     if (data.cv.template_id) {
                         this.currentTemplate = data.cv.template_id;
-                        
+
                         this.updateCustomSelect();
                     }
-                    
+
                     this.displayJSONInEditor(this.currentCVData);
 
                     // Cargar el título en el editor de nombre
@@ -325,17 +325,17 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
             if (data.success && data.cv_data) {
                 this.currentCVData = data.cv_data;
-                
+
                 // Para usuarios no autenticados, usar Harvard por defecto si no hay plantilla seleccionada
                 if (!this.isAuthenticated && !this.currentTemplate) {
-                    const harvardTemplate = this.availableTemplates.find(t => 
+                    const harvardTemplate = this.availableTemplates.find(t =>
                         t.name === 'Harvard Profesional' || t.name.toLowerCase().includes('harvard')
                     );
                     if (harvardTemplate) {
                         this.currentTemplate = harvardTemplate.id;
                     }
                 }
-                
+
                 this.displayJSONInEditor(this.currentCVData);
 
                 // Cargar título en el editor de nombre
@@ -435,66 +435,84 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         const resizer = document.getElementById('resizer');
         const leftPanel = document.getElementById('left-panel');
         const rightPanel = document.getElementById('right-panel');
-        
+
         if (!resizer || !leftPanel || !rightPanel) return;
-        
-        let isResizing = false;
-        
-        resizer.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            document.body.style.cursor = 'col-resize';
-            document.body.style.userSelect = 'none';
-            
-            const startX = e.clientX;
-            const startLeftWidth = leftPanel.offsetWidth;
-            const startRightWidth = rightPanel.offsetWidth;
-            const totalWidth = startLeftWidth + startRightWidth;
-            
-            const handleMouseMove = (e) => {
-                if (!isResizing) return;
-                
-                const currentX = e.clientX;
-                const diffX = currentX - startX;
-                
-                let newLeftWidth = startLeftWidth + diffX;
-                let newRightWidth = startRightWidth - diffX;
-                
-                const minWidth = totalWidth * 0.2;
-                
-                if (newLeftWidth < minWidth) {
-                    newLeftWidth = minWidth;
-                    newRightWidth = totalWidth - minWidth;
-                } else if (newRightWidth < minWidth) {
-                    newRightWidth = minWidth;
-                    newLeftWidth = totalWidth - minWidth;
-                }
-                
-                const leftPercent = (newLeftWidth / totalWidth) * 100;
-                const rightPercent = (newRightWidth / totalWidth) * 100;
-                
-                leftPanel.style.width = leftPercent + '%';
-                rightPanel.style.width = rightPercent + '%';
+
+        // Solo inicializar resizer en desktop
+        const initializeDesktopResizer = () => {
+            if (window.innerWidth < 1024) return; // lg breakpoint
+
+            let isResizing = false;
+
+            const handleMouseDown = (e) => {
+                isResizing = true;
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+
+                const startX = e.clientX;
+                const startLeftWidth = leftPanel.offsetWidth;
+                const startRightWidth = rightPanel.offsetWidth;
+                const totalWidth = startLeftWidth + startRightWidth;
+
+                const handleMouseMove = (e) => {
+                    if (!isResizing) return;
+
+                    const currentX = e.clientX;
+                    const diffX = currentX - startX;
+
+                    let newLeftWidth = startLeftWidth + diffX;
+                    let newRightWidth = startRightWidth - diffX;
+
+                    const minWidth = totalWidth * 0.2;
+
+                    if (newLeftWidth < minWidth) {
+                        newLeftWidth = minWidth;
+                        newRightWidth = totalWidth - minWidth;
+                    } else if (newRightWidth < minWidth) {
+                        newRightWidth = minWidth;
+                        newLeftWidth = totalWidth - minWidth;
+                    }
+
+                    const leftPercent = (newLeftWidth / totalWidth) * 100;
+                    const rightPercent = (newRightWidth / totalWidth) * 100;
+
+                    leftPanel.style.setProperty('--lg-width', leftPercent + '%');
+                    rightPanel.style.setProperty('--lg-width', rightPercent + '%');
+                    leftPanel.style.width = leftPercent + '%';
+                    rightPanel.style.width = rightPercent + '%';
+                };
+
+                const handleMouseUp = () => {
+                    isResizing = false;
+                    document.body.style.cursor = '';
+                    document.body.style.userSelect = '';
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                };
+
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
             };
-            
-            const handleMouseUp = () => {
-                isResizing = false;
-                document.body.style.cursor = '';
-                document.body.style.userSelect = '';
-                document.removeEventListener('mousemove', handleMouseMove);
-                document.removeEventListener('mouseup', handleMouseUp);
-            };
-            
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
+
+            resizer.addEventListener('mousedown', handleMouseDown);
+        };
+
+        // Inicializar en desktop y re-inicializar en resize
+        initializeDesktopResizer();
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                initializeDesktopResizer();
+            }
         });
     }
-    
+
     toggleWordWrap() {
         if (!this.jsonEditor) return;
-        
+
         const currentStyle = this.jsonEditor.style.whiteSpace;
         const isWrapped = currentStyle === 'pre-wrap';
-        
+
         if (isWrapped) {
             this.jsonEditor.style.whiteSpace = 'pre';
             this.jsonEditor.style.wordWrap = 'normal';
@@ -504,7 +522,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             this.jsonEditor.style.whiteSpace = 'pre-wrap';
             this.jsonEditor.style.wordWrap = 'break-word';
             this.jsonEditor.style.overflowWrap = 'break-word';
-            this.wordWrapBtn.style.color = '#00e1ff'; 
+            this.wordWrapBtn.style.color = '#00e1ff';
         }
     }
 
@@ -630,16 +648,16 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
     async changeTemplate(templateId) {
         this.currentTemplate = templateId;
-        
+
         // Mostrar estado "Guardando" inmediatamente
         if (this.isAuthenticated && this.currentCVData) {
             this.hasUnsavedChanges = true;
             this.updateSaveStatus('Guardando...', 'saving');
             this.scheduleAutoSave();
         }
-        
+
         await this.updatePreview();
-        
+
         if (!this.currentCVData) return;
 
         if (!this.previewContainer) {
@@ -658,24 +676,24 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         const education = cvData.education || [];
         const skills = cvData.skills || [];
         const languages = cvData.languages || [];
-        
+
         // Verificar si es la plantilla Harvard
-        const isHarvardTemplate = this.availableTemplates.find(t => 
-            t.id === template && 
+        const isHarvardTemplate = this.availableTemplates.find(t =>
+            t.id === template &&
             (t.name === 'Harvard Profesional' || t.name.toLowerCase().includes('harvard'))
         );
-        
+
         // Verificar si es la plantilla Creativo Moderno
-        const isModernChronological = this.availableTemplates.find(t => 
-            t.id === template && 
-            (t.name === 'Modern Chronological' || t.name.toLowerCase().includes('modern chronological') || 
-             t.name.toLowerCase().includes('chronological') || t.name.toLowerCase().includes('platinum'))
+        const isModernChronological = this.availableTemplates.find(t =>
+            t.id === template &&
+            (t.name === 'Modern Chronological' || t.name.toLowerCase().includes('modern chronological') ||
+                t.name.toLowerCase().includes('chronological') || t.name.toLowerCase().includes('platinum'))
         );
-        
+
         if (isHarvardTemplate) {
             return this.generateHarvardTemplate(cvData);
         }
-        
+
         if (isModernChronological) {
             return this.generateModernChronologicalTemplate(cvData);
         }
@@ -837,7 +855,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
 
         return html;
     }
-    
+
     generateHarvardTemplate(cvData) {
         const basics = cvData.basics || {};
         const work = cvData.work || [];
@@ -845,7 +863,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         const education = cvData.education || [];
         const skills = cvData.skills || [];
         const languages = cvData.languages || [];
-        
+
         return `
             <style>
                 .font-stix {
@@ -952,9 +970,9 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                     <h2 class="text-md font-bold uppercase tracking-wide border-b-2 border-slate-300 mb-3">Skills Adicionales</h2>
                     <ul class="list-disc list-outside ml-5 space-y-1 text-[11pt] text-slate-800">
                         ${skills.map(skillGroup => {
-                            const skillsText = skillGroup.keywords ? skillGroup.keywords.join(', ') : skillGroup.name;
-                            return `<li>${skillsText}</li>`;
-                        }).join('')}
+            const skillsText = skillGroup.keywords ? skillGroup.keywords.join(', ') : skillGroup.name;
+            return `<li>${skillsText}</li>`;
+        }).join('')}
                         ${languages.length > 0 ? `<li>Idiomas: ${languages.map(lang => `${lang.language} (${lang.fluency || 'Intermedio'})`).join(', ')}</li>` : ''}
                     </ul>
                 </section>
@@ -962,7 +980,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             </div>
         `;
     }
-    
+
     generateModernChronologicalTemplate(cvData) {
         const basics = cvData.basics || {};
         const work = cvData.work || [];
@@ -970,7 +988,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         const education = cvData.education || [];
         const skills = cvData.skills || [];
         const languages = cvData.languages || [];
-        
+
         return `
             <style>
                 .cv-body { font-family: 'Inter', sans-serif; line-height: 1.5; color: #1a202c; }
@@ -1152,20 +1170,26 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
     }
 
     async exportToPDF() {
+        if (this.isMobileDevice()) {
+            this.showNotification(
+                'Para descargar PDF, por favor accede desde una laptop o PC. Los dispositivos móviles no soportan esta función.',
+                'warning'
+            );
+            return;
+        }
 
         try {
-            // Determinar qué plantilla estamos usando
             let isHarvardTemplate = false;
             let isModernChronological = false;
             const templateObj = this.availableTemplates.find(t => t.id === this.currentTemplate);
-            
+
             if (templateObj) {
-                isHarvardTemplate = templateObj.name === 'Harvard Profesional' || 
-                                   templateObj.name.toLowerCase().includes('harvard');
-                isModernChronological = templateObj.name === 'Modern Chronological' || 
-                                       templateObj.name.toLowerCase().includes('modern chronological') ||
-                                       templateObj.name.toLowerCase().includes('chronological') ||
-                                       templateObj.name.toLowerCase().includes('platinum');
+                isHarvardTemplate = templateObj.name === 'Harvard Profesional' ||
+                    templateObj.name.toLowerCase().includes('harvard');
+                isModernChronological = templateObj.name === 'Modern Chronological' ||
+                    templateObj.name.toLowerCase().includes('modern chronological') ||
+                    templateObj.name.toLowerCase().includes('chronological') ||
+                    templateObj.name.toLowerCase().includes('platinum');
             }
 
             const cvContent = this.previewContainer.innerHTML;
@@ -1173,9 +1197,9 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             const filename = this.generateSlug(cvTitle) + '.pdf';
 
             const printWindow = window.open('', '_blank');
-            
+
             let fontImport, bodyStyles;
-            
+
             if (isHarvardTemplate) {
                 fontImport = "@import url('https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');";
                 bodyStyles = `
@@ -1451,7 +1475,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                     }
                 `;
             }
-            
+
             printWindow.document.write(`
                 <!DOCTYPE html>
                 <html>
@@ -1617,9 +1641,9 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
         notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 transition-all duration-300 ${type === 'success' ? 'bg-green-500' :
-                type === 'error' ? 'bg-red-500' :
-                    type === 'warning' ? 'bg-yellow-500' :
-                        'bg-blue-500'
+            type === 'error' ? 'bg-red-500' :
+                type === 'warning' ? 'bg-yellow-500' :
+                    'bg-blue-500'
             }`;
         notification.textContent = message;
 
@@ -1660,6 +1684,18 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
             .trim()
             .replace(/\s+/g, '-')
             .replace(/-+/g, '-');
+    }
+
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+            window.innerWidth <= 768 ||
+            ('ontouchstart' in window);
+    }
+
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+            window.innerWidth <= 768 ||
+            ('ontouchstart' in window);
     }
 
     updateSaveStatus(message, type = 'info') {
@@ -1715,13 +1751,13 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
         // Mostrar loader mientras se genera la vista previa
         const loader = this.previewContainer.querySelector('#loader');
         const content = this.previewContainer.querySelector('#cv-content');
-        
+
         if (loader) loader.style.display = 'flex';
         if (content) content.style.display = 'none';
 
         try {
             const cvHTML = this.generateCVHTML(this.currentCVData, this.currentTemplate);
-            
+
             if (content) {
                 content.innerHTML = cvHTML;
                 content.style.display = 'block';
@@ -1729,7 +1765,7 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                 // Si no existe el contenedor de contenido, crear uno
                 this.previewContainer.innerHTML = `<div id="cv-content">${cvHTML}</div>`;
             }
-            
+
             if (loader) loader.style.display = 'none';
         } catch (error) {
             console.error('Error updating preview:', error);
@@ -1773,18 +1809,18 @@ ${skills.map((skillGroup, index) => `  category_${index + 1} {
                 this.updateSaveStatus('Auto guardado', 'success');
                 return true;
             }
-            
+
             if (savedTemplate && this.availableTemplates.some(t => t.id === savedTemplate)) {
                 this.currentTemplate = savedTemplate;
             }
-            
+
             return false;
         } catch (error) {
             console.error('Error loading from localStorage:', error);
             return false;
         }
     }
-    
+
     updateCustomSelect() {
         // Notificar al custom-select que se actualice con la plantilla actual
         if (window.customSelectInstance && window.customSelectInstance.updateSelectedTemplate) {

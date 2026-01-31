@@ -324,12 +324,10 @@ class ProfileManager {
                     'success'
                 );
             } else {
-                // Revert toggle on error
                 this.visibilityToggle.checked = !isPublic;
                 this.showNotification(data.message, 'error');
             }
         } catch (error) {
-            // Revert toggle on error
             this.visibilityToggle.checked = !isPublic;
             this.showNotification('Error al cambiar visibilidad', 'error');
         }
