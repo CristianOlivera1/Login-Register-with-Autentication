@@ -37,9 +37,9 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
     </script>
 <?php endif; ?>
 
-<main class="py-8">
-    <div class="max-w-4xl mx-auto px-4">
-        <div class="a4-paper mx-auto p-8 md:p-12">
+<main class="py-4 md:py-8">
+    <div class="max-w-4xl mx-auto px-3 md:px-4 mt-14 sm:mt-6">
+        <div class="a4-paper mx-auto p-4 md:p-8 lg:p-12 bg-white shadow-lg">
             <?php
             $cvData = json_decode($cv['cv_data'], true);
             $basics = $cvData['basics'] ?? [];
@@ -52,22 +52,27 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
             // Verificar el tipo de plantilla
             $templateName = $cv['template_name'] ?? '';
             $isHarvardTemplate = stripos($templateName, 'harvard') !== false;
-            $isModernChronological = stripos($templateName, 'modern chronological') !== false || 
-                                    stripos($templateName, 'chronological') !== false ||
-                                    stripos($templateName, 'platinum') !== false;
+            $isModernChronological = stripos($templateName, 'modern chronological') !== false ||
+                stripos($templateName, 'chronological') !== false ||
+                stripos($templateName, 'platinum') !== false;
             ?>
 
             <?php if ($isModernChronological): ?>
                 <!-- Plantilla Platinum -->
                 <style>
-                    .cv-body { font-family: 'Inter', sans-serif; line-height: 1.5; color: #1a202c; }
-                    .section-header { 
-                        display: flex; 
-                        align-items: center; 
-                        text-transform: uppercase; 
-                        letter-spacing: 0.05em; 
-                        font-weight: 700; 
-                        font-size: 10pt; 
+                    .cv-body {
+                        font-family: 'Inter', sans-serif;
+                        line-height: 1.5;
+                        color: #1a202c;
+                    }
+
+                    .section-header {
+                        display: flex;
+                        align-items: center;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        font-weight: 700;
+                        font-size: 10pt;
                         color: #2d3748;
                         border-bottom: 1px solid #e2e8f0;
                         margin-bottom: 12px;
@@ -76,21 +81,32 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                     }
                 </style>
 
-                <div class="cv-body p-2">
+                <div class="cv-body p-1 md:p-2">
                     <!-- Header Minimalista -->
-                    <header class="text-center mb-8">
-                        <h1 class="text-4xl font-extrabold tracking-tighter text-slate-900 mb-3">
+                    <header class="text-center mb-6 md:mb-8">
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tighter text-slate-900 mb-2 md:mb-3">
                             <?php echo htmlspecialchars($basics['name']); ?>
                         </h1>
-                        <div class="flex justify-center flex-wrap gap-x-4 text-[9.5pt] text-slate-600 font-medium">
-                            <span><?php echo htmlspecialchars($basics['phone']); ?></span>
-                            <span class="text-slate-300">|</span>
-                            <span><?php echo htmlspecialchars($basics['email']); ?></span>
-                            <span class="text-slate-300">|</span>
-                            <span><?php echo htmlspecialchars($basics['location']['city'] ?? $basics['location']); ?></span>
+                        <div class="flex flex-col sm:flex-row justify-center flex-wrap gap-2 sm:gap-x-4 text-[8pt] sm:text-[9.5pt] text-slate-600 font-medium">
+                            <?php if (!empty($basics['phone'])): ?>
+                                <span><?php echo htmlspecialchars($basics['phone']); ?></span>
+                            <?php endif; ?>
+                            <?php if (!empty($basics['phone']) && !empty($basics['email'])): ?>
+                                <span class="text-slate-300 hidden sm:inline">|</span>
+                            <?php endif; ?>
+                            <?php if (!empty($basics['email'])): ?>
+                                <span><?php echo htmlspecialchars($basics['email']); ?></span>
+                            <?php endif; ?>
+                            <?php if ((!empty($basics['phone']) || !empty($basics['email'])) && !empty($basics['location'])): ?>
+
+                                <span class="text-slate-300 hidden sm:inline">|</span>
+                            <?php endif; ?>
+                            <?php if (!empty($basics['location'])): ?>
+                                <span><?php echo htmlspecialchars($basics['location']['city'] ?? $basics['location']); ?></span>
+                            <?php endif; ?>
                             <?php if (!empty($basics['url'])): ?>
-                                <span class="text-slate-300">|</span>
-                                <a href="<?php echo $basics['url']; ?>" class="text-slate-900 underline decoration-slate-300">Portafolio</a>
+                                <span class="text-slate-300 hidden sm:inline">|</span>
+                                <a href="<?php echo $basics['url']; ?>" class="text-slate-900 underline decoration-slate-300 block sm:inline mt-1 sm:mt-0">Portafolio</a>
                             <?php endif; ?>
                         </div>
                     </header>
@@ -110,20 +126,22 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                         <section>
                             <h2 class="section-header">Experiencia Profesional</h2>
                             <?php foreach ($work as $job): ?>
-                                <div class="mb-5">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h3 class="text-[11pt] font-bold text-slate-900"><?php echo htmlspecialchars($job['name']); ?></h3>
-                                        <span class="text-[9pt] font-semibold text-slate-500"><?php echo htmlspecialchars(formatDateRange($job['startDate'], $job['endDate'])); ?></span>
+                                <div class="mb-4 md:mb-5">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1 gap-1">
+                                        <h3 class="text-[10pt] md:text-[11pt] font-bold text-slate-900"><?php echo htmlspecialchars($job['name']); ?></h3>
+                                        <span class="text-[8pt] md:text-[9pt] font-semibold text-slate-500"><?php echo htmlspecialchars(formatDateRange($job['startDate'], $job['endDate'])); ?></span>
                                     </div>
-                                    <div class="flex justify-between items-baseline mb-2">
-                                        <span class="text-[10pt] font-medium text-slate-700 italic"><?php echo htmlspecialchars($job['position']); ?></span>
-                                        <span class="text-[9pt] text-slate-400"><?php echo htmlspecialchars($job['location'] ?? ''); ?></span>
+                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2 gap-1">
+                                        <span class="text-[9pt] md:text-[10pt] font-medium text-slate-700 italic"><?php echo htmlspecialchars($job['position']); ?></span>
+                                        <span class="text-[8pt] md:text-[9pt] text-slate-400"><?php echo htmlspecialchars($job['location'] ?? ''); ?></span>
                                     </div>
-                                    <ul class="list-disc ml-4 space-y-1">
-                                        <?php foreach ($job['highlights'] as $h): ?>
-                                            <li class="text-[9.5pt] text-slate-700 pl-1"><?php echo htmlspecialchars($h); ?></li>
-                                        <?php endforeach; ?>
-                                    </ul>
+                                    <?php if (!empty($job['highlights'])): ?>
+                                        <ul class="list-disc ml-3 md:ml-4 space-y-1">
+                                            <?php foreach ($job['highlights'] as $h): ?>
+                                                <li class="text-[8.5pt] md:text-[9.5pt] text-slate-700 pl-1"><?php echo htmlspecialchars($h); ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         </section>
@@ -154,10 +172,10 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                                     <span class="text-[9pt] text-slate-500"><?php echo htmlspecialchars(formatDateRange($edu['startDate'], $edu['endDate'])); ?></span>
                                 </div>
                                 <p class="text-[9.5pt] text-slate-700">
-                                    <?php 
-                                        $degree = $edu['studyType'] ?? '';
-                                        $area = $edu['area'] ?? $edu['field'] ?? ''; 
-                                        echo htmlspecialchars($degree . ($area ? " en " . $area : "")); 
+                                    <?php
+                                    $degree = $edu['studyType'] ?? '';
+                                    $area = $edu['area'] ?? $edu['field'] ?? '';
+                                    echo htmlspecialchars($degree . ($area ? " en " . $area : ""));
                                     ?>
                                 </p>
                             <?php endforeach; ?>
@@ -174,9 +192,9 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
 
                 <div class="font-stix text-slate-900">
                     <!-- Header -->
-                    <header class="text-center mb-3">
-                        <h1 class="text-3xl font-bold tracking-tight mb-2"><?php echo htmlspecialchars($basics['name'] ?? 'Nombre Completo'); ?></h1>
-                        <div class="flex justify-center flex-wrap gap-2 text-[11pt] text-slate-700">
+                    <header class="text-center mb-2 md:mb-3">
+                        <h1 class="text-2xl md:text-3xl font-bold tracking-tight mb-1 md:mb-2"><?php echo htmlspecialchars($basics['name'] ?? 'Nombre Completo'); ?></h1>
+                        <div class="flex flex-col sm:flex-row justify-center flex-wrap gap-1 sm:gap-2 text-[9pt] md:text-[11pt] text-slate-700">
                             <?php if (!empty($basics['location'])): ?>
                                 <span>
                                     <?php
@@ -189,7 +207,7 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                                 </span>
                             <?php endif; ?>
                             <?php if (!empty($basics['location']) && !empty($basics['url'])): ?>
-                                <span class="text-slate-500">•</span>
+                                <span class="text-slate-500 hidden sm:inline">•</span>
                             <?php endif; ?>
                             <?php if (!empty($basics['url'])): ?>
                                 <a href="<?php echo htmlspecialchars($basics['url']); ?>" target="_blank" class="text-blue-600">
@@ -197,13 +215,13 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                                 </a>
                             <?php endif; ?>
                             <?php if ((!empty($basics['location']) || !empty($basics['url'])) && !empty($basics['phone'])): ?>
-                                <span class="text-slate-500">•</span>
+                                <span class="text-slate-500 hidden sm:inline">•</span>
                             <?php endif; ?>
                             <?php if (!empty($basics['phone'])): ?>
                                 <span><?php echo htmlspecialchars($basics['phone']); ?></span>
                             <?php endif; ?>
                             <?php if (((!empty($basics['location']) || !empty($basics['url']) || !empty($basics['phone'])) && !empty($basics['email']))): ?>
-                                <span class="text-slate-500">•</span>
+                                <span class="text-slate-500 hidden sm:inline">•</span>
                             <?php endif; ?>
                             <?php if (!empty($basics['email'])): ?>
                                 <span><?php echo htmlspecialchars($basics['email']); ?></span>
@@ -317,33 +335,33 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                     <?php endif; ?>
                 </div>
             <?php else: ?>
-                <!-- Plantilla creativo moderno  -->
+                <!-- Plantilla Estándar -->
 
-                <header class="mb-8 border-b border-slate-200 pb-6 flex items-start gap-6">
+                <header class="mb-6 md:mb-8 border-b border-slate-200 pb-4 md:pb-6 flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
                     <?php if (!empty($basics['image'])): ?>
-                        <div class="flex-shrink-0">
+                        <div class="flex-shrink-0 self-center md:self-start">
                             <img
                                 src="<?php echo htmlspecialchars($basics['image']); ?>"
                                 alt="<?php echo htmlspecialchars($basics['name'] ?? 'Foto de perfil'); ?>"
-                                class="w-28 h-28 object-cover rounded-xl border border-slate-100 shadow-sm"
+                                class="w-20 h-20 md:w-28 md:h-28 object-cover rounded-xl border border-slate-100 shadow-sm"
                                 onerror="this.style.display='none'" />
                         </div>
                     <?php endif; ?>
 
-                    <div class="flex-1">
-                        <h1 class="text-4xl font-bold text-slate-900 tracking-tight mb-1">
+                    <div class="flex-1 text-center md:text-left">
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight mb-1">
                             <?php echo htmlspecialchars($basics['name'] ?? ''); ?>
                         </h1>
 
                         <?php if (!empty($basics['label'])): ?>
-                            <p class="text-lg text-slate-600 font-medium mb-3">
+                            <p class="text-base md:text-lg text-slate-600 font-medium mb-3">
                                 <?php echo htmlspecialchars($basics['label']); ?>
                             </p>
                         <?php endif; ?>
 
-                        <div class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-500 font-medium">
+                        <div class="flex flex-col sm:flex-row sm:justify-center md:justify-start flex-wrap gap-2 sm:gap-x-4 gap-y-2 text-xs text-slate-500 font-medium">
                             <?php if (!empty($basics['location'])): ?>
-                                <div class="flex items-center gap-1">
+                                <div class="flex items-center gap-1 justify-center md:justify-start">
                                     <iconify-icon icon="solar:map-point-linear" width="14" height="14"></iconify-icon>
                                     <?php
                                     if (is_array($basics['location'])) {
@@ -356,21 +374,21 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                             <?php endif; ?>
 
                             <?php if (!empty($basics['url'])): ?>
-                                <a href="<?php echo htmlspecialchars($basics['url']); ?>" target="_blank" class="flex items-center gap-1 text-blue-600">
+                                <a href="<?php echo htmlspecialchars($basics['url']); ?>" target="_blank" class="flex items-center gap-1 text-blue-600 justify-center md:justify-start">
                                     <iconify-icon icon="line-md:link" width="14" height="14"></iconify-icon>
                                     <?php echo htmlspecialchars(preg_replace('/^https?:\/\//', '', $basics['url'])); ?>
                                 </a>
                             <?php endif; ?>
 
                             <?php if (!empty($basics['phone'])): ?>
-                                <div class="flex items-center gap-1">
+                                <div class="flex items-center gap-1 justify-center md:justify-start">
                                     <iconify-icon icon="solar:phone-linear" width="14" height="14"></iconify-icon>
                                     <?php echo htmlspecialchars($basics['phone']); ?>
                                 </div>
                             <?php endif; ?>
 
                             <?php if (!empty($basics['email'])): ?>
-                                <div class="flex items-center gap-1">
+                                <div class="flex items-center gap-1 justify-center md:justify-start">
                                     <iconify-icon icon="solar:letter-linear" width="14" height="14"></iconify-icon>
                                     <?php echo htmlspecialchars($basics['email']); ?>
                                 </div>
@@ -388,19 +406,19 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                 <?php endif; ?>
 
                 <?php if (!empty($work)): ?>
-                    <section class="mb-8">
-                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
+                    <section class="mb-6 md:mb-8">
+                        <h2 class="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 md:mb-4 border-b border-slate-100 pb-2">
                             Experiencia Profesional
                         </h2>
                         <?php foreach ($work as $job): ?>
-                            <div class="mb-6">
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <h3 class="font-bold text-slate-800"><?php echo htmlspecialchars($job['name'] ?? ''); ?></h3>
+                            <div class="mb-4 md:mb-6">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1 gap-1">
+                                    <h3 class="font-bold text-slate-800 text-sm md:text-base"><?php echo htmlspecialchars($job['name'] ?? ''); ?></h3>
                                     <span class="text-xs text-slate-500 font-mono">
                                         <?php echo htmlspecialchars(formatDateRange($job['startDate'] ?? '', $job['endDate'] ?? '')); ?>
                                     </span>
                                 </div>
-                                <div class="text-sm text-slate-600 italic mb-2">
+                                <div class="text-xs md:text-sm text-slate-600 italic mb-2">
                                     <?php echo htmlspecialchars($job['position'] ?? ''); ?>
                                 </div>
                                 <?php if (!empty($job['location'])): ?>
@@ -409,7 +427,7 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                                     </div>
                                 <?php endif; ?>
                                 <?php if (!empty($job['highlights'])): ?>
-                                    <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-600 leading-relaxed">
+                                    <ul class="list-disc list-outside ml-3 md:ml-4 space-y-1 text-xs md:text-sm text-slate-600 leading-relaxed">
                                         <?php foreach ($job['highlights'] as $highlight): ?>
                                             <li><?php echo htmlspecialchars($highlight); ?></li>
                                         <?php endforeach; ?>
@@ -421,29 +439,29 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                 <?php endif; ?>
 
                 <?php if (!empty($projects)): ?>
-                    <section class="mb-8">
-                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
+                    <section class="mb-6 md:mb-8">
+                        <h2 class="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 md:mb-4 border-b border-slate-100 pb-2">
                             Proyectos
                         </h2>
                         <?php foreach ($projects as $project): ?>
-                            <div class="mb-6">
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <h3 class="font-bold text-slate-800"><?php echo htmlspecialchars($project['name'] ?? ''); ?></h3>
+                            <div class="mb-4 md:mb-6">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1 gap-1">
+                                    <h3 class="font-bold text-slate-800 text-sm md:text-base"><?php echo htmlspecialchars($project['name'] ?? ''); ?></h3>
                                     <span class="text-xs text-slate-500 font-mono">
                                         <?php echo htmlspecialchars(formatDateRange($project['startDate'] ?? '', $project['endDate'] ?? '')); ?>
                                     </span>
                                 </div>
                                 <?php if (!empty($project['role'])): ?>
-                                    <div class="text-sm text-slate-600 italic mb-1"><?php echo htmlspecialchars($project['role']); ?></div>
+                                    <div class="text-xs md:text-sm text-slate-600 italic mb-1"><?php echo htmlspecialchars($project['role']); ?></div>
                                 <?php endif; ?>
                                 <?php if (!empty($project['type'])): ?>
                                     <div class="text-xs text-slate-500 mb-2"><?php echo htmlspecialchars($project['type']); ?></div>
                                 <?php endif; ?>
                                 <?php if (!empty($project['description'])): ?>
-                                    <p class="text-sm text-slate-600 mb-2"><?php echo htmlspecialchars($project['description']); ?></p>
+                                    <p class="text-xs md:text-sm text-slate-600 mb-2"><?php echo htmlspecialchars($project['description']); ?></p>
                                 <?php endif; ?>
                                 <?php if (!empty($project['highlights'])): ?>
-                                    <ul class="list-disc list-outside ml-4 space-y-1 text-sm text-slate-600 leading-relaxed">
+                                    <ul class="list-disc list-outside ml-3 md:ml-4 space-y-1 text-xs md:text-sm text-slate-600 leading-relaxed">
                                         <?php foreach ($project['highlights'] as $highlight): ?>
                                             <li><?php echo htmlspecialchars($highlight); ?></li>
                                         <?php endforeach; ?>
@@ -461,23 +479,23 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                 <?php endif; ?>
 
                 <?php if (!empty($education)): ?>
-                    <section class="mb-8">
-                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
+                    <section class="mb-6 md:mb-8">
+                        <h2 class="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 md:mb-4 border-b border-slate-100 pb-2">
                             Educación
                         </h2>
                         <?php foreach ($education as $edu): ?>
-                            <div class="mb-4">
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <h3 class="font-bold text-slate-800"><?php echo htmlspecialchars($edu['institution'] ?? ''); ?></h3>
+                            <div class="mb-3 md:mb-4">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1 gap-1">
+                                    <h3 class="font-bold text-slate-800 text-sm md:text-base"><?php echo htmlspecialchars($edu['institution'] ?? ''); ?></h3>
                                     <span class="text-xs text-slate-500 font-mono">
                                         <?php echo htmlspecialchars(formatDateRange($edu['startDate'] ?? '', $edu['endDate'] ?? '')); ?>
                                     </span>
                                 </div>
                                 <?php if (!empty($edu['studyType'])): ?>
-                                    <div class="text-sm text-slate-600"><?php echo htmlspecialchars($edu['studyType']); ?></div>
+                                    <div class="text-xs md:text-sm text-slate-600"><?php echo htmlspecialchars($edu['studyType']); ?></div>
                                 <?php endif; ?>
                                 <?php if (!empty($edu['area'])): ?>
-                                    <div class="text-sm text-slate-600"><?php echo htmlspecialchars($edu['area']); ?></div>
+                                    <div class="text-xs md:text-sm text-slate-600"><?php echo htmlspecialchars($edu['area']); ?></div>
                                 <?php endif; ?>
                                 <?php if (!empty($edu['location'])): ?>
                                     <div class="text-xs text-slate-500"><?php echo htmlspecialchars($edu['location']); ?></div>
@@ -488,13 +506,13 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                 <?php endif; ?>
 
                 <?php if (!empty($skills)): ?>
-                    <section class="mb-8">
-                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
+                    <section class="mb-6 md:mb-8">
+                        <h2 class="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 md:mb-4 border-b border-slate-100 pb-2">
                             Habilidades
                         </h2>
                         <?php foreach ($skills as $skillGroup): ?>
                             <div class="mb-3">
-                                <h4 class="text-sm font-semibold text-slate-800 mb-2"><?php echo htmlspecialchars($skillGroup['name'] ?? ''); ?></h4>
+                                <h4 class="text-xs md:text-sm font-semibold text-slate-800 mb-2"><?php echo htmlspecialchars($skillGroup['name'] ?? ''); ?></h4>
                                 <div class="flex flex-wrap gap-2">
                                     <?php foreach (($skillGroup['keywords'] ?? []) as $skill): ?>
                                         <span class="px-2 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded">
@@ -509,12 +527,12 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
 
                 <?php if (!empty($languages)): ?>
                     <section>
-                        <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
+                        <h2 class="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 md:mb-4 border-b border-slate-100 pb-2">
                             Idiomas
                         </h2>
-                        <div class="grid grid-cols-3 gap-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             <?php foreach ($languages as $lang): ?>
-                                <div class="text-sm">
+                                <div class="text-xs md:text-sm">
                                     <span class="font-medium text-slate-800"><?php echo htmlspecialchars($lang['language'] ?? ''); ?></span>
                                     <span class="text-slate-600"> - <?php echo htmlspecialchars($lang['fluency'] ?? ''); ?></span>
                                 </div>
@@ -522,7 +540,7 @@ $isSuggested = isset($_GET['suggested']) && $_GET['suggested'] == '1';
                         </div>
                     </section>
                 <?php endif; ?>
-            <?php endif; // Fin plantilla creativo moderno 
+            <?php endif; // Fin plantilla estándar 
             ?>
         </div>
     </div>

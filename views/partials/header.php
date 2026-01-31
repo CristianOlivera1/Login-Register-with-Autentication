@@ -33,14 +33,14 @@ $user = $isAuthenticated ? [
             <?php if (!$isAuthenticated): ?>
                 <div class="flex items-center gap-4">
                     <a href="#auth" class="hidden sm:block text-sm hover:text-white transition-colors">Iniciar sesión</a>
-                    <a href="#auth" class="text-sm bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-full transition-all flex items-center gap-2">
+                    <a href="#auth" class="btn-register align-center flex items-center gap-2">
                         <span>Registrarse</span>
                         <iconify-icon icon="solar:arrow-right-linear" width="16" stroke-width="1.5"></iconify-icon>
                     </a>
                 </div>
             <?php else: ?>
                 <div class="flex items-center gap-4">
-                    <div class="hidden sm:flex items-center gap-3 text-sm">
+                    <div class="flex items-center gap-3 text-sm">
                         <?php if (!empty($user['avatar'])): ?>
                             <img src="<?php echo htmlspecialchars($user['avatar']); ?>"
                                 alt="Avatar" class="w-8 h-8 rounded-full object-cover"
@@ -50,16 +50,16 @@ $user = $isAuthenticated ? [
                                 <?php echo strtoupper(substr($user['firstName'] ?: $user['username'], 0, 1)); ?>
                             </div>
                         <?php endif; ?>
-                        <span class="text-white"><?php echo htmlspecialchars($user['firstName'] ?: $user['username']); ?></span>
+                        <span class="hidden sm:flex text-white"><?php echo htmlspecialchars($user['firstName'] ?: $user['username']); ?></span>
                     </div>
 
-                    <div class="relative group">
-                        <button class="text-sm bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-full transition-all flex items-center gap-2">
+                    <div class="relative" id="userDropdownContainer">
+                        <button id="dropdownButton" class="text-sm bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-full transition-all flex items-center gap-2">
                             <iconify-icon icon="solar:settings-linear" width="16"></iconify-icon>
                             <iconify-icon icon="solar:alt-arrow-down-linear" width="12"></iconify-icon>
                         </button>
 
-                        <div class="absolute right-0 mt-2 w-48 bg-[#0a0b0f] border border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+                         <div id="dropdownMenu" class="absolute right-0 mt-2 w-48 bg-[#0a0b0f] border border-white/10 rounded-lg shadow-xl opacity-0 invisible transition-all duration-200 z-10">
                             <div class="p-2">
                                 <a href="/profile" data-reload class="block px-3 py-2 text-sm text-white hover:bg-white/10 rounded-md transition-colors">
                                     <iconify-icon icon="solar:user-linear" width="16" class="mr-2"></iconify-icon>
@@ -82,3 +82,32 @@ $user = $isAuthenticated ? [
         </div>
     </nav>
 </header>
+
+<style>
+    #dropdownMenu.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(4px);
+}
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('dropdownButton');
+    const menu = document.getElementById('dropdownMenu');
+
+    if (btn && menu) {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    }
+});
+
+</script>
